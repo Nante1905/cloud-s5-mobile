@@ -1,0 +1,30 @@
+:root{
+    --black:#060606;
+    --white:#fefefe;
+    --grey:#f1f1f1
+}
+.tabBar{
+    --background: #fefefe;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding-top: 10px;
+    box-shadow: 1px 2px 17px #8c8c8c;
+    --border: 0;
+}
+.header{
+    --background:var(--black);
+}
+
+.content{
+    --background:var(--white);
+}
+.title{
+    --background:var(--black);
+    height: 100px;
+}
+.title .title-toolbar{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

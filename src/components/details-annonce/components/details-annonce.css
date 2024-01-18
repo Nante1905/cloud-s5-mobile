@@ -1,0 +1,157 @@
+ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+  }
+  
+  ion-label {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+  
+  ion-item h2 {
+    font-weight: 600;
+    margin: 0;
+    
+    /**
+     * With larger font scales
+     * the date/time should wrap to the next
+     * line. However, there should be
+     * space between the name and the date/time
+     * if they can appear on the same line.
+     */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  ion-item p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 95%;
+  }
+  
+  ion-item .date {
+    align-items: center;
+    display: flex;
+  }
+  
+  ion-item ion-icon {
+    color: #c9c9ca;
+  }
+  
+  ion-item ion-note {
+    font-size: 0.9375rem;
+    margin-right: 8px;
+    font-weight: normal;
+  }
+  
+  ion-item ion-note.md {
+    margin-right: 14px;
+  }
+  
+  .dot {
+    display: block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    align-self: start;
+    margin: 16px 10px 16px 16px;
+  }
+  
+  .dot-unread {
+    background: var(--ion-color-primary);
+  }
+  
+  ion-footer ion-title {
+    font-size: 11px;
+    font-weight: normal;
+  }
+
+  /* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+    height: 100%;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    --color:black;
+  }
+  
+  .swiper-button-next {
+    right: 10px;
+  }
+  
+  .swiper-button-prev {
+    left: 10px;
+  }
+  .img-caroussel{
+    object-fit: cover;
+  }
+
+  .ion-padding{
+    transform: translateY(-7vh);
+    background: #ffff;
+    color:#333;
+    padding: 40px;
+    border-top-left-radius: 100px;
+    box-shadow:  5px 7px 60px #333;
+    position:absolute;
+    z-index:20 ;
+    min-height: 100vh;
+    padding-top: 60px;
+    padding-bottom: 75px;
+  }
+
+  .car-name{
+    font-weight: 800;
+    font-size: 35px;
+    margin-bottom: 40px;
+  }
+  .car-annonce{
+    font-size: 15px;
+  }
+  .bold{
+    font-weight: 800;
+  }
+  .semi-bold{
+    font-weight: 800;
+  }
+  .annonce{
+    display: flex;
+    justify-content: space-between;
+    color: rgb(143, 143, 143);
+  }
+  .car-caracteristique{
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .modif-button{
+    background: rgb( 69 , 189 , 197 );
+    height: 50px;
+    width:80px;
+    border-radius: 5px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .details-header , .details-toolbar{
+    --background:transparent;
+  }
+
+.button-back{
+    background: black;
+    width: 40px;
+    top:5px;
+    left:5px;
+    position:absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    height: 40px;
+    box-sizing: border-box;
+}
