@@ -32,7 +32,7 @@ const Tabs: React.FC = () => (
               <IonIcon aria-hidden="true" icon={ellipse} />
               <IonLabel>Annonces</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab1" href="/tab1">
+            <IonTabButton tab="ajout annonce" href="/annonce/create/one">
               <IonIcon aria-hidden="true" icon={triangle} />
               <IonLabel>Ajout annonces</IonLabel>
             </IonTabButton>

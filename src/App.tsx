@@ -38,6 +38,7 @@ import Tabs from './Tabs';
 import DetailsAnnonceRoot from './components/details-annonce/container/details-annonce.root';
 import ConnectRoot from './components/login/connexion/container/connect.root';
 import InscriptionRoot from './components/login/inscription/container/inscription.root';
+import CreationAnnonce from './components/annonce/container/creation/creation-annonce.root';
 
 setupIonicReact();
 
@@ -51,6 +52,9 @@ const App: React.FC = () => (
       </Route>
       <Route path="/details">
           <DetailsAnnonceRoot />
+      </Route>
+      <Route path="/annonce/create">
+          <CreationAnnonce />
       </Route>
       <Route path="/login">
           <ConnectRoot />
