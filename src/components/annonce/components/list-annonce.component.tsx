@@ -36,7 +36,7 @@ const ListAnnonceComponent: React.FC = () => {
         <IonItemSliding>
         {/* <Link style={{textDecoration:"none"}} to="/details"> */}
           <IonItem
-            routerLink="/details"
+           
             className="annonce-content"
             style={{ borderLeft: '10px solid red', background: "rgb( 240 , 240 , 240 )" }}
           >

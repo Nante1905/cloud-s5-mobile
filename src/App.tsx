@@ -34,50 +34,31 @@ import "./theme/home.css";
 
 /* Theme variables */
 import './theme/variables.css';
-import ListAnnonce from './components/annonce/container/liste-annonce.root';
-import DetailsAnnonce from './components/details-annonce/components/details-annonce.component';
+import Tabs from './Tabs';
+import DetailsAnnonceRoot from './components/details-annonce/container/details-annonce.root';
+import ConnectRoot from './components/login/connexion/container/connect.root';
+import InscriptionRoot from './components/login/inscription/container/inscription.root';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
-          </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
-          </Route>
-          <Route exact path="/annonce">
-            <ListAnnonce />
-          </Route>
-          <Route path="/tab3">
-            <Tab3 />
-          </Route>
-          <Route path="/details">
-            <DetailsAnnonce />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/tab1" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom" className="tabBar" >
-            <IonTabButton tab="annonce" href="/annonce">
-              <IonIcon aria-hidden="true" icon={ellipse} />
-              <IonLabel>Annonces</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab1" href="/tab1">
-              <IonIcon aria-hidden="true" icon={triangle} />
-              <IonLabel>Ajout annonces</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
-              <IonIcon aria-hidden="true" icon={square} />
-              <IonLabel>Tab 3</IonLabel>
-            </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
+    <IonRouterOutlet>
+      <Route path="/tabs" render={() => <Tabs />} />
+      <Route exact path="/">
+        <Redirect to="/tabs" />
+      </Route>
+      <Route path="/details">
+          <DetailsAnnonceRoot />
+      </Route>
+      <Route path="/login">
+          <ConnectRoot />
+      </Route>
+      <Route path="/inscription">
+          <InscriptionRoot />
+      </Route>
+    </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
 );
