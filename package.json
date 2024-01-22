@@ -17,15 +17,22 @@
     "@capacitor/haptics": "5.0.6",
     "@capacitor/keyboard": "5.0.7",
     "@capacitor/status-bar": "5.0.6",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
+    "@mui/material": "^5.15.5",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
+    "bootstrap": "^5.3.2",
     "ionicons": "^7.0.0",
+    "jquery": "^3.7.1",
+    "popper.js": "^1.16.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^5.3.4",
-    "react-router-dom": "^5.3.4"
+    "react-router-dom": "^5.3.4",
+    "swiper": "^11.0.5"
   },
   "devDependencies": {
     "@capacitor/cli": "5.6.0",
@@ -43,8 +50,11 @@
     "jsdom": "^22.1.0",
     "terser": "^5.4.0",
     "typescript": "^5.1.6",
-    "vite": "^5.0.0",
+    "vite": "5.0.11",
     "vitest": "^0.34.6"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "config": {
+    "ionic_sass": "./sass.config.js"
+  }
 }

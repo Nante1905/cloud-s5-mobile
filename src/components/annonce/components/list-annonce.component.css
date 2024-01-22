@@ -1,0 +1,84 @@
+.list-annonce .annonce-content{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width:90%;
+    margin-left: auto;
+    margin-right: auto;
+    --min-height:120px ;
+    border-radius: 25px;
+    --background: rgb( 240 , 240 , 240 );
+    --color:#333 !important;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.list-annonce .view{
+    font-weight: 800;
+}
+.list-annonce {
+    --text-decoration: none;
+}
+.list-annonce .card-title{
+    --color:#333;
+    font-weight: 700;
+    font-size: 20px;
+}
+.list-annonce{
+    background: #ffff ;
+}
+.content-card{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.list-annonce .card-img{
+    border-radius: 50px;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+.list-title{
+    color: black;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.list-title h1{
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.progress-choice{
+    height:10px;
+    width: 80%;
+    background: #333;
+    color: transparent;
+    display: flex;
+}
+.progress-choice-text{
+    margin-top: 5px;
+    height:10px;
+    width: 80%;
+    display: flex;
+    color:#333;
+    font-size: 13px;
+    font-weight: 600;
+}
+.choice{
+    width:calc( 100% / 3 );
+    color:#333;
+    text-align: center;
+
+}
+.progress-choice .en-attente{
+    background-color:rgb( 255 , 168 , 0 );
+}
+.progress-choice .publie{
+    background-color:rgb( 228 , 255 , 60 );
+}
+.progress-choice .vendu{
+    background-color:rgb( 48 , 255 , 56 );
+}
