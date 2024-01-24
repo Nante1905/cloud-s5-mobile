@@ -1,0 +1,17 @@
+.wrapper {
+    padding: 10px;
+    height: 100%;
+  }
+  
+  .label {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  .editor {
+    margin-top: 1rem;
+    height: 500px;
+  }
+.richTextFieldContainer{
+  height:100%;
+}

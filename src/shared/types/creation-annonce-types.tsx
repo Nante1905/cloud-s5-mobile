@@ -1,3 +1,3 @@
 export interface StepCreationAnnonceProps{
-    onTabChange: (value:string)=>void;
+    onClickFunc: (newValue: string) => void;
 }
