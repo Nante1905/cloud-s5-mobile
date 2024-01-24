@@ -29,7 +29,7 @@ const FourthStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : a
                     <IonGrid>
                     <IonRow >
                         <IonCol size="5" className="ion-text-start">
-                        <div className="button-next-form"  onClick={() => props.onClickFunc("4")}  >précedent</div>
+                        <div className="button-next-form"  onClick={() => props.onClickFunc("3")}  >précedent</div>
                         </IonCol>
                         <IonCol size="5" offset="1" className="ion-text-end">
                             <div className="button-next-form" onClick={() => props.onClickFunc("5")} > Suivant</div>

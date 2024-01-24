@@ -5,6 +5,7 @@ import { Tab, Tabs } from "@mui/material";
 import SecondStepAnnonceCreation from "../../components/creation/second-step.components";
 import ThirdStepAnnonceCreation from "../../components/creation/third-step.component";
 import FourthStepAnnonceCreation from "../../components/creation/fourth-step.component";
+import VerificationAnnonce from "../../components/creation/verification-step.root";
 
 interface CreationAnnonceState{
     tab: string;
@@ -31,12 +32,13 @@ export default  function  CreationAnnonce () {
                         <h1>
                             Vendez votre voiture
                         </h1>
-                    </div>
+                        </div>
                 </IonItem>
                 {state.tab == "1" && <FirstStepAnnonceCreation  onClickFunc={handleTabChange}  />}
                 {state.tab == "2" && <SecondStepAnnonceCreation  onClickFunc={handleTabChange}  />}
                 {state.tab == "3" && <ThirdStepAnnonceCreation  onClickFunc={handleTabChange}  />}
                 {state.tab == "4" && <FourthStepAnnonceCreation  onClickFunc={handleTabChange}  />}
+                {state.tab == "5" && <VerificationAnnonce  onClickFunc={handleTabChange}  />}
             </IonContent>
         </IonPage>
     );
