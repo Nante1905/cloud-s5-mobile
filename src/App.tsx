@@ -39,6 +39,8 @@ import DetailsAnnonceRoot from './components/details-annonce/container/details-a
 import ConnectRoot from './components/login/connexion/container/connect.root';
 import InscriptionRoot from './components/login/inscription/container/inscription.root';
 import CreationAnnonce from './components/annonce/container/creation/creation-annonce.root';
+import TestComp from './components/annonce/components/creation/test.component';
+import Editor from './shared/rich-text/richText';
 
 setupIonicReact();
 
@@ -61,6 +63,9 @@ const App: React.FC = () => (
       </Route>
       <Route path="/inscription">
           <InscriptionRoot />
+      </Route>
+      <Route path="/test">
+          <TestComp />
       </Route>
     </IonRouterOutlet>
     </IonReactRouter>

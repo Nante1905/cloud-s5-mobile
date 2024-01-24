@@ -145,16 +145,17 @@ ion-slides {
 
 .button-back{
     background: black;
-    width: 40px;
-    top:5px;
-    left:5px;
-    position:absolute;
+    /* width: 40px; */
+    /* top:5px; */
+    /* left:5px; */
+    /* position:absolute; */
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 25px;
-    height: 40px;
+    /* height: 40px; */
     box-sizing: border-box;
+    color: #ffff;
 }
 
 .title-login{
@@ -227,7 +228,7 @@ ion-slides {
 }
 
 .button-form-creation{
-  display: flex !important;
+  display: flex ;
   align-items: center ;
   justify-content: center;
   --text-align: center;
@@ -236,4 +237,58 @@ ion-slides {
 
 .button-form-creation .input-wrapper{
   justify-content: center;
+}
+
+.button-next-form{
+  background: black;
+  color: #ffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 25px;
+}
+
+.button-invalid-form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 25px;
+  background: rgb(226, 220, 220);
+}
+
+
+.or-form{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 20px;
+  color: black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.evaluation{
+  background:  rgb( 69 , 189 , 197 );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffff;
+  padding: 15px;
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 25px;
+}
+
+.rich-text{
+  height: 40vh;
+  overflow-y: scroll;
+  margin-bottom: 50px;
+  border: 1px solid #333;
+  /* padding: 20px; */
 }

@@ -20,7 +20,7 @@ const Tabs: React.FC = () => (
           <Route exact path="/tabs/annonce">
             <ListAnnonce />
           </Route>
-          <Route path="/tab3">
+          <Route path="/tabs/tab3">
             <Tab3 />
           </Route>
           <Route exact path="/">
@@ -36,7 +36,7 @@ const Tabs: React.FC = () => (
               <IonIcon aria-hidden="true" icon={triangle} />
               <IonLabel>Ajout annonces</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
+            <IonTabButton tab="tab3" href="/tabs/tab3">
               <IonIcon aria-hidden="true" icon={square} />
               <IonLabel>Tab 3</IonLabel>
             </IonTabButton>

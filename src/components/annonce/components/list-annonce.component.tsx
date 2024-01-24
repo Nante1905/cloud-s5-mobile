@@ -34,7 +34,7 @@ const ListAnnonceComponent: React.FC = () => {
       </div>
       <IonList className="list-annonce" lines="none">
         <IonItemSliding>
-        {/* <Link style={{textDecoration:"none"}} to="/details"> */}
+        <Link style={{textDecoration:"none"}} to="/details">
           <IonItem
            
             className="annonce-content"
@@ -57,7 +57,7 @@ const ListAnnonceComponent: React.FC = () => {
               <div className="view">10k</div>
             </IonCardContent>
           </IonItem>
-          {/* </Link> */}
+          </Link>
           <IonItemOptions side="end">
             <IonItemOption color="success" expandable>
               OK
