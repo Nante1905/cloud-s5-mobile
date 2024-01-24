@@ -93,7 +93,6 @@ ion-slides {
     transform: translateY(-7vh);
     background: #ffff;
     color:#333;
-    width: 100%;
     padding: 40px;
     border-top-left-radius: 80px;
     box-shadow:  5px 7px 60px #333;
@@ -145,150 +144,14 @@ ion-slides {
 
 .button-back{
     background: black;
-    /* width: 40px; */
-    /* top:5px; */
-    /* left:5px; */
-    /* position:absolute; */
+    width: 40px;
+    top:5px;
+    left:5px;
+    position:absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 25px;
-    /* height: 40px; */
+    height: 40px;
     box-sizing: border-box;
-    color: #ffff;
-}
-
-.title-login{
-  height:30vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.title-login h1{
-  color:#fff;
-  transform: translateY(-2vh);
-  font-size: 35px;
-  font-weight: 600;
-  text-align: center;
-}
-.form-title{
-  font-size: 35px;
-  font-weight: 600;
-  color: black;
-  margin-bottom: 30px;
-}
-.form-group{
-  display:  flex;
-  
-  flex-direction: column;
-}
-.form-group label{
-  font-weight: 600;
-  color:  rgb(132, 132, 132);
-}
-.form-group input ,.form-group select  {
-  margin-top: 5px;
-  border: 3px solid rgb(211 , 211, 211);
-  background-color: rgb(241 , 241 , 241 );
-  height: 45px;
-  color:  rgb(132, 132, 132);
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-.form-login .form-submit{
-  background-color: black;
-  color: #ffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  width: 150px;
-  padding: 20px;
-  box-sizing: border-box;
-  border-radius: 50px;
-  margin-left: auto;
-}
-.inscription{
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-}
-.inscription .text-inscription{
-  --background:transparent;
-  --color:black;
-  font-weight: 600;
-  margin-left: 5px;
-}
-
-
-.form-suivant{
-  --background: transparent;
-}
-
-.button-form-creation{
-  display: flex ;
-  align-items: center ;
-  justify-content: center;
-  --text-align: center;
-  border-radius: 50px;
-}
-
-.button-form-creation .input-wrapper{
-  justify-content: center;
-}
-
-.button-next-form{
-  background: black;
-  color: #ffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  border-radius: 25px;
-}
-
-.button-invalid-form{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  border-radius: 25px;
-  background: rgb(226, 220, 220);
-}
-
-
-.or-form{
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  text-align: center;
-  justify-content: center;
-  font-weight: 500;
-  font-size: 20px;
-  color: black;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.evaluation{
-  background:  rgb( 69 , 189 , 197 );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffff;
-  padding: 15px;
-  width: 50%;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 25px;
-}
-
-.rich-text{
-  height: 40vh;
-  overflow-y: scroll;
-  margin-bottom: 50px;
-  border: 1px solid #333;
-  /* padding: 20px; */
 }

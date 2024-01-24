@@ -1,13 +1,11 @@
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import "./details-annonce.css";
-import { StepCreationAnnonceProps } from "../../../shared/types/creation-annonce-types";
+import "./verification-annonce.css"
+import { StepCreationAnnonceProps } from "../../../../../shared/types/creation-annonce-types";
 
-
-
-const Caracteristique:React.FC = (props : any ) => {
+const VerificationCaracteristique:React.FC<StepCreationAnnonceProps> = (props : any ) => {
     return (
         <div className="ion-padding">
-              <div className="annonce" >
+                <div className="annonce" >
                     <h2 className="car-annonce" >
                         <span className="bold" >Annonce n°:</span> 123E2
                     </h2>
@@ -44,11 +42,18 @@ const Caracteristique:React.FC = (props : any ) => {
                   nulla pariatur. Excepteur sint occaecat cupidatat non proident,
                   sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
-                <div className="modif-button" >
-                Modif
-              </div>
+                <IonGrid>
+                <IonRow >
+                        <IonCol size="5" className="ion-text-start">
+                        <div className="button-next-form"  onClick={() => props.onClickFunc("4")}  >précedent</div>
+                        </IonCol>
+                        <IonCol size="5" offset="1" className="ion-text-end">
+                            <div className="button-next-form" onClick={() => props.onClickFunc("5")} > Terminé</div>
+                        </IonCol>
+                </IonRow>
+                </IonGrid>
         </div>
     );
 };
 
-export default Caracteristique;
+export default VerificationCaracteristique;

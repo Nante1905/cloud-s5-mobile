@@ -1,3 +1,3 @@
-export interface StepCreationAnnonceProps{
+export interface DetailAnnonce{
     onClickFunc: (newValue: string) => void;
 }
