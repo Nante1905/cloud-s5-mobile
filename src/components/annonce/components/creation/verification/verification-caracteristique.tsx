@@ -1,5 +1,5 @@
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import "./verification-annonce.css"
+import "./verification-annonce.css";
 import { StepCreationAnnonceProps } from "../../../../../shared/types/creation-annonce-types";
 
 const VerificationCaracteristique:React.FC<StepCreationAnnonceProps> = (props : any ) => {
