@@ -292,3 +292,17 @@ ion-slides {
   border: 1px solid #333;
   /* padding: 20px; */
 }
+
+#bouton-choice{
+  margin-top: 5px;
+  border: 3px solid rgb(211 , 211, 211);
+  background-color: rgb(241 , 241 , 241 );
+  height: 45px;
+  width:100%;
+  display: block;
+  text-align: left;
+  color:  rgb(132, 132, 132);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-transform: none;
+}
