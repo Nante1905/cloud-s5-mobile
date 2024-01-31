@@ -1,10 +1,19 @@
 import { IonCol, IonGrid, IonItem, IonRow } from "@ionic/react";
-import { StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
+import { Annonce, StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
 import "../../container/creation/creation.css";
 import RichText from "../../../../shared/rich-text/richText";
 import PhotoGallery from "../../../../shared/photo/usePhotoGallery";
 // import { usePhotoGallery } from "../../../../shared/photo/usePhotoGallery";
-const FourthStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : any) => {
+interface FourthStepProps{
+    onClickFunc: (value:string)=> void;
+    handleDescriptionChange:(value: string)=>void;
+    annonce:Annonce
+}
+
+const FourthStepAnnonceCreation: React.FC<FourthStepProps> = (props : FourthStepProps) => {
+    const onContentChange = (value:string)=>{
+        props.handleDescriptionChange(value);
+    }
     // const { photos, takePhoto } = usePhotoGallery();
     return (
         <div className="ion-padding">
@@ -17,7 +26,7 @@ const FourthStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : a
                             Description
                         </label>
                         <div className="rich-text" >
-                            <RichText onContentChange={props.onContentChange} />
+                            <RichText onContentChange={onContentChange} defaultValue={props.annonce.description} />
                         </div>                            
                     </div>
                     {/* <div>
@@ -26,16 +35,10 @@ const FourthStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : a
                         ))}
                         </div> */}
                     <PhotoGallery />
-                    <IonGrid>
-                    <IonRow >
-                        <IonCol size="5" className="ion-text-start">
-                        <div className="button-next-form"  onClick={() => props.onClickFunc("3")}  >précedent</div>
-                        </IonCol>
-                        <IonCol size="5" offset="1" className="ion-text-end">
-                            <div className="button-next-form" onClick={() => props.onClickFunc("5")} > Suivant</div>
-                        </IonCol>
-                    </IonRow>
-                    </IonGrid>
+                    <div className="ion-button-container">
+                        <div className="button-next-form" onClick={() => props.onClickFunc("3")}>Précedent</div>
+                        <div className="button-next-form" onClick={() => props.onClickFunc("5")} > Suivant</div>
+                    </div>
                 </div>
             </div>
     );

@@ -17,7 +17,7 @@ import { Item } from '../types/item';
 import { SimpleDialogProps } from '../types/simple-dialog-props';
 
 export function SimpleDialog<T extends Item>(props: SimpleDialogProps<T>) {
-  const { onClose, selectedValue, open, items, title } = props;
+  const { onClose, open, items, title } = props;
 
   const handleClose = () => {
     onClose(null);

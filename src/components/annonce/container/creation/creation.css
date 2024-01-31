@@ -7,7 +7,7 @@ ion-item {
     margin-top: 12px;
     margin-bottom: 12px;
   }
-  
+ 
   ion-item h2 {
     font-weight: 600;
     margin: 0;
@@ -95,13 +95,14 @@ ion-slides {
     color:#333;
     width: 100%;
     padding: 40px;
-    border-top-left-radius: 80px;
+    border-top-left-radius: 60px;
     box-shadow:  5px 7px 60px #333;
     position:absolute;
     z-index:20 ;
-    min-height: 100vh;
+    min-height: 78vh;
     padding-top: 60px;
     padding-bottom: 75px;
+    margin-top: 26vh;
   }
 
   .car-name{
@@ -164,6 +165,9 @@ ion-slides {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: black;
+  position: fixed;
+  top:0;
 }
 
 .title-login h1{
@@ -196,7 +200,19 @@ ion-slides {
   color:  rgb(132, 132, 132);
   border-radius: 10px;
   margin-bottom: 20px;
+  
 }
+.form-group input{
+  padding-left: 2vh;
+
+}
+.ion-button-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
 .form-login .form-submit{
   background-color: black;
   color: #ffff;
@@ -245,8 +261,11 @@ ion-slides {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15px;
-  border-radius: 25px;
+  /* padding: 15px; */
+  border-radius: 20px;  
+
+  width: 45%;
+  height: 6vh;
 }
 
 .button-invalid-form{
@@ -254,8 +273,10 @@ ion-slides {
   align-items: center;
   justify-content: center;
   padding: 15px;
-  border-radius: 25px;
+  border-radius: 20px;
   background: rgb(226, 220, 220);
+  width: 45%;
+  height: 6vh;
 }
 
 
@@ -284,7 +305,33 @@ ion-slides {
   margin-bottom: 20px;
   border-radius: 25px;
 }
-
+.evalue{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+.choisir{
+  background:  rgb( 69 , 189 , 197 );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffff;
+  padding: 15px;
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+.price-evalue{
+  font-weight: bold;
+  font-size: larger;
+}
 .rich-text{
   height: 40vh;
   overflow-y: scroll;

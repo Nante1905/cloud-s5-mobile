@@ -95,13 +95,14 @@ ion-slides {
     color:#333;
     width: 100%;
     padding: 40px;
-    border-top-left-radius: 80px;
+    border-top-left-radius: 60px;
     box-shadow:  5px 7px 60px #333;
     position:absolute;
     z-index:20 ;
-    min-height: 100vh;
+    min-height: 78vh;
     padding-top: 60px;
     padding-bottom: 75px;
+    margin-top: 26vh;
   }
 
   .car-name{
