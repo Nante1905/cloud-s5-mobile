@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   IonButton,
   IonCard,
@@ -16,15 +16,25 @@ import {
 } from '@ionic/react';
 import './list-annonce.component.css';
 import { Link } from 'react-router-dom';
+interface ListAnnonceState{
+  tab : string;
+}
+const initialState : ListAnnonceState = {
+  tab : "0"
+}
 const ListAnnonceComponent: React.FC = () => {
+  const [state, setState] = useState(initialState);
+  const handleTabClick = (tab: string) => {
+    setState({ tab });
+  };
   return (
     <>
       <div className="list-title">
         <h1>Vos annonces</h1>
         <div className="progress-choice">
-          <div className="en-attente choice"></div>
-          <div className="publie choice"></div>
-          <div className="vendu choice"></div>
+        <div className={`en-attente choice ${state.tab === "1" ? 'choice-active' : ''}`} onClick={() => handleTabClick("1")}></div>
+          <div className={`publie choice ${state.tab === "2" ? 'choice-active' : ''}`} onClick={() => handleTabClick("2")}></div>
+          <div className={`vendu choice ${state.tab === "3" ? 'choice-active' : ''}`} onClick={() => handleTabClick("3")}></div>
         </div>
         <div className="progress-choice-text">
           <div className="choice">En attente</div>
