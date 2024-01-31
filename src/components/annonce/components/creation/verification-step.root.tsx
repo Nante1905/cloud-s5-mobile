@@ -20,10 +20,9 @@ import 'swiper/css/scrollbar';
 
 import { Navigation } from 'swiper/modules';
 import VerificationCaracteristique from './verification/verification-caracteristique';
-import { StepCreationAnnonceProps } from '../../../../shared/types/creation-annonce-types';
+import { Annonce, Marque, StepCreationAnnonceProps, VerificationAnnonceProps } from '../../../../shared/types/creation-annonce-types';
 
-const VerificationAnnonce: React.FC<StepCreationAnnonceProps> = ( props : any ) => {
-  console.log(props.onClickFunc);
+const VerificationAnnonce: React.FC<VerificationAnnonceProps> = ( props : VerificationAnnonceProps ) => {
   return (
             <>
               <IonItem >
@@ -40,7 +39,7 @@ const VerificationAnnonce: React.FC<StepCreationAnnonceProps> = ( props : any ) 
                     <SwiperSlide><img className="img-caroussel" src={"tesla.jpg"} /></SwiperSlide>
                     </Swiper>
               </IonItem>
-                <VerificationCaracteristique onClickFunc={props.onClickFunc} />
+                <VerificationCaracteristique onClickFunc={props.onClickFunc} annonce={props.annonce} marque={props.marque}/>
             </>
     );
   };

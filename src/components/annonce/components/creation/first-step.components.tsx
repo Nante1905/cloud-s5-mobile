@@ -1,32 +1,32 @@
 import { IonCol, IonGrid, IonItem, IonRow } from "@ionic/react";
-import { StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
-import "../../container/creation/creation.css"
+import { Annonce, Couleur, Etat, Marque, Modele, StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { Item , transformObjectToItem , transformListToItemList } from "../../../../shared/types/item";
 import { SimpleDialog } from "../../../../shared/hooks/SimpleDialog";
 interface firstStepState{
     open : boolean,
-    selectedMarque : Item ,
-    selectedModele : Item,
-    selectedEtat : Item,
-    selectedCouleur : Item,
     type : string,
     dialogTitle: string,
     items : Item[]
 }
+interface FirstStepProps{
+    handleMarqueChange: (newValue: Marque) => void;
+    handleModeleChange: (newValue: Modele)=> void;
+    handleEtatChange: (newValue: Etat)=>void;
+    handleCouleurChange:(newValue: Couleur)=>void;
+    onClickFunc: (newValue: string) => void;
+    annonce: Annonce;
+    marque: Marque;
+}   
 const initialState: firstStepState = {
     open: false ,
-    selectedMarque: {id : 0 , name: "aucun marque"},
-    selectedModele: {id : 0 , name: "aucun modèle"},
-    selectedEtat : {id : 0 , name : "aucun etat"},
-    selectedCouleur : {id : 0 , name : "aucune couleur"},
     type: "",
     dialogTitle :"",
     items: []
 }
 
-const FirstStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : any) => {
+const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepProps) => {
     const [state, setState] = useState(initialState);
     const marque = [
         { id: 1, nom: 'Toyota Camry' },
@@ -71,34 +71,36 @@ const FirstStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : an
         switch(state.type) {
             case 'marque':
                 if (item) {
-                    setState(prevState => ({
-                        ...prevState,
-                        selectedMarque: transformObjectToItem( item , "id" , "name" )
-                    }));
+                    props.handleMarqueChange({
+                        id: item.id,
+                        nom: item.name
+                    })
                 }
                 break;
             case 'modele':
                 if (item) {
-                    setState(prevState => ({
-                        ...prevState,
-                        selectedModele: transformObjectToItem( item , "id" , "name" )
-                    }));
+                    props.handleModeleChange({
+                        id: item.id,
+                        nom:item.name
+                    })
                 }
                 break;
             case 'etat':
                 if (item) {
-                    setState(prevState => ({
-                        ...prevState,
-                        selectedEtat: transformObjectToItem( item , "id" , "name" )
-                    }));
+                    props.handleEtatChange({
+                        id:item.id,
+                        nom: item.name,
+                        valeur:item.id
+                    })
                 }
                 break;
             case 'couleur':
                 if (item) {
-                    setState(prevState => ({
-                        ...prevState,
-                        selectedCouleur: transformObjectToItem( item , "id" , "name" )
-                    }));
+                    props.handleCouleurChange({
+                        id:item.id,
+                        nom: item.name,
+                        hexa:''
+                    })
                 }
                 break;
             default:
@@ -110,7 +112,7 @@ const FirstStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : an
     return (
         <div className="ion-padding">
                 <h1 className="form-title" >
-                        Caracteristiques générales
+                        Caractéristiques générales
                 </h1>
                 <div className="form-login">
                     <div className="form-group">
@@ -118,11 +120,10 @@ const FirstStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : an
                             Marque
                         </label>
                         <Button id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList(marque , "id" , "nom" ), 'Choisissez une Marque', 'marque')}>
-                        {state.selectedMarque ? `${state.selectedMarque.name}` : 'Aucune marque sélectionnée' }
-                    </Button>
+                        {props.marque.nom}
+                        </Button>
                     
                     <SimpleDialog
-                        selectedValue={state.selectedMarque}
                         open={state.open && state.type === 'marque'}
                         onClose={handleClose}
                         items={state.items}
@@ -135,11 +136,10 @@ const FirstStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : an
                             Modèle
                         </label>
                         <Button id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList(modele , "id" , "nom" ), 'Choisissez un Modèle', 'modele')}>
-                        {state.selectedModele ? `${state.selectedModele.name}` : 'Aucune modèle sélectionnée' }
+                        {props.annonce.voiture.modele.nom}
                     </Button>
                     
                     <SimpleDialog
-                        selectedValue={state.selectedModele}
                         open={state.open && state.type === 'modele'}
                         onClose={handleClose}
                         items={state.items}
@@ -151,11 +151,10 @@ const FirstStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : an
                             Etat
                         </label>
                         <Button id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList(etat , "id" , "nom" ), 'Choisissez un Etat', 'etat')}>
-                            {state.selectedEtat ? `${state.selectedEtat.name}` : 'Aucun état sélectionnée' }
+                            {props.annonce.voiture.Etat.nom}
                         </Button>
                         
                         <SimpleDialog
-                            selectedValue={state.selectedEtat}
                             open={state.open && state.type === 'etat'}
                             onClose={handleClose}
                             items={state.items}
@@ -167,27 +166,19 @@ const FirstStepAnnonceCreation: React.FC<StepCreationAnnonceProps> = (props : an
                             Couleur
                         </label>
                         <Button id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList(couleur , "id" , "nom" ), 'Choisissez une Couleur', 'couleur')}>
-                            {state.selectedCouleur ? `${state.selectedCouleur.name}` : 'Aucune couleur sélectionnée' }
+                            {props.annonce.voiture.couleur.nom}
                         </Button>
-                        
                         <SimpleDialog
-                            selectedValue={state.selectedCouleur}
                             open={state.open && state.type === 'couleur'}
                             onClose={handleClose}
                             items={state.items}
                             title={state.dialogTitle}
                         />
                     </div>
-                    <IonGrid>
-                    <IonRow >
-                        <IonCol size="5" className="ion-text-start">
-                        <div className="button-invalid-form" >précedent</div>
-                        </IonCol>
-                        <IonCol size="5" offset="1" className="ion-text-end">
-                            <div className="button-next-form" onClick={() => props.onClickFunc("2")} > Suivant</div>
-                        </IonCol>
-                    </IonRow>
-                    </IonGrid>
+                    <div className="ion-button-container">
+                        <div className="button-invalid-form" >Précedent</div>
+                        <div className="button-next-form" onClick={() => props.onClickFunc("2")} > Suivant</div>
+                    </div>
                 </div>
             </div>
     );

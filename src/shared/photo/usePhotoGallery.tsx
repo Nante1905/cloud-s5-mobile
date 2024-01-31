@@ -15,6 +15,7 @@ const PhotoGallery = () => {
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
       quality: 100,
+      
     });
 
     const fileName = Date.now() + '.jpeg';
