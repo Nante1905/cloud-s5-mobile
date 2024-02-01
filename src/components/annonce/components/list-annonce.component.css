@@ -67,12 +67,18 @@
     font-size: 13px;
     font-weight: 600;
 }
-.choice{
-    width:calc( 100% / 3 );
-    color:#333;
+.choice {
+    width: calc(100% / 3);
+    color: #333;
     text-align: center;
-
+    height: 10px;
+    transition: height 0.5s;
 }
+
+.choice-active {
+    height: 40px;
+}
+
 .progress-choice .en-attente{
     background-color:rgb( 255 , 168 , 0 );
 }
