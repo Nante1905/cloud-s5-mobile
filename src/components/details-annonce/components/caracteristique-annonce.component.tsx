@@ -1,6 +1,10 @@
+import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import "./details-annonce.css";
+import { StepCreationAnnonceProps } from "../../../shared/types/creation-annonce-types";
 
-const Caracteristique:React.FC = () => {
+
+
+const Caracteristique:React.FC = (props : any ) => {
     return (
         <div className="ion-padding">
               <div className="annonce" >

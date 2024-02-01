@@ -49,9 +49,9 @@ const ConnectComponent : React.FC = () => {
                         </label>
                         <input type="password"   />
                     </div>
-                    <div className="form-submit">
+                    <a href="/tabs" className="form-submit">
                         Se connecter
-                    </div>
+                    </a>
                 </div>
                 <div className="inscription" >
                     Pas encore de compte ?<IonItem className="text-inscription" routerLink="/inscription" >

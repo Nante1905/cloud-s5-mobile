@@ -93,7 +93,6 @@ ion-slides {
     transform: translateY(-7vh);
     background: #ffff;
     color:#333;
-    width: 100%;
     padding: 40px;
     border-top-left-radius: 60px;
     box-shadow:  5px 7px 60px #333;
@@ -103,6 +102,10 @@ ion-slides {
     padding-top: 60px;
     padding-bottom: 75px;
     margin-top: 26vh;
+  }
+  .verification{
+    margin-top: -2vh;
+    min-height: 80vh;
   }
 
   .car-name{
@@ -156,69 +159,4 @@ ion-slides {
     border-radius: 25px;
     height: 40px;
     box-sizing: border-box;
-}
-
-.title-login{
-  height:30vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.title-login h1{
-  color:#fff;
-  transform: translateY(-2vh);
-  font-size: 35px;
-  font-weight: 600;
-  text-align: center;
-}
-.form-title{
-  font-size: 35px;
-  font-weight: 600;
-  color: black;
-  margin-bottom: 30px;
-}
-.form-group{
-  display:  flex;
-  
-  flex-direction: column;
-}
-.form-group label{
-  font-weight: 600;
-  color:  rgb(132, 132, 132);
-}
-.form-group input ,.form-group select  {
-  margin-top: 5px;
-  border: 3px solid rgb(211 , 211, 211);
-  background-color: rgb(241 , 241 , 241 );
-  height: 45px;
-  color:  rgb(132, 132, 132);
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-.form-login .form-submit{
-  background-color: black;
-  color: #ffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  width: 150px;
-  padding: 20px;
-  box-sizing: border-box;
-  border-radius: 50px;
-  margin-left: auto;
-  text-decoration: none;
-}
-.inscription{
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-}
-.inscription .text-inscription{
-  --background:transparent;
-  --color:black;
-  font-weight: 600;
-  margin-left: 5px;
 }

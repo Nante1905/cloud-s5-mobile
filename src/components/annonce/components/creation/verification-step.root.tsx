@@ -1,7 +1,6 @@
 import {
   IonItem,
 } from '@ionic/react';
-import "./details-annonce.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -20,11 +19,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 import { Navigation } from 'swiper/modules';
-import Caracteristique from './caracteristique-annonce.component';
-import { DetailAnnonce } from '../../../shared/types/details-annonce-type';
+import VerificationCaracteristique from './verification/verification-caracteristique';
+import { Annonce, Marque, StepCreationAnnonceProps, VerificationAnnonceProps } from '../../../../shared/types/creation-annonce-types';
 
-const DetailsAnnonce: React.FC = ( props : any ) => {
-  console.log(props);
+const VerificationAnnonce: React.FC<VerificationAnnonceProps> = ( props : VerificationAnnonceProps ) => {
   return (
             <>
               <IonItem >
@@ -41,9 +39,9 @@ const DetailsAnnonce: React.FC = ( props : any ) => {
                     <SwiperSlide><img className="img-caroussel" src={"tesla.jpg"} /></SwiperSlide>
                     </Swiper>
               </IonItem>
-                <Caracteristique  />
+                <VerificationCaracteristique onClickFunc={props.onClickFunc} annonce={props.annonce} marque={props.marque}/>
             </>
     );
   };
   
-  export default DetailsAnnonce;
+  export default VerificationAnnonce;

@@ -41,6 +41,7 @@ import InscriptionRoot from './components/login/inscription/container/inscriptio
 import CreationAnnonce from './components/annonce/container/creation/creation-annonce.root';
 import TestComp from './components/annonce/components/creation/test.component';
 import Editor from './shared/rich-text/richText';
+import Accueil from './components/accueil/accueil.root';
 
 setupIonicReact();
 
@@ -50,7 +51,7 @@ const App: React.FC = () => (
     <IonRouterOutlet>
       <Route path="/tabs" render={() => <Tabs />} />
       <Route exact path="/">
-        <Redirect to="/tabs" />
+        <Redirect to="/accueil" />
       </Route>
       <Route path="/details">
           <DetailsAnnonceRoot />
@@ -64,8 +65,8 @@ const App: React.FC = () => (
       <Route path="/inscription">
           <InscriptionRoot />
       </Route>
-      <Route path="/test">
-          <TestComp />
+      <Route path="/accueil">
+          <Accueil />
       </Route>
     </IonRouterOutlet>
     </IonReactRouter>

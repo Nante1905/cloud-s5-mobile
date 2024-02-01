@@ -5,12 +5,70 @@ import { Tab, Tabs } from "@mui/material";
 import SecondStepAnnonceCreation from "../../components/creation/second-step.components";
 import ThirdStepAnnonceCreation from "../../components/creation/third-step.component";
 import FourthStepAnnonceCreation from "../../components/creation/fourth-step.component";
+import VerificationAnnonce from "../../components/creation/verification-step.root";
+import { Annonce, BoiteVitesse, Couleur, Energie, Etat, Marque, Modele } from "../../../../shared/types/creation-annonce-types";
 
 interface CreationAnnonceState{
     tab: string;
+    annonce: Annonce,
+    marque: Marque,
+    prixEvalue: number
 }
 const initialState: CreationAnnonceState = {
-    tab:"1"
+    prixEvalue:0,
+    tab:"1", 
+    annonce: {
+        id:0, 
+        reference:'',
+        description:'',
+        status:0,
+        dateCreation:new Date(Date.now()), 
+        prix:0,
+        commission:0,
+        nbVues:0,
+        utilisateur:{
+            id:0, 
+            nom:'',
+            prenom:''
+        },
+        voiture:{
+            Etat:{
+                id:0,
+                nom:'Sélectionner un état',
+                valeur:0
+            },
+            id:0,
+            consommation:0,
+            kilometrage:0,
+            etat:0,
+            couleur:{
+                id:0,
+                nom:'Sélectionner une couleur',
+                hexa:''
+            },
+            modele:{
+                id:0,
+                nom:'Sélectionner un modèle'
+            },
+            energie:{
+                id:0,
+                nom:'Sélectionner une énergie'
+            },
+            boiteVitesse:{
+                id:0,
+                nom:'Sélectionner une boîte de vitesse'
+            },
+            idModele:0,
+            idCouleur:0,
+            idBoiteVitesse:0,
+            idEnergie:0
+        },
+        idUtilisateur:0
+    },
+    marque:{
+        id:0,
+        nom:'Sélectionner une marque'
+    }
 }
 
 export default  function  CreationAnnonce () {  
@@ -21,22 +79,144 @@ export default  function  CreationAnnonce () {
           tab: newValue,
         }));
     };
+    const handleDescriptionChange = (newDescription: string) => {
+        setState(prevState => ({
+          ...prevState,
+          annonce: {
+            ...prevState.annonce,
+            description: newDescription,
+          },
+        }));
+      };
+      const handleEstimationChange = (newValue: number) => {
+        setState(prevState => ({
+          ...prevState,
+          prixEvalue: newValue
+        }));
+      };
+    const handlePriceChange = (newPrice: number) => {
+        setState(prevState => ({
+          ...prevState,
+          annonce: {
+            ...prevState.annonce,
+            prix: newPrice,
+          },
+        }));
+      };
+    const handleColorChange = (newColor: Couleur) => {
+        setState(prevState => ({
+          ...prevState,
+          annonce: {
+            ...prevState.annonce,
+            voiture:{
+                ...prevState.annonce.voiture,
+                couleur: newColor,
+                idCouleur: newColor.id
+            }
+          },
+        }));
+      };
+      const handleConsommationChange = (newConso: number) => {
+        setState(prevState => ({
+          ...prevState,
+          annonce: {
+            ...prevState.annonce,
+            voiture:{
+                ...prevState.annonce.voiture,
+                consommation:newConso
+            }
+          },
+        }));
+      };
+      function handleKilometrageChange(newKM: number) {
+        setState(prevState => ({
+            ...prevState,
+            annonce: {
+                ...prevState.annonce,
+                voiture: {
+                    ...prevState.annonce.voiture,
+                    kilometrage: newKM
+                }
+            },
+        }));
+    }
+    const handleModelChange = (newModel: Modele) => {
+    setState(prevState => ({
+        ...prevState,
+        annonce: {
+        ...prevState.annonce,
+        voiture:{
+            ...prevState.annonce.voiture,
+            modele: newModel,
+            idModele: newModel.id
+        }
+        }
+    }));
+    };
+    const handleEnergieChange = (newEnergie: Energie) => {
+        setState(prevState => ({
+            ...prevState,
+            annonce: {
+            ...prevState.annonce,
+            voiture:{
+                ...prevState.annonce.voiture,
+                energie: newEnergie,
+                idEnergie: newEnergie.id
+            }
+            },
+        }));
+    };
+    const handleEtatChange = (newEtat: Etat) => {
+        setState(prevState => ({
+            ...prevState,
+            annonce: {
+            ...prevState.annonce,
+            voiture:{
+                ...prevState.annonce.voiture,
+                Etat: newEtat,
+                etat: newEtat.id
+            }
+            },
+        }));
+    };
+    const handleMarqueChange = (newMarque: Marque) => {
+        setState(prevState => ({
+            ...prevState,
+            marque: newMarque
+        }));
+    };
+    const handleBoiteVitesseChange = (newBV: BoiteVitesse) => {
+        setState(prevState => ({
+            ...prevState,
+            annonce: {
+            ...prevState.annonce,
+            voiture:{
+                ...prevState.annonce.voiture,
+                boiteVitesse: newBV,
+                idBoiteVitesse: newBV.id
+            }
+            },
+        }));
+    };
+      
+      
     console.log(state.tab);
     
     return (
         <IonPage style={{ color: "#ffff" }} id="view-message-page">
             <IonContent fullscreen>
-                <IonItem>
+                {state.tab!="5" && <IonItem>
                     <div className="title-login">
                         <h1>
                             Vendez votre voiture
                         </h1>
                     </div>
-                </IonItem>
-                {state.tab == "1" && <FirstStepAnnonceCreation  onClickFunc={handleTabChange}  />}
-                {state.tab == "2" && <SecondStepAnnonceCreation  onClickFunc={handleTabChange}  />}
-                {state.tab == "3" && <ThirdStepAnnonceCreation  onClickFunc={handleTabChange}  />}
-                {state.tab == "4" && <FourthStepAnnonceCreation  onClickFunc={handleTabChange}  />}
+                </IonItem>}
+                {state.tab == "1" && <FirstStepAnnonceCreation  onClickFunc={handleTabChange} handleCouleurChange={handleColorChange} handleEtatChange={handleEtatChange} handleMarqueChange={handleMarqueChange} handleModeleChange={handleModelChange} annonce={state.annonce} marque={state.marque}/>}
+                {state.tab == "2" && <SecondStepAnnonceCreation  onClickFunc={handleTabChange} handleBoiteVitesseChange={handleBoiteVitesseChange} handleConsommationChange={handleConsommationChange} handleEnergieChange={handleEnergieChange} handleKilometrageChange={handleKilometrageChange} annonce={state.annonce}/>}
+                {state.tab == "3" && <ThirdStepAnnonceCreation handleEstimationChange={handleEstimationChange}  onClickFunc={handleTabChange}  annonce={state.annonce} handlePriceChange={handlePriceChange} estime={state.prixEvalue}/>}
+                {state.tab == "4" && <FourthStepAnnonceCreation  annonce={state.annonce} onClickFunc={handleTabChange} handleDescriptionChange={handleDescriptionChange}  />}
+                {state.tab == "5" && <VerificationAnnonce marque={state.marque} onClickFunc={handleTabChange} annonce={state.annonce} />}
             </IonContent>
         </IonPage>
     );

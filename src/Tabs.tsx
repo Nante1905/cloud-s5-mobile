@@ -7,6 +7,10 @@ import DetailsAnnonce from './components/details-annonce/components/details-anno
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import Profile from './components/profil/profil.root';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AddIcon from '@mui/icons-material/Add';
 
 const Tabs: React.FC = () => (
 <IonTabs>
@@ -20,6 +24,12 @@ const Tabs: React.FC = () => (
           <Route exact path="/tabs/annonce">
             <ListAnnonce />
           </Route>
+          <Route exact path="/tabs">
+          <Redirect to="/tabs/annonce" />
+          </Route>
+          <Route exact path="/tabs/profile">
+            <Profile />
+          </Route>
           <Route path="/tabs/tab3">
             <Tab3 />
           </Route>
@@ -29,16 +39,17 @@ const Tabs: React.FC = () => (
         </IonRouterOutlet>
         <IonTabBar slot="bottom" className="tabBar" >
             <IonTabButton tab="annonce" href="/tabs/annonce">
-              <IonIcon aria-hidden="true" icon={ellipse} />
-              <IonLabel>Annonces</IonLabel>
+              <FormatListBulletedIcon />
+              {/* <IonLabel>Annonces</IonLabel> */}
             </IonTabButton>
-            <IonTabButton tab="ajout annonce" href="/annonce/create/one">
-              <IonIcon aria-hidden="true" icon={triangle} />
-              <IonLabel>Ajout annonces</IonLabel>
+            <IonTabButton className='ajout-button' tab="ajout annonce" href="/annonce/create/one">
+              <AddIcon />
+              {/* <IonIcon aria-hidden="true" icon={triangle} /> */}
+              {/* <IonLabel>Ajout annonces</IonLabel> */}
             </IonTabButton>
-            <IonTabButton tab="tab3" href="/tabs/tab3">
-              <IonIcon aria-hidden="true" icon={square} />
-              <IonLabel>Tab 3</IonLabel>
+            <IonTabButton tab="tab3" href="/tabs/profile">
+              <AccountCircleIcon/>
+              {/* <IonLabel>Profile</IonLabel> */}
             </IonTabButton>
         </IonTabBar>
       </IonTabs>

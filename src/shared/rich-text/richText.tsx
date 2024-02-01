@@ -15,14 +15,15 @@ import "./RichText.components.css";
 
 interface RichTextProps {
   onContentChange: (content: string) => void;
+  defaultValue: string;
 }
 
-function RichText({ onContentChange }: RichTextProps) {
+const RichText: React.FC<RichTextProps> = (props : RichTextProps) =>{
   const editor = useEditor({
     extensions: [StarterKit],
-    content: "",
+    content: props.defaultValue,
     onUpdate: ({ editor }) => {
-      onContentChange(editor.getHTML());
+      props.onContentChange(editor.getHTML());
     },
   });
 
