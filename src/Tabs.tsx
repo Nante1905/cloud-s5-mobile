@@ -24,6 +24,9 @@ const Tabs: React.FC = () => (
           <Route exact path="/tabs/annonce">
             <ListAnnonce />
           </Route>
+          <Route exact path="/tabs">
+          <Redirect to="/tabs/annonce" />
+          </Route>
           <Route exact path="/tabs/profile">
             <Profile />
           </Route>
