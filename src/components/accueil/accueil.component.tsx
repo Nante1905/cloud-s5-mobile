@@ -13,17 +13,18 @@ const AccueilComponent : React.FC = () => {
                 <div className="title-accueil">
                     Sera Vaika
                 </div>
-                <VerifiedIcon className="icon-accueil" />
+                <VerifiedIcon className="rotate-entry icon-accueil" />
                 <div className="image-accueil" >
-                    <img src="7970479.png" alt="" />
+                    <img src="2745453.png" alt="" />
                     <div  className="bar-group">
                         <RemoveIcon className="bar-accueil" />
                         <RemoveIcon className="bar-accueil"  />
                     </div>
                 </div>
                 <div className='button-accueil'>
-                    <a href="/login" className=" login-accueil">Conexion</a>
-                    <a href="/inscription" className=" sign-in-accueil">Inscription</a>
+                    {/* <a href="/login" className="login-accueil">Connexion</a>
+                    <a href="/inscription" className="login-accueil">Inscription</a> */}
+                    <a href="/tabs" className="button-play-accueil pulsate">Appuyer ici pour continuer</a>
                     {/* <IonItem id="button-ion-item-accueil" routerLink="/login" >
                         <div className="login-in-accueil" >Conexion</div>
                     </IonItem>

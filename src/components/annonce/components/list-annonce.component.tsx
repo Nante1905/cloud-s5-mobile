@@ -16,6 +16,7 @@ import {
 } from '@ionic/react';
 import './list-annonce.component.css';
 import { Link } from 'react-router-dom';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 interface ListAnnonceState{
   tab : string;
 }
@@ -70,7 +71,7 @@ const ListAnnonceComponent: React.FC = () => {
           </Link>
           <IonItemOptions side="end">
             <IonItemOption color="success" expandable>
-              OK
+              <CheckCircleOutlineIcon />
             </IonItemOption>
           </IonItemOptions>
         </IonItemSliding>
