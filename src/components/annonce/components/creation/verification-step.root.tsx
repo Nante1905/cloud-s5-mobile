@@ -34,9 +34,10 @@ const VerificationAnnonce: React.FC<VerificationAnnonceProps> = ( props : Verifi
                         modules={[Navigation]}
                         navigation={true}
                     >
-                    <SwiperSlide><img className="img-caroussel" src={"tesla.jpg"} /></SwiperSlide>
-                    <SwiperSlide><img className="img-caroussel" src={"voiture2.jpg"} /></SwiperSlide>
-                    <SwiperSlide><img className="img-caroussel" src={"tesla.jpg"} /></SwiperSlide>
+                    
+                    {props.annonce.medias.map((photo, index) => (
+                        <SwiperSlide><img className="img-caroussel" src={photo.webViewPath} /></SwiperSlide>
+                    ))}
                     </Swiper>
               </IonItem>
                 <VerificationCaracteristique onClickFunc={props.onClickFunc} annonce={props.annonce} marque={props.marque}/>

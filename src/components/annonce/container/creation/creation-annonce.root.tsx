@@ -6,7 +6,7 @@ import SecondStepAnnonceCreation from "../../components/creation/second-step.com
 import ThirdStepAnnonceCreation from "../../components/creation/third-step.component";
 import FourthStepAnnonceCreation from "../../components/creation/fourth-step.component";
 import VerificationAnnonce from "../../components/creation/verification-step.root";
-import { Annonce, BoiteVitesse, Couleur, Energie, Etat, Marque, Modele } from "../../../../shared/types/creation-annonce-types";
+import { Annonce, BoiteVitesse, Couleur, Energie, Etat, Image, Marque, Modele } from "../../../../shared/types/creation-annonce-types";
 
 interface CreationAnnonceState{
     tab: string;
@@ -18,6 +18,7 @@ const initialState: CreationAnnonceState = {
     prixEvalue:0,
     tab:"1", 
     annonce: {
+        medias:[],
         id:0, 
         reference:'',
         description:'',
@@ -87,6 +88,26 @@ export default  function  CreationAnnonce () {
             description: newDescription,
           },
         }));
+      };
+      const handleImageDelete = (filename: string) => {
+        const updatedMedias = state.annonce.medias.filter((media) => media.fileName !== filename);
+    
+        setState((prevState)=>({
+          ...prevState,
+          annonce:{
+            ...prevState.annonce,
+            medias: updatedMedias
+          }
+        }));
+      };
+      const handleImageChange = (newImage : Image) => {
+        setState((prevState)=>({
+            ...prevState,
+            annonce: {
+                ...prevState.annonce,
+                medias:[...prevState.annonce.medias, newImage]
+            }
+        }))
       };
       const handleEstimationChange = (newValue: number) => {
         setState(prevState => ({
@@ -215,7 +236,7 @@ export default  function  CreationAnnonce () {
                 {state.tab == "1" && <FirstStepAnnonceCreation  onClickFunc={handleTabChange} handleCouleurChange={handleColorChange} handleEtatChange={handleEtatChange} handleMarqueChange={handleMarqueChange} handleModeleChange={handleModelChange} annonce={state.annonce} marque={state.marque}/>}
                 {state.tab == "2" && <SecondStepAnnonceCreation  onClickFunc={handleTabChange} handleBoiteVitesseChange={handleBoiteVitesseChange} handleConsommationChange={handleConsommationChange} handleEnergieChange={handleEnergieChange} handleKilometrageChange={handleKilometrageChange} annonce={state.annonce}/>}
                 {state.tab == "3" && <ThirdStepAnnonceCreation handleEstimationChange={handleEstimationChange}  onClickFunc={handleTabChange}  annonce={state.annonce} handlePriceChange={handlePriceChange} estime={state.prixEvalue}/>}
-                {state.tab == "4" && <FourthStepAnnonceCreation  annonce={state.annonce} onClickFunc={handleTabChange} handleDescriptionChange={handleDescriptionChange}  />}
+                {state.tab == "4" && <FourthStepAnnonceCreation handleImageDelete={handleImageDelete} annonce={state.annonce} onClickFunc={handleTabChange} handleDescriptionChange={handleDescriptionChange} handleImageChange={handleImageChange} />}
                 {state.tab == "5" && <VerificationAnnonce marque={state.marque} onClickFunc={handleTabChange} annonce={state.annonce} />}
             </IonContent>
         </IonPage>

@@ -1,38 +1,106 @@
 import React, { useState } from 'react';
-import { IonButton, IonImg, IonGrid, IonRow, IonCol } from '@ionic/react';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { IonButton, IonImg, IonGrid, IonRow, IonCol, isPlatform, IonIcon } from '@ionic/react';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import "./photo.css"
-interface Photo {
+import { Annonce, Image } from '../types/creation-annonce-types';
+import { Directory, Filesystem, FilesystemDirectory, FilesystemEncoding } from '@capacitor/filesystem';
+import { Capacitor } from '@capacitor/core';
+import { checkmarkCircleOutline, closeCircleOutline } from 'ionicons/icons';
+
+interface PhotoGalleryProps{
+  handleImageChange: (value: Image)=>void;
+  annonce: Annonce;
+  handleImageDelete: (value:string)=>void;
+}
+export interface UserPhoto {
   filepath: string;
-  webviewPath: string | undefined;
+  webviewPath?: string;
+}
+async function base64FromPath(path: string): Promise<string> {
+  const response = await fetch(path);
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+      } else {
+        reject('method did not return a string')
+      }
+    };
+    reader.readAsDataURL(blob);
+  });
 }
 
-const PhotoGallery = () => {
-  const [photos, setPhotos] = useState<Photo[]>([]);
+const PhotoGallery = (props: PhotoGalleryProps) => {
+  const savePicture = async (photo: Photo, fileName: string): Promise<Image> => {
+    let base64Data: string;
+    // "hybrid" will detect Cordova or Capacitor;
+    if (isPlatform('hybrid')) {
+      const file = await Filesystem.readFile({
+        path: photo.path!
+      });
+      base64Data = file.data.toString();
+    } else {
+      base64Data = await base64FromPath(photo.webPath!);
+    }
+    const savedFile = await Filesystem.writeFile({
+      path: fileName,
+      data: base64Data,
+      directory: Directory.Data
+    });
 
+    if (isPlatform('hybrid')) {
+      // Display the new image by rewriting the 'file://' path to HTTP
+      // Details: https://ionicframework.com/docs/building/webview#file-protocol
+      return {
+        fileName: savedFile.uri,
+        webViewPath: Capacitor.convertFileSrc(savedFile.uri),
+        blob: base64Data, 
+        contentType: photo.format
+      };
+    }
+    else {
+      // Use webPath to display the new image instead of base64 since it's
+      // already loaded into memory
+      return {
+        fileName: fileName,
+        webViewPath: photo.webPath,
+        blob: base64Data, 
+        contentType: photo.format
+      };
+    }
+  };
   const takePhoto = async () => {
     const photo = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
-      quality: 100,
-      
+      quality: 90,
     });
-
-    const fileName = Date.now() + '.jpeg';
-    const newPhotos: Photo[] = [{ filepath: fileName, webviewPath: photo.webPath }, ...photos];
-    setPhotos(newPhotos);
+    const fileName = new Date().getTime()+'.jpeg';
+    const savedFileImage = await savePicture (photo, fileName);
+    console.log(savedFileImage.blob);
+    
+    props.handleImageChange(savedFileImage);
   };
-
+  const handleImageDelete = (filename : string) =>  {
+    props.handleImageDelete(filename);
+  }
   return (
     <div>
       <IonButton onClick={takePhoto}>Ajouter des photos</IonButton>
       <IonGrid>
         <IonRow>
-          {photos.map((photo, index) => (
-            <IonCol size="6" key={index}>
-              <IonImg className="photo-list" src={photo.webviewPath} />
-            </IonCol>
-          ))}
+        {props.annonce.medias.map((photo, index) => (
+        <IonCol size="6" key={index} className="position-relative">
+          <IonImg className="photo-list" src={photo.webViewPath} alt={`image-${index}`} />
+          <IonIcon
+            icon={closeCircleOutline}
+            className="close-image" onClick={() => handleImageDelete(photo.fileName)}
+          />
+        </IonCol>
+      ))}
         </IonRow>
       </IonGrid>
     </div>
