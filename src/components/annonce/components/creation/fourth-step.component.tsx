@@ -1,5 +1,5 @@
 import { IonCol, IonGrid, IonItem, IonRow } from "@ionic/react";
-import { Annonce, StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
+import { Annonce, Image, StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
 import "../../container/creation/creation.css";
 import RichText from "../../../../shared/rich-text/richText";
 import PhotoGallery from "../../../../shared/photo/usePhotoGallery";
@@ -7,7 +7,9 @@ import PhotoGallery from "../../../../shared/photo/usePhotoGallery";
 interface FourthStepProps{
     onClickFunc: (value:string)=> void;
     handleDescriptionChange:(value: string)=>void;
-    annonce:Annonce
+    annonce:Annonce,
+    handleImageChange: (value: Image)=>void;
+    handleImageDelete: (value:string)=>void;
 }
 
 const FourthStepAnnonceCreation: React.FC<FourthStepProps> = (props : FourthStepProps) => {
@@ -34,10 +36,10 @@ const FourthStepAnnonceCreation: React.FC<FourthStepProps> = (props : FourthStep
                             <img key={index} src={photo.webviewPath} alt="" />
                         ))}
                         </div> */}
-                    <PhotoGallery />
+                    <PhotoGallery handleImageDelete={props.handleImageDelete} handleImageChange={props.handleImageChange} annonce={props.annonce}/>
                     <div className="ion-button-container">
                         <div className="button-next-form" onClick={() => props.onClickFunc("3")}>Précedent</div>
-                        <div className="button-next-form" onClick={() => props.onClickFunc("5")} > Suivant</div>
+                        <div className="button-next-form" onClick={() => props.onClickFunc("5")} >Suivant</div>
                     </div>
                 </div>
             </div>

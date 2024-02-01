@@ -6,6 +6,12 @@ export interface Utilisateur{
     nom: string, 
     prenom: string
 }
+export interface Image{
+    blob: string,
+    contentType: string, 
+    fileName: string ,
+    webViewPath: string|undefined
+}
 export interface VerificationAnnonceProps{
     onClickFunc: (value:string)=>void;
     annonce: Annonce;
@@ -63,5 +69,6 @@ export interface Annonce{
     nbVues: number, 
     utilisateur: Utilisateur, 
     voiture: Voiture, 
-    idUtilisateur: number
+    idUtilisateur: number,
+    medias: Image[]
 }
