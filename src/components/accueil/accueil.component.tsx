@@ -15,7 +15,7 @@ const AccueilComponent : React.FC = () => {
                 </div>
                 <VerifiedIcon className="icon-accueil" />
                 <div className="image-accueil" >
-                    <img src="7970479.png" alt="" />
+                    <img src="2745453.png" alt="" />
                     <div  className="bar-group">
                         <RemoveIcon className="bar-accueil" />
                         <RemoveIcon className="bar-accueil"  />

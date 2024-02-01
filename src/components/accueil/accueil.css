@@ -37,7 +37,7 @@ clip-path: polygon(0 58%, 100% 37%, 100% 100%, 0% 100%);    background: black;
     margin: 0;
 }
 .bar-group{
-    top :180px;
+    top :150px;
     left: 43%;
     position: absolute;
     display: flex;
@@ -72,7 +72,7 @@ clip-path: polygon(0 58%, 100% 37%, 100% 100%, 0% 100%);    background: black;
     text-decoration: none;
 }
 .image-accueil img{
-    height: 300px;
+    height: 200px;
 }
 #button-ion-item-accueil{
     --background:white;
