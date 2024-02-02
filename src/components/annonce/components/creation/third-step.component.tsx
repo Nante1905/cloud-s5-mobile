@@ -122,7 +122,7 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
                 <div className="form-login">
                     <div className="form-group">
                         <label>
-                            Prix
+                            Prix ( MGA )
                         </label>
                         <input className={state.prixClasse} type="text" value={props.annonce.prix} onChange={handlePriceInputChange}/>
                     </div>

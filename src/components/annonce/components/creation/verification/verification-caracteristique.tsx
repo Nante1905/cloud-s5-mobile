@@ -37,10 +37,18 @@ const VerificationCaracteristique:React.FC<VerificationAnnonceProps> = (props : 
                 <h2 className="car-caracteristique" >
                     <span className="semi-bold" >Couleur :</span> {props.annonce.voiture.couleur.nom}
                 </h2>
+                <h2 className="car-caracteristique" >
+                    <span className="semi-bold" >Prix :</span>MGA {props.annonce.prix.toLocaleString('fr-FR', {
+                                    useGrouping: true,
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                })}
+                </h2>
                 <p className="car-caracteristique" >
                 <span className="semi-bold" >Description : </span> <div dangerouslySetInnerHTML={{ __html: props.annonce.description }}></div>
                   
                 </p>
+                
                 <div className="ion-button-container">
                         <div className="button-next-form" onClick={() => props.onClickFunc("4")}>Précedent</div>
                         <div className="button-next-form" onClick={() => props.onClickFunc("6")} > Suivant</div>
