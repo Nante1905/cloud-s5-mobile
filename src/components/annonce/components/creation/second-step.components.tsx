@@ -2,14 +2,18 @@ import { IonCol, IonGrid, IonItem, IonRow } from "@ionic/react";
 import { Annonce, BoiteVitesse, Energie, StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
 import "../../container/creation/creation.css";
 import { SimpleDialog } from "../../../../shared/hooks/SimpleDialog";
-import { Item , transformObjectToItem , transformListToItemList } from "../../../../shared/types/item";
+import { Item, transformListToItemList } from "../../../../shared/types/item";
 import { ChangeEvent, useState } from "react";
 import { Button } from "@mui/material";
 interface SecondStepState{
     open : boolean,
     type : string,
     dialogTitle: string,
-    items : Item[]
+    items : Item[],
+    energieClasse: string, 
+    bvClasse: string, 
+    kmClasse:string,
+    consoClasse:string
 }
 interface SecondStepProps{
     onClickFunc: (newValue: string)=>void;
@@ -20,10 +24,14 @@ interface SecondStepProps{
     annonce: Annonce
 }
 const initialState: SecondStepState = {
-    open: false ,
+    open: false,
     type: "",
-    dialogTitle :"",
-    items: []
+    dialogTitle: "",
+    items: [],
+    energieClasse: "",
+    bvClasse: "", 
+    kmClasse:'',
+    consoClasse:''
 }
 const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStepProps) => {
     const [state, setState] = useState(initialState);
@@ -61,6 +69,10 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         id: item.id,
                         nom: item.name
                     })
+                    setState((prevState)=>({
+                        ...prevState,
+                        energieClasse:""
+                    }))
                 }
                 break;
             case 'bv':
@@ -69,28 +81,79 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         id:item.id,
                         nom: item.name
                     })
+                    setState((prevState)=>({
+                        ...prevState,
+                        bvClasse:""
+                    }))
                 }
                 break;
                 default:
                 break;
         }
     };
+    const next = ()=>{
+        if(props.annonce.voiture.energie.id==0){
+            setState((prevState)=>({
+                ...prevState,
+                energieClasse:"error"
+            }));
+        };
+        if(props.annonce.voiture.boiteVitesse.id==0){
+            setState((prevState)=>({
+                ...prevState,
+                bvClasse:"error"
+            }))
+        }
+        if(props.annonce.voiture.kilometrage==0){
+            setState((prevState)=>({
+                ...prevState,
+                kmClasse:"error"
+            }))
+        }
+        if(props.annonce.voiture.consommation==0){
+            setState((prevState)=>({
+                ...prevState,
+                consoClasse:"error"
+            }))
+        }
+        if(props.annonce.voiture.consommation!=0 && props.annonce.voiture.kilometrage!=0 && props.annonce.voiture.boiteVitesse.id!=0 && props.annonce.voiture.energie.id!=0 ){
+            props.onClickFunc("3");
+        }
+    }
     const handleKilometrageChange = (e:  ChangeEvent<HTMLInputElement>) => {
         const newvalue  = parseFloat(e.target.value);
-        if(isNaN(newvalue)){
+        console.log(newvalue);
+        
+        if(isNaN(newvalue) || newvalue==0.0 || newvalue<0){
             props.handleKilometrageChange(0);
+            setState((prevState)=>({
+                ...prevState,
+                kmClasse:"error"
+            }))
         }
         else{
             props.handleKilometrageChange(newvalue);
+            setState((prevState)=>({
+                ...prevState,
+                kmClasse:""
+            }))
         }
     };
     const handleConsommationChange = (e:  ChangeEvent<HTMLInputElement>) => {
         const newvalue  = parseFloat(e.target.value);
-        if(isNaN(newvalue)){
+        if(isNaN(newvalue) || newvalue==0.0 || newvalue<0){
             props.handleConsommationChange(0);
+            setState((prevState)=>({
+                ...prevState,
+                consoClasse:"error"
+            }))
         }
         else{
             props.handleConsommationChange(newvalue);
+            setState((prevState)=>({
+                ...prevState,
+                consoClasse:""
+            }))
         }
     };
 
@@ -104,7 +167,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         <label>
                             Energie
                         </label>
-                        <Button id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList( energie, "id" , "nom" ), 'Choisissez une Energie', 'energie')}>
+                        <Button className={state.energieClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList( energie, "id" , "nom" ), 'Choisissez une Energie', 'energie')}>
                         {props.annonce.voiture.energie.nom}
                     </Button>
                     <SimpleDialog
@@ -118,7 +181,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         <label>
                             Boite de vitesse
                         </label>
-                        <Button id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList( bv, "id" , "nom" ), 'Choisissez une boie de vitesse', 'bv')}>
+                        <Button  className={state.bvClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList( bv, "id" , "nom" ), 'Choisissez une boie de vitesse', 'bv')}>
                         {props.annonce.voiture.boiteVitesse.nom}
                         </Button>
                         <SimpleDialog
@@ -131,20 +194,20 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                     </div>
                     <div className="form-group">
                         <label>
-                            Consommation ( L/100km )
+                            Consommation
                         </label>
-                        <input type="text" value={props.annonce.voiture.consommation} onChange={handleConsommationChange}/>
+                        <input className={state.consoClasse}  type="text" value={props.annonce.voiture.consommation} onChange={handleConsommationChange}/>
                     </div>
                     <div className="form-group">
                         <label>
                             Kilometrage
                         </label>
-                        <input type="text" value={props.annonce.voiture.kilometrage} onChange={handleKilometrageChange}/>
+                        <input className={state.kmClasse}  type="text" value={props.annonce.voiture.kilometrage} onChange={handleKilometrageChange}/>
                     </div>
 
                     <div className="ion-button-container">
                         <div className="button-next-form"  onClick={() => props.onClickFunc("1")} >Précedent</div>
-                        <div className="button-next-form" onClick={() => props.onClickFunc("3")} > Suivant</div>
+                        <div className="button-next-form" onClick={() => next()} >Suivant</div>
                     </div>
                 </div>
             </div>
