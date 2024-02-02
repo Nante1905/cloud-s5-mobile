@@ -11,12 +11,12 @@ interface PhotoGalleryProps{
   handleImageChange: (value: Image)=>void;
   annonce: Annonce;
   handleImageDelete: (value:string)=>void;
+  addPhotoClass: string;
+  handleClassChange : (value:string)=> void;
 }
-export interface UserPhoto {
-  filepath: string;
-  webviewPath?: string;
-}
+
 async function base64FromPath(path: string): Promise<string> {
+  
   const response = await fetch(path);
   const blob = await response.blob();
   return new Promise((resolve, reject) => {
@@ -34,6 +34,7 @@ async function base64FromPath(path: string): Promise<string> {
 }
 
 const PhotoGallery = (props: PhotoGalleryProps) => {
+
   const savePicture = async (photo: Photo, fileName: string): Promise<Image> => {
     let base64Data: string;
     // "hybrid" will detect Cordova or Capacitor;
@@ -83,13 +84,15 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     console.log(savedFileImage.blob);
     
     props.handleImageChange(savedFileImage);
+    props.handleClassChange('');
   };
   const handleImageDelete = (filename : string) =>  {
     props.handleImageDelete(filename);
   }
+
   return (
     <div>
-      <IonButton onClick={takePhoto}>Ajouter des photos</IonButton>
+      <IonButton className={props.addPhotoClass} onClick={takePhoto}>Ajouter des photos</IonButton>
       <IonGrid>
         <IonRow>
         {props.annonce.medias.map((photo, index) => (

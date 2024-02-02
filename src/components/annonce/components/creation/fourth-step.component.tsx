@@ -4,6 +4,7 @@ import "../../container/creation/creation.css";
 import RichText from "../../../../shared/rich-text/richText";
 import PhotoGallery from "../../../../shared/photo/usePhotoGallery";
 // import { usePhotoGallery } from "../../../../shared/photo/usePhotoGallery";
+import React, { useState } from 'react';
 interface FourthStepProps{
     onClickFunc: (value:string)=> void;
     handleDescriptionChange:(value: string)=>void;
@@ -11,16 +12,39 @@ interface FourthStepProps{
     handleImageChange: (value: Image)=>void;
     handleImageDelete: (value:string)=>void;
 }
+interface PhotoGalleryState{
+    addPhotoClass: string
+  }
+const initialState : PhotoGalleryState={
+    addPhotoClass:''
+  }
 
 const FourthStepAnnonceCreation: React.FC<FourthStepProps> = (props : FourthStepProps) => {
+    const [state, setState] = useState<PhotoGalleryState>(initialState);
     const onContentChange = (value:string)=>{
         props.handleDescriptionChange(value);
     }
-    // const { photos, takePhoto } = usePhotoGallery();
+    const next = ()=>{
+        if(props.annonce.medias.length==0){
+            setState((state)=>({
+                ...state, 
+                addPhotoClass:'ajout-photo-error'
+            }))
+        }
+        else{
+            props.onClickFunc("5");
+        }
+    }
+    const handleClassChange = ()=>{
+        setState((state)=>({
+            ...state, 
+            addPhotoClass:''
+        }))
+    }
     return (
         <div className="ion-padding">
                 <h1 className="form-title" >
-                    Finaliser votre annonce 
+                    Finalisez votre annonce 
                 </h1>
                 <div className="form-login">
                     <div className="form-group">
@@ -36,10 +60,10 @@ const FourthStepAnnonceCreation: React.FC<FourthStepProps> = (props : FourthStep
                             <img key={index} src={photo.webviewPath} alt="" />
                         ))}
                         </div> */}
-                    <PhotoGallery handleImageDelete={props.handleImageDelete} handleImageChange={props.handleImageChange} annonce={props.annonce}/>
+                    <PhotoGallery handleClassChange={handleClassChange} addPhotoClass={state.addPhotoClass} handleImageDelete={props.handleImageDelete} handleImageChange={props.handleImageChange} annonce={props.annonce}/>
                     <div className="ion-button-container">
                         <div className="button-next-form" onClick={() => props.onClickFunc("3")}>Précedent</div>
-                        <div className="button-next-form" onClick={() => props.onClickFunc("5")} >Suivant</div>
+                        <div className="button-next-form" onClick={() => next()} >Suivant</div>
                     </div>
                 </div>
             </div>

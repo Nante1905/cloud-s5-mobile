@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonLoading, IonRow } from "@ionic/react";
+import { IonAlert, IonLoading } from "@ionic/react";
 import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
 import { Annonce, StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
 import "../../container/creation/creation.css"
@@ -10,20 +10,34 @@ interface ThirdStepProps{
     handleEstimationChange: (value:number)=>void;
 }
 interface ThirdStepState{
-    loading:number
+    loading:number;
+    prixClasse: string;
+    prixValid: number;
 }
 const initialState:ThirdStepState={
-    loading:0
+    loading: 0,
+    prixClasse: "",
+    prixValid: 0
 }
 const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepProps) => {
     const [state,setState] = useState<ThirdStepState>(initialState);
     const handlePriceInputChange = (e:ChangeEvent<HTMLInputElement>)=>{
         const newvalue  = parseFloat(e.target.value);
-        if(isNaN(newvalue)){
+        if(isNaN(newvalue) || newvalue==0.0 || newvalue<0){
             props.handlePriceChange(0);
+            setState((prevState)=>({
+                ...prevState,
+                prixClasse:"warning",
+                prixValid:0
+            }))
         }
         else{
             props.handlePriceChange(newvalue);
+            setState((prevState)=>({
+                ...prevState,
+                prixClasse:"",
+                prixValid:2
+            }))
         }
     }
     const handlePriceEstimatedChange = ()=>{
@@ -43,8 +57,60 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
             }));
           }, 3000);
     };
+    const next = ()=>{
+        if(state.prixValid==0){
+            setState((prevState)=>({
+                ...prevState,
+                prixClasse:"warning",
+                prixValid:-1
+            }))
+        }
+        if(state.prixValid==2){
+            props.onClickFunc("4");
+        }
+    }
+    const setPrixNonValid = ()=>{
+        setState((prevState)=>({
+            ...prevState,
+            prixClasse:"warning",
+            prixValid:0
+        }))
+    }
+    const setPrixValid = ()=>{
+        setState((prevState)=>({
+            ...prevState,
+            prixClasse:"",
+            prixValid:2
+        }));
+        props.onClickFunc("4");
+    }
     return (
         <div className="ion-padding">
+            {
+                        state.prixValid==-1 && 
+                        <IonAlert
+                            isOpen={true}
+                            message="Etes-vous sûr votre voiture sera gratuite?"
+                            buttons={[
+                                {
+                                    text: 'Oui',
+                                    role: 'cancel',
+                                    handler: () => {
+                                      setPrixValid()
+                                    },
+                                  },
+                                {
+                                  text: 'Non',
+                                  role: 'confirm',
+                                  handler: () => {
+                                    setPrixNonValid()
+                                  },
+                                }
+                                
+                              ]}
+                            onDidDismiss={() => setPrixNonValid()}
+                        ></IonAlert>
+                    }
                 <h1 className="form-title" >
                     A combien la vendriez-vous?
                 </h1>
@@ -53,7 +119,7 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
                         <label>
                             Prix
                         </label>
-                        <input type="text" value={props.annonce.prix} onChange={handlePriceInputChange}/>
+                        <input className={state.prixClasse} type="text" value={props.annonce.prix} onChange={handlePriceInputChange}/>
                     </div>
                     <div className="or-form" >
                     ---------------- ou ----------------
@@ -89,7 +155,7 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
                     </div>}
                     <div className="ion-button-container">
                         <div className="button-next-form"onClick={() => props.onClickFunc("2")} >Précedent</div>
-                        <div className="button-next-form" onClick={() => props.onClickFunc("4")} > Suivant</div>
+                        <div className="button-next-form" onClick={() => next()} > Suivant</div>
                     </div>
                 </div>
             </div>
