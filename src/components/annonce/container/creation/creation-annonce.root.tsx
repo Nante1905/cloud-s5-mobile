@@ -4,6 +4,7 @@ import FirstStepAnnonceCreation from "../../components/creation/first-step.compo
 import { Tab, Tabs } from "@mui/material";
 import SecondStepAnnonceCreation from "../../components/creation/second-step.components";
 import ThirdStepAnnonceCreation from "../../components/creation/third-step.component";
+import LastStepAnnonceCreation  from "../../components/creation/last-step.component";
 import FourthStepAnnonceCreation from "../../components/creation/fourth-step.component";
 import VerificationAnnonce from "../../components/creation/verification-step.root";
 import { Annonce, BoiteVitesse, Couleur, Energie, Etat, Image, Marque, Modele } from "../../../../shared/types/creation-annonce-types";
@@ -226,7 +227,7 @@ export default  function  CreationAnnonce () {
     return (
         <IonPage style={{ color: "#ffff" }} id="view-message-page">
             <IonContent fullscreen>
-                {state.tab!="5" && <IonItem>
+                {state.tab!="5" && state.tab!="6" && <IonItem>
                     <div className="title-login">
                         <h1>
                             Vendez votre voiture
@@ -238,6 +239,7 @@ export default  function  CreationAnnonce () {
                 {state.tab == "3" && <ThirdStepAnnonceCreation handleEstimationChange={handleEstimationChange}  onClickFunc={handleTabChange}  annonce={state.annonce} handlePriceChange={handlePriceChange} estime={state.prixEvalue}/>}
                 {state.tab == "4" && <FourthStepAnnonceCreation handleImageDelete={handleImageDelete} annonce={state.annonce} onClickFunc={handleTabChange} handleDescriptionChange={handleDescriptionChange} handleImageChange={handleImageChange} />}
                 {state.tab == "5" && <VerificationAnnonce marque={state.marque} onClickFunc={handleTabChange} annonce={state.annonce} />}
+                {state.tab == "6" && <LastStepAnnonceCreation annonce={state.annonce}/>}
             </IonContent>
         </IonPage>
     );

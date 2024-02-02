@@ -43,7 +43,7 @@ const VerificationCaracteristique:React.FC<VerificationAnnonceProps> = (props : 
                 </p>
                 <div className="ion-button-container">
                         <div className="button-next-form" onClick={() => props.onClickFunc("4")}>Précedent</div>
-                        <div className="button-next-form" onClick={() => props.onClickFunc("5")} > Suivant</div>
+                        <div className="button-next-form" onClick={() => props.onClickFunc("6")} > Suivant</div>
                     </div>
         </div>
     );
