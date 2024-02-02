@@ -4,6 +4,20 @@ import {
     IonItem,
   } from '@ionic/react';
 const AccueilComponent : React.FC = () => {
+    const renderUserName = () => {
+        if (localStorage.getItem("token")) {
+            const token = localStorage.getItem("token");
+            const body = JSON.parse(atob(token!.split(".")[1]));
+            return <a href="/tabs" className="button-play-accueil pulsate">Appuyer ici pour continuer</a>;
+        } else {
+            return (
+                <> 
+                    <a href="/login" className="login-accueil">Connexion</a>
+                    <a href="/inscription" className="login-accueil">Inscription</a>
+                </>
+            );
+        }
+    };
     return (
         <div id="accueil">
             <div className="clip-path-accueil">
@@ -22,15 +36,10 @@ const AccueilComponent : React.FC = () => {
                     </div>
                 </div>
                 <div className='button-accueil'>
+                    {renderUserName()}
                     {/* <a href="/login" className="login-accueil">Connexion</a>
                     <a href="/inscription" className="login-accueil">Inscription</a> */}
-                    <a href="/tabs" className="button-play-accueil pulsate">Appuyer ici pour continuer</a>
-                    {/* <IonItem id="button-ion-item-accueil" routerLink="/login" >
-                        <div className="login-in-accueil" >Conexion</div>
-                    </IonItem>
-                    <IonItem id="button-ion-item-accueil" routerLink="/login" >
-                        <div className="sign-in-accueil" >Inscription</div>
-                    </IonItem> */}
+                    {/* <a href="/tabs" className="button-play-accueil pulsate">Appuyer ici pour continuer</a> */}
                 </div>
             </div>
         </div>

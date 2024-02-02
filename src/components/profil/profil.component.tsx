@@ -3,6 +3,8 @@ import { Avatar } from "@mui/material";
 import { deepOrange, deepPurple } from '@mui/material/colors';
 
 const ProfilComponent   : React.FC = () => {
+    
+
     return (
         <>
             <div className="profile-page"  >

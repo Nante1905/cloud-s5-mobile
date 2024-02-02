@@ -19,53 +19,57 @@ const initialState: CreationAnnonceState = {
     prixEvalue:0,
     tab:"1", 
     annonce: {
-        medias:[],
-        id:0, 
-        reference:'',
-        description:'',
-        status:0,
-        dateCreation:new Date(Date.now()), 
-        prix:0,
-        commission:0,
-        nbVues:0,
-        utilisateur:{
-            id:0, 
-            nom:'',
-            prenom:''
+        medias: [],
+        id: 0,
+        reference: '',
+        description: '',
+        status: 0,
+        dateCreation: new Date(Date.now()),
+        prix: 0,
+        commission: 0,
+        nbVues: 0,
+        utilisateur: {
+            id: 0,
+            nom: '',
+            prenom: ''
         },
-        voiture:{
-            Etat:{
-                id:0,
-                nom:'Sélectionner un état',
-                valeur:0
+        voiture: {
+            Etat: {
+                id: 0,
+                nom: 'Sélectionner un état',
+                valeur: 0
             },
-            id:0,
-            consommation:0,
-            kilometrage:0,
-            etat:0,
-            couleur:{
-                id:0,
-                nom:'Sélectionner une couleur',
-                hexa:''
+            id: 0,
+            consommation: 0,
+            kilometrage: 0,
+            etat: 0,
+            couleur: {
+                id: 0,
+                nom: 'Sélectionner une couleur',
+                hexa: ''
             },
-            modele:{
-                id:0,
-                nom:'Sélectionner un modèle'
+            modele: {
+                id: 0,
+                nom: 'Sélectionner un modèle'
             },
-            energie:{
-                id:0,
-                nom:'Sélectionner une énergie'
+            energie: {
+                id: 0,
+                nom: 'Sélectionner une énergie'
             },
-            boiteVitesse:{
-                id:0,
-                nom:'Sélectionner une boîte de vitesse'
+            boiteVitesse: {
+                id: 0,
+                nom: 'Sélectionner une boîte de vitesse'
             },
-            idModele:0,
-            idCouleur:0,
-            idBoiteVitesse:0,
-            idEnergie:0
+            idModele: 0,
+            idCouleur: 0,
+            idBoiteVitesse: 0,
+            idEnergie: 0
         },
-        idUtilisateur:0
+        idUtilisateur: 0,
+        marque: {
+            id : 0,
+            nom : ""
+        }
     },
     marque:{
         id:0,
