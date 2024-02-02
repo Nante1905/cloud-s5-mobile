@@ -17,14 +17,58 @@ import {
 import './list-annonce.component.css';
 import { Link } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { findAllAnnonce } from '../../service/Utilisateur.service';
+import { ApiResponse } from '../../../shared/types/Response';
+import { Annonce } from '../../../shared/types/creation-annonce-types';
 interface ListAnnonceState{
   tab : string;
+  annonces : Annonce[]
 }
 const initialState : ListAnnonceState = {
-  tab : "0"
+  tab : "0",
+  annonces : []
 }
 const ListAnnonceComponent: React.FC = () => {
   const [state, setState] = useState(initialState);
+  findAllAnnonce()
+      .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          setState((state) => ({
+            ...state,
+            annonces: response.data,
+            loading: false,
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            loading: false,
+            openError: true,
+            errorMessage: response.err,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        console.log("etoo");
+
+        setState((state) => ({
+          ...state,
+          loading: false,
+          openError: true,
+          errorMessage: errorMessage,
+        }));
+      });
   const handleTabClick = (tab: string) => {
     setState({ tab });
   };

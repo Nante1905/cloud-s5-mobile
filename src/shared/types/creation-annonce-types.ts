@@ -70,5 +70,6 @@ export interface Annonce{
     utilisateur: Utilisateur, 
     voiture: Voiture, 
     idUtilisateur: number,
-    medias: Image[]
+    medias: Image[],
+    marque: Marque
 }
