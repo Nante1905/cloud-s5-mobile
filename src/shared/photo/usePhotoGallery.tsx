@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonButton, IonImg, IonGrid, IonRow, IonCol, isPlatform, IonIcon } from '@ionic/react';
+import { IonButton, IonImg, IonGrid, IonRow, IonCol, isPlatform, IonIcon, IonAlert } from '@ionic/react';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import "./photo.css"
 import { Annonce, Image } from '../types/creation-annonce-types';
@@ -79,6 +79,7 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
       source: CameraSource.Camera,
       quality: 90,
     });
+
     const fileName = new Date().getTime()+'.jpeg';
     const savedFileImage = await savePicture (photo, fileName);
     console.log(savedFileImage.blob);
@@ -86,13 +87,50 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     props.handleImageChange(savedFileImage);
     props.handleClassChange('');
   };
+  const takePhotoFromGallery = async () => {
+    const photo = await Camera.getPhoto({
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos,
+      quality: 90,
+    });
+    
+    const fileName = new Date().getTime()+'.jpeg';
+    const savedFileImage = await savePicture (photo, fileName);
+    console.log(savedFileImage.blob);
+    
+    props.handleImageChange(savedFileImage);
+    props.handleClassChange('');
+  };
+
+
   const handleImageDelete = (filename : string) =>  {
     props.handleImageDelete(filename);
   }
 
   return (
     <div>
-      <IonButton className={props.addPhotoClass} onClick={takePhoto}>Ajouter des photos</IonButton>
+      <IonButton id='choose-photo' className={props.addPhotoClass} >Ajouter des photos</IonButton>
+      <IonAlert
+        header="Prendre la photo depuis"
+        trigger="choose-photo"
+        buttons={[
+          {
+            text: 'Appareil Photo',
+            role: 'confirm',
+            handler: () => {
+                takePhoto()
+            },
+          },
+          {
+            text: 'Gallerie',
+            role: 'confirm',
+            handler: () => {
+              takePhotoFromGallery()
+            },
+          },
+        ]}
+        onDidDismiss={({ detail }) => console.log(`Dismissed with role: ${detail.role}`)}
+      ></IonAlert>
       <IonGrid>
         <IonRow>
         {props.annonce.medias.map((photo, index) => (
