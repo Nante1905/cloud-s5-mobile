@@ -12,7 +12,19 @@ ion-item {
     border-color: #ffc107 !important;
     color: #ffc107 !important;
   }
+  .gif-car{
+    margin-top: -1vh;
 
+  }
+  .blue{
+    background-color: #e4eeff;
+    height: 35vh;
+  }
+  .green{
+    background-color:#7da141;
+    height: 35vh;
+    margin-top: -20px;
+  }
 
 .ajout-photo-error {
   animation: pulsate 1s infinite;
