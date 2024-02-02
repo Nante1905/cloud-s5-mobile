@@ -41,6 +41,11 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
         }
     }
     const handlePriceEstimatedChange = ()=>{
+        setState((prevState)=>({
+            ...prevState,
+            prixClasse:"",
+            prixValid:2
+        }))
         props.handlePriceChange(props.estime);
     }
     const handleEstimate = ()=>{
