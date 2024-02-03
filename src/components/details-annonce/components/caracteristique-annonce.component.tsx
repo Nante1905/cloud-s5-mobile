@@ -1,54 +1,50 @@
-import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import "./details-annonce.css";
-import { StepCreationAnnonceProps } from "../../../shared/types/creation-annonce-types";
+import React from 'react';
+import { IonGrid, IonRow, IonCol } from '@ionic/react';
+import './details-annonce.css';
+import { Annonce } from '../../../shared/types/details-annonce-type';
 
+interface CaracteristiqueProps {
+  annonce: Annonce;
+}
 
-
-const Caracteristique:React.FC = (props : any ) => {
-    return (
-        <div className="ion-padding">
-              <div className="annonce" >
-                    <h2 className="car-annonce" >
-                        <span className="bold" >Annonce n°:</span> 123E2
-                    </h2>
-                    <h2 className="car-annonce" >
-                        <span className="bold" >Du:</span> 2024-01-01
-                    </h2>
-                </div>
-                <h1 className="car-name" >Mercedes Benz - E class AMG</h1>
-                <h2 className="car-caracteristique" >
-                    <span  className="semi-bold" >Marque :</span> 2024-01-01
-                </h2>
-                <h2 className="car-caracteristique" >
-                    <span className="semi-bold" >Modèle :</span> 2024-01-01
-                </h2 >
-                <h2 className="car-caracteristique" >
-                    <span className="semi-bold" >Kilometrage :</span> 2024-01-01
-                </h2>
-                <h2 className="car-caracteristique" >
-                    <span className="semi-bold" >Consommation:</span> 2024-01-01
-                </h2>
-                <h2 className="car-caracteristique" >
-                    <span className="semi-bold" >Vitesse :</span> 2024-01-01
-                </h2>
-                <h2 className="car-caracteristique" >
-                    <span className="semi-bold" >Couleur :</span> 2024-01-01
-                </h2>
-                <p className="car-caracteristique" >
-                <span className="semi-bold" >Description : </span>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                  enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                  in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                  nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                  sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <div className="modif-button" >
-                Modif
-              </div>
-        </div>
-    );
+const Caracteristique: React.FC<CaracteristiqueProps> = ({ annonce }) => {
+  return (
+    <div className="ion-padding">
+      <div className="annonce">
+        <h2 className="car-annonce">
+          <span className="bold">Annonce n°:</span> {annonce.reference}
+        </h2>
+        <h2 className="car-annonce">
+          <span className="bold">Du:</span> {annonce.dateCreation}
+        </h2>
+      </div>
+      <h1 className="car-name">{annonce.voiture.modele.marque.nom} - {annonce.voiture.modele.nom}</h1>
+      <h2 className="car-caracteristique">
+        <span className="semi-bold">Marque :</span> {annonce.voiture.modele.marque.nom}
+      </h2>
+      <h2 className="car-caracteristique">
+        <span className="semi-bold">Modèle :</span> {annonce.voiture.modele.nom}
+      </h2>
+      <h2 className="car-caracteristique">
+        <span className="semi-bold">Kilométrage :</span> {annonce.voiture.kilometrage}
+      </h2>
+      <h2 className="car-caracteristique">
+        <span className="semi-bold">Consommation :</span> {annonce.voiture.consommation}
+      </h2>
+      <h2 className="car-caracteristique">
+        <span className="semi-bold">Vitesse :</span> {annonce.voiture.vitesse.nom}
+      </h2>
+      <h2 className="car-caracteristique">
+        <span className="semi-bold">Couleur :</span> {annonce.voiture.couleur.nom}
+      </h2>
+      <p className="car-caracteristique">
+        <span className="semi-bold">Description : </span> {annonce.description}
+      </p>
+      <div className="modif-button">
+        Modif
+      </div>
+    </div>
+  );
 };
 
 export default Caracteristique;

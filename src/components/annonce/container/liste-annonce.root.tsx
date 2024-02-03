@@ -5,11 +5,11 @@ import ListAnnonceComponent from "../components/list-annonce.component";
 const ListAnnonce: React.FC = () => {
     return (
       <IonPage>
-        <IonHeader className="title" >
+        {/* <IonHeader className="title" >
           <IonToolbar  className="title-toolbar" >
             <IonTitle  >Annonces</IonTitle>
           </IonToolbar>
-        </IonHeader>
+        </IonHeader> */}
         <IonContent fullscreen className="content" >
           <ListAnnonceComponent/>
         </IonContent>

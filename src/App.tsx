@@ -53,7 +53,7 @@ const App: React.FC = () => (
       <Route exact path="/">
         <Redirect to="/accueil" />
       </Route>
-      <Route path="/details">
+      <Route path="/details/:id">
           <DetailsAnnonceRoot />
       </Route>
       <Route path="/annonce/create">
