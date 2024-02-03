@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import {
   IonButton,
   IonCard,
@@ -19,7 +19,8 @@ import { Link } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { findAllAnnonce } from '../../service/Utilisateur.service';
 import { ApiResponse } from '../../../shared/types/Response';
-import { Annonce } from '../../../shared/types/creation-annonce-types';
+import { getErrorMessage } from '../../../shared/service/api-service';
+import { Annonce } from '../../../shared/types/liste-annonce';
 interface ListAnnonceState{
   tab : string;
   annonces : Annonce[]
@@ -30,48 +31,68 @@ const initialState : ListAnnonceState = {
 }
 const ListAnnonceComponent: React.FC = () => {
   const [state, setState] = useState(initialState);
-  findAllAnnonce()
-      .then((res) => {
-        const response: ApiResponse = res.data;
-        if (response.ok) {
-          setState((state) => ({
-            ...state,
-            annonces: response.data,
-            loading: false,
-          }));
-        } else {
+  const getColor = ( status : number ) =>{
+      if( status < 0 ) return "rgb( 255 , 168 , 0 )";
+      if( status == 5 ) return "rgb( 228 , 255 , 60 )";
+      if( status == 10 ) return "rgb( 48 , 255 , 56 )";
+      return "";
+  };
+  const changeList = ( url : string ) => {
+    findAllAnnonce(url)
+        .then((res) => {
+          const response: ApiResponse = res.data;
+          if (response.ok) {
+            setState((state) => ({
+              ...state,
+              annonces: response.data,
+              loading: false,
+            }));
+          } else {
+            setState((state) => ({
+              ...state,
+              loading: false,
+              openError: true,
+              errorMessage: response.err,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          let errorMessage = "";
+          if (
+            !err.response?.data.err ||
+            err.response?.data.err == "" ||
+            err.response?.data.err == null
+          ) {
+            errorMessage = getErrorMessage(err.code);
+          } else {
+            errorMessage = err.response.data.err;
+          }
+          console.log("etoo");
+
           setState((state) => ({
             ...state,
             loading: false,
             openError: true,
-            errorMessage: response.err,
+            errorMessage: errorMessage,
           }));
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        let errorMessage = "";
-        if (
-          !err.response?.data.err ||
-          err.response?.data.err == "" ||
-          err.response?.data.err == null
-        ) {
-          errorMessage = getErrorMessage(err.code);
-        } else {
-          errorMessage = err.response.data.err;
-        }
-        console.log("etoo");
+        });
+    console.log( state.annonces );
+  }
 
-        setState((state) => ({
-          ...state,
-          loading: false,
-          openError: true,
-          errorMessage: errorMessage,
-        }));
-      });
+  useEffect(() => {
+      changeList( "/annonces/yours" );
+      } , []);
   const handleTabClick = (tab: string) => {
-    setState({ tab });
-  };
+    setState((state) => ({
+      ...state,
+      tab: tab
+    }));
+    if (tab == "3") changeList( "/annonces/vendu/moi" );
+    if (tab == "2") changeList( "/annonces/valide/moi" );
+    if (tab == "1") changeList( "/annonces/nonValide/moi" );
+
+  }; 
   return (
     <>
       <div className="list-title">
@@ -88,30 +109,30 @@ const ListAnnonceComponent: React.FC = () => {
         </div>
       </div>
       <IonList className="list-annonce" lines="none">
-        <IonItemSliding>
-        <Link style={{textDecoration:"none"}} to="/details">
-          <IonItem
-           
-            className="annonce-content"
-            style={{ borderLeft: '10px solid red', background: "rgb( 240 , 240 , 240 )" }}
-          >
-            <IonThumbnail slot="start">
-              <img
-                className="card-img"
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
-              />
-            </IonThumbnail>
-            <IonCardHeader>
-              <IonCardTitle className="card-title">
-                Mercedes Benz E class AMG Sport
-              </IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent className="content-card">
-              <div className="prix">12 000 000 MGA</div>
-              <div className="view">10k</div>
-            </IonCardContent>
-          </IonItem>
+      {state.annonces.map((annonce) => (
+        <IonItemSliding key={annonce.id}>
+          <Link style={{textDecoration:"none"}} to={`/details/${annonce.id}`}>
+            <IonItem
+              className="annonce-content"
+              style={{ borderLeft: `10px solid ${getColor(annonce.status)}`, background: "rgb( 240 , 240 , 240 )" }}
+            >
+              <IonThumbnail slot="start">
+                <img
+                  className="card-img"
+                  alt="Silhouette of mountains"
+                  src={annonce.photos.length != 0 ?annonce.photos[0].url : ""}
+                />
+              </IonThumbnail>
+              <IonCardHeader>
+                <IonCardTitle className="card-title">
+                  {annonce.marque.nom} {annonce.modele.nom}
+                </IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent className="content-card">
+                <div className="prix">{annonce.prix} MGA</div>
+                <div className="view">10k</div>
+              </IonCardContent>
+            </IonItem>
           </Link>
           <IonItemOptions side="end">
             <IonItemOption color="success" expandable>
@@ -119,9 +140,13 @@ const ListAnnonceComponent: React.FC = () => {
             </IonItemOption>
           </IonItemOptions>
         </IonItemSliding>
-      </IonList>
+      ))}
+    </IonList>
+
     </>
   );
 };
 
 export default ListAnnonceComponent;
+
+
