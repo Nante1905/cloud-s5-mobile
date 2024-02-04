@@ -6,7 +6,6 @@ import ListAnnonce from './components/annonce/container/liste-annonce.root';
 import DetailsAnnonce from './components/details-annonce/components/details-annonce.component';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import Profile from './components/profil/profil.root';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -30,9 +29,7 @@ const Tabs: React.FC = () => (
           <Route exact path="/tabs/profile">
             <Profile />
           </Route>
-          <Route path="/tabs/tab3">
-            <Tab3 />
-          </Route>
+          
           <Route exact path="/">
             <Redirect to="/tab1" />
           </Route>

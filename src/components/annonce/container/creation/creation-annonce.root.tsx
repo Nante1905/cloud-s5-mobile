@@ -68,12 +68,14 @@ const initialState: CreationAnnonceState = {
         idUtilisateur: 0,
         marque: {
             id : 0,
-            nom : ""
+            nom : "",
+            logo: ""
         }
     },
     marque:{
         id:0,
-        nom:'Sélectionner une marque'
+        nom:'Sélectionner une marque',
+        logo:''
     }
 }
 
