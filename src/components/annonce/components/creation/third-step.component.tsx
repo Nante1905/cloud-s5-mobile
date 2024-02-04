@@ -1,6 +1,10 @@
-import { IonAlert, IonLoading } from "@ionic/react";
+import { IonAlert, IonLoading, IonToast } from "@ionic/react";
+import { Alert } from "@mui/material";
 import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
+import { getErrorMessage } from "../../../../shared/service/api-service";
 import { Annonce, StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
+import { ApiResponse } from "../../../../shared/types/Response";
+import { estimate } from "../../../service/Add-annonce.service";
 import "../../container/creation/creation.css"
 interface ThirdStepProps{
     onClickFunc:(value:string)=>void;
@@ -8,16 +12,19 @@ interface ThirdStepProps{
     handlePriceChange:(newvlue:number)=>void;
     estime: number;
     handleEstimationChange: (value:number)=>void;
+    
 }
 interface ThirdStepState{
     loading:number;
     prixClasse: string;
     prixValid: number;
+    error: string|null;
 }
 const initialState:ThirdStepState={
     loading: 0,
     prixClasse: "",
-    prixValid: 0
+    prixValid: 0,
+    error: null
 }
 const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepProps) => {
     const [state,setState] = useState<ThirdStepState>(initialState);
@@ -55,11 +62,50 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
         }));
         
         setTimeout(() => {
-            props.handleEstimationChange(10000000);
+        estimate(props.annonce.voiture)
+      .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          if(response.data){
+            props.handleEstimationChange(response.data.prix);
             setState((prevState)=>({
                 ...prevState, 
                 loading:2,
             }));
+        }   
+        else{
+            setState((prevState)=>({
+                ...prevState, 
+                loading:2,
+                error: 'Nous n\'avons pas pu estimé la valeur de votre voiture'
+            }));
+        }
+        } else {
+          setState((state) => ({
+            ...state,
+            error: response.err,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        setState((state) => ({
+          ...state,
+          error: errorMessage
+        }));
+      });
+            
+            
           }, 3000);
     };
     const next = ()=>{
@@ -163,6 +209,14 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
                         <div className="button-next-form" onClick={() => next()} > Suivant</div>
                     </div>
                 </div>
+                <IonToast
+                    isOpen={!!state.error}
+                    message={state.error || ""}
+                    duration={3000}
+                    onDidDismiss={() => setState({ ...state, error: null })}
+                    color="danger"
+                ><Alert severity="error">{state.error as string}</Alert>
+                </IonToast>
             </div>
     );
 }
