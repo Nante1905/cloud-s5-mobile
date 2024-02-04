@@ -9,7 +9,7 @@ interface CaracteristiqueProps {
 
 const Caracteristique: React.FC<CaracteristiqueProps> = ({ annonce }) => {
   return (
-    <div className="ion-padding">
+    <div className="caracteristique ion-padding">
       <div className="annonce">
         <h2 className="car-annonce">
           <span className="bold">Annonce n°:</span> {annonce.reference}

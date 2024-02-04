@@ -1,3 +1,8 @@
+:root{
+  --first : #3DC2BC;
+  --second : #3D86C2;
+  --third : #3DC279;
+}
 ion-item {
     --padding-start: 0;
     --inner-padding-end: 0;
@@ -89,7 +94,7 @@ ion-slides {
     object-fit: cover;
   }
 
-  .ion-padding{
+  .connect{
     transform: translateY(-7vh);
     background: #ffff;
     color:#333;
@@ -102,7 +107,7 @@ ion-slides {
     min-height: 78vh;
     padding-top: 60px;
     padding-bottom: 75px;
-    margin-top: 26vh;
+    margin-top: 26vh !important;
   }
 
   .car-name{
@@ -164,6 +169,7 @@ ion-slides {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--first) !important;
 }
 
 .title-login h1{
@@ -176,7 +182,7 @@ ion-slides {
 .form-title{
   font-size: 35px;
   font-weight: 600;
-  color: black;
+  color: var(--first) !important;
   margin-bottom: 30px;
 }
 .form-group{
@@ -198,7 +204,7 @@ ion-slides {
   margin-bottom: 20px;
 }
 .form-login .form-submit{
-  background-color: black;
+  background-color: var(--first) !important;
   color: #ffff;
   display: flex;
   align-items: center;
@@ -216,9 +222,13 @@ ion-slides {
   align-items: center;
   margin-top: 20px;
 }
-.inscription .text-inscription{
+.inscription #text-inscription{
   --background:transparent;
-  --color:black;
+  --color:var( --second) !important;
   font-weight: 600;
   margin-left: 5px;
+  text-decoration: none !important;
+  border: none;
+  background: #fff;
+  box-shadow: none !important;
 }

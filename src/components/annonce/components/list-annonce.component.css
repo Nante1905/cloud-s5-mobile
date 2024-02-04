@@ -1,3 +1,9 @@
+:root{
+    --first : #3DC2BC;
+    --second : #3D86C2;
+    --third : #3DC279;
+  }
+  
 .list-annonce .annonce-content{
     margin-bottom: 10px;
     margin-top: 10px;
@@ -37,7 +43,7 @@
     object-fit: cover;
 }
 .list-title{
-    color: black;
+    color: var(--first);
     height: 150px;
     display: flex;
     flex-direction: column;
@@ -87,4 +93,9 @@
 }
 .progress-choice .vendu{
     background-color:rgb( 48 , 255 , 56 );
+}
+#card-text{
+    display: flex;
+    flex-direction: column !important;
+    width: 100%;
 }

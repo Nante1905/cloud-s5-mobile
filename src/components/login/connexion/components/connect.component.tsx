@@ -17,6 +17,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import 'swiper/css/pagination';
+import { Redirect } from 'react-router-dom';
 
 import 'swiper/css/scrollbar';
 import { useHistory} from 'react-router-dom';
@@ -33,6 +34,7 @@ interface UtilisateurFormState {
     submitLoading: boolean;
     viewPassword: boolean;
     redirectMessage: boolean;
+    redirectToAccueil : boolean;
   }
   
   const initialState: UtilisateurFormState = {
@@ -45,6 +47,7 @@ interface UtilisateurFormState {
     submitLoading: false,
     viewPassword: false,
     redirectMessage: false,
+    redirectToAccueil:false
   };
   
 const ConnectComponent : React.FC = () => {
@@ -59,14 +62,20 @@ const ConnectComponent : React.FC = () => {
         connexion({ email: state.form.email, password: state.form.password })
           .then((res) => {
             localStorage.setItem("token", res.data.data);
-            setState((prevData) => ({ ...prevData, success: res.data.message, submitLoading: false }));
+            setState((prevData) => ({ ...prevData, success: res.data.message, submitLoading: false , redirectToAccueil : true }));
+            console.log("andhe ahipsh" );
             history.push("/accueil");
+            console.log("avy ahipsh" );
           })
           .catch((err) => {
             setState((prevData) => ({ ...prevData, error: err?.response?.data.err || "Une erreur s'est produite.", submitLoading: false }));
           });
       };
-    
+    const redirctAccueil = () => {
+        if (state.redirectToAccueil) {
+            return <Redirect to="/accueil" />;
+        }
+    };  
     return (
         <>
             <IonItem >
@@ -76,7 +85,7 @@ const ConnectComponent : React.FC = () => {
                             </h1>
                     </div>
               </IonItem>
-              <div className="ion-padding">
+              <div className="ion-padding connect">
                 <h1 className="form-title" >
                         Connectez vous
                 </h1>
@@ -103,7 +112,7 @@ const ConnectComponent : React.FC = () => {
                     </a>
                 </div>
                 <div className="inscription" >
-                    Pas encore de compte ?<IonItem className="text-inscription" routerLink="/inscription" >
+                    Pas encore de compte ?<IonItem id="text-inscription" routerLink="/inscription" >
                         Inscrivez vous
                     </IonItem>
                 </div>
@@ -132,6 +141,7 @@ const ConnectComponent : React.FC = () => {
                     onDidDismiss={() => setState({ ...state, redirectMessage: false })}
                     color="warning"
                 ></IonToast>
+                {redirctAccueil()}
             </div>
         </>
     );

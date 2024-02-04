@@ -89,7 +89,7 @@ ion-slides {
     object-fit: cover;
   }
 
-  .ion-padding{
+  .caracteristique{
     transform: translateY(-7vh);
     background: #ffff;
     color:#333;
@@ -101,7 +101,7 @@ ion-slides {
     min-height: 78vh;
     padding-top: 60px;
     padding-bottom: 75px;
-    margin-top: 26vh;
+    margin-top: 0px !important;
   }
 
   .car-name{

@@ -89,7 +89,7 @@ ion-slides {
     object-fit: cover;
   }
 
-  .ion-padding{
+  .inscription{
     transform: translateY(-7vh);
     background: #ffff;
     color:#333;
