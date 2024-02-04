@@ -1,18 +1,15 @@
 import React, { useState , useEffect } from 'react';
 import {
-  IonButton,
-  IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonItem,
-  IonLabel,
   IonList,
   IonThumbnail,
   IonItemSliding,
   IonItemOptions,
   IonItemOption,
+  IonToast,
 } from '@ionic/react';
 import './list-annonce.component.css';
 import { Link } from 'react-router-dom';
@@ -21,23 +18,47 @@ import { findAllAnnonce } from '../../service/Utilisateur.service';
 import { ApiResponse } from '../../../shared/types/Response';
 import { getErrorMessage } from '../../../shared/service/api-service';
 import { Annonce } from '../../../shared/types/liste-annonce';
+import { Modif_annonce } from '../../service/annonce.service';
+import { Alert } from '@mui/material';
+import AppLoaderComponent from '../../../shared/loader/app-loader.component';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 interface ListAnnonceState{
   tab : string;
-  annonces : Annonce[]
+  annonces : Annonce[],
+  success : string  | null,
+  error : string | null,
+  actual_list : string,
+  loading : boolean
 }
 const initialState : ListAnnonceState = {
   tab : "0",
-  annonces : []
+  annonces : [],
+  success : null,
+  error : null,
+  actual_list : "/annonces/yours",
+  loading : true
 }
 const ListAnnonceComponent: React.FC = () => {
   const [state, setState] = useState(initialState);
   const getColor = ( status : number ) =>{
-      if( status < 0 ) return "rgb( 255 , 168 , 0 )";
+      if( status == -5 ) return "black";
+      if( status == -5 ) return "red";
+      if( status == 0 ) return "rgb( 255 , 168 , 0 )";
       if( status == 5 ) return "rgb( 228 , 255 , 60 )";
       if( status == 10 ) return "rgb( 48 , 255 , 56 )";
       return "";
   };
+  const formatNumber = (number : number) => {
+    return number.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
   const changeList = ( url : string ) => {
+    setState((state) => ({
+      ...state,
+      loading: true
+    }));
     findAllAnnonce(url)
         .then((res) => {
           const response: ApiResponse = res.data;
@@ -46,13 +67,12 @@ const ListAnnonceComponent: React.FC = () => {
               ...state,
               annonces: response.data,
               loading: false,
+              actual_list : url
             }));
           } else {
             setState((state) => ({
               ...state,
-              loading: false,
-              openError: true,
-              errorMessage: response.err,
+              error: response.err,
             }));
           }
         })
@@ -72,12 +92,53 @@ const ListAnnonceComponent: React.FC = () => {
 
           setState((state) => ({
             ...state,
-            loading: false,
-            openError: true,
-            errorMessage: errorMessage,
+            error : errorMessage
           }));
         });
     console.log( state.annonces );
+  }
+
+  const ModifAnnonce = ( id_annonce : number) => {
+    console.log( "manao modif" );
+    Modif_annonce( id_annonce )
+    .then((res) => {
+      const response: ApiResponse = res.data;
+      if (response.ok) {
+        setState((state) => ({
+          ...state,
+          success : "La voiture a donc été vendu"
+        }));
+        changeList( state.actual_list );
+      } else {
+        setState((state) => ({
+          ...state,
+          error : response.err
+        }));
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      let errorMessage = "";
+      if (
+        !err.response?.data.err ||
+        err.response?.data.err == "" ||
+        err.response?.data.err == null
+      ) {
+        errorMessage = getErrorMessage(err.code);
+      } else {
+        errorMessage = err.response.data.err;
+      }
+      console.log("etoo");
+
+      setState((state) => ({
+        ...state,
+        error : errorMessage
+      }));
+    });
+  };
+
+  const Valider = ( id_annonce : number ) =>{
+    ModifAnnonce( id_annonce );
   }
 
   useEffect(() => {
@@ -93,6 +154,17 @@ const ListAnnonceComponent: React.FC = () => {
     if (tab == "1") changeList( "/annonces/nonValide/moi" );
 
   }; 
+
+  const CanValid = ( status : number , id_annonce :number ) => {
+    if( status == 5 )
+      return (
+        <IonItemOption color="success" onClick={() => Valider( id_annonce )} expandable>
+          <CheckCircleOutlineIcon />
+        </IonItemOption>
+      );
+    return ( <></> );
+  };
+
   return (
     <>
       <div className="list-title">
@@ -108,41 +180,61 @@ const ListAnnonceComponent: React.FC = () => {
           <div className="choice">Vendu</div>
         </div>
       </div>
-      <IonList className="list-annonce" lines="none">
-      {state.annonces.map((annonce) => (
-        <IonItemSliding key={annonce.id}>
-          <Link style={{textDecoration:"none"}} to={`/details/${annonce.id}`}>
-            <IonItem
-              className="annonce-content"
-              style={{ borderLeft: `10px solid ${getColor(annonce.status)}`, background: "rgb( 240 , 240 , 240 )" }}
-            >
-              <IonThumbnail slot="start">
-                <img
-                  className="card-img"
-                  alt="Silhouette of mountains"
-                  src={annonce.photos.length != 0 ?annonce.photos[0].url : ""}
-                />
-              </IonThumbnail>
-              <IonCardHeader>
-                <IonCardTitle className="card-title">
-                  {annonce.marque.nom} {annonce.modele.nom}
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent className="content-card">
-                <div className="prix">{annonce.prix} MGA</div>
-                <div className="view">10k</div>
-              </IonCardContent>
-            </IonItem>
-          </Link>
-          <IonItemOptions side="end">
-            <IonItemOption color="success" expandable>
-              <CheckCircleOutlineIcon />
-            </IonItemOption>
-          </IonItemOptions>
-        </IonItemSliding>
-      ))}
-    </IonList>
-
+      <AppLoaderComponent loading={state.loading}>
+        <IonList className="list-annonce" lines="none">
+        {state.annonces.map((annonce) => (
+          <IonItemSliding id={`annonce`} key={annonce.id}>
+            <Link style={{textDecoration:"none"}} to={`/details/${annonce.id}`}>
+              <IonItem
+                className="annonce-content"
+                style={{ borderLeft: `10px solid ${getColor(annonce.status)}`, background: "rgb( 240 , 240 , 240 )" }}
+              >
+                <IonThumbnail slot="start">
+                  <img
+                    className="card-img"
+                    alt="Silhouette of mountains"
+                    src={annonce.photos.length != 0 ?annonce.photos[0].url : ""}
+                  />
+                </IonThumbnail>
+                <div id='card-text' >
+                  <IonCardHeader>
+                      <IonCardTitle className="card-title">
+                      {annonce.marque.nom} {annonce.modele.nom}
+                    </IonCardTitle>
+                  </IonCardHeader>
+                  <IonCardContent className="content-card">
+                    <div className="prix">{formatNumber(annonce.prix)} MGA</div>
+                    <div className="view">  <VisibilityIcon /> 10k</div>
+                  </IonCardContent>
+                </div>
+              </IonItem>
+            </Link>
+            
+            <IonItemOptions side="end">
+              {/* <IonItemOption color="success" expandable>
+                <CheckCircleOutlineIcon />
+              </IonItemOption> */}
+              {CanValid( annonce.status , annonce.id )}
+            </IonItemOptions>
+          </IonItemSliding>
+        ))}
+        </IonList>
+      </AppLoaderComponent>
+    <IonToast
+      isOpen={!!state.success}
+      message={state.success || ""}
+      duration={3000}
+      onDidDismiss={() => setState({ ...state, success: null })}
+      color="success"
+    ><Alert severity="success">{state.success as string}</Alert></IonToast>
+    <IonToast
+        isOpen={!!state.error}
+        message={state.error || ""}
+        duration={3000}
+        onDidDismiss={() => setState({ ...state, error: null })}
+        color="warning"
+    ><Alert severity="warning">{state.error as string}</Alert>
+    </IonToast>
     </>
   );
 };

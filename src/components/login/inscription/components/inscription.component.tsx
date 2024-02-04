@@ -12,7 +12,7 @@ const InscriptionComponent : React.FC = () => {
                             </h1>
                     </div>
               </IonItem>
-              <div className="ion-padding">
+              <div className="ion-padding inscription">
                 <h1 className="form-title" >
                         Inscription
                 </h1>

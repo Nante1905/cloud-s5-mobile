@@ -26,11 +26,13 @@ import { useEffect, useState } from 'react';
 import { ApiResponse } from '../../../shared/types/Response';
 import { getErrorMessage } from '../../../shared/service/api-service';
 import { getById } from '../../service/annonce.service';
+import AppLoaderComponent from '../../../shared/loader/app-loader.component';
 interface  DetailsAnnonceProps{
   id_annonce: number
 }
 interface DetaislAnnonceState{
-  annonce : Annonce
+  annonce : Annonce,
+  loading : boolean
 }
 const initialState : DetaislAnnonceState = {
   annonce : {
@@ -87,8 +89,9 @@ const initialState : DetaislAnnonceState = {
       },
       idVoiture: 0,
       photos: [],
-      favori: false
-    }
+      favori: false,
+    },
+    loading: true
 }
 
 
@@ -105,6 +108,7 @@ const DetailsAnnonce: React.FC<DetailsAnnonceProps> = ( props ) => {
             console.log( response );
             setState((state) => ({
               ...state,
+              loading: false,
               annonce: response.data,
             }));
           } else {
@@ -144,23 +148,27 @@ const DetailsAnnonce: React.FC<DetailsAnnonceProps> = ( props ) => {
   return (
     <>
       <IonItem>
-        <Swiper
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: false }}
-          spaceBetween={100}
-          slidesPerView={1}
-          modules={[Navigation]}
-          navigation={true}
-        >
-          {state.annonce &&
-            state.annonce.photos.map((photo: Photo, index: number) => (
-              <SwiperSlide key={index}>
-                <img className="img-caroussel" src={photo.url} alt={`Photo ${index}`} />
-              </SwiperSlide>
-            ))}
-        </Swiper>
+      <AppLoaderComponent loading={state.loading}>
+          <Swiper
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: false }}
+            spaceBetween={100}
+            slidesPerView={1}
+            modules={[Navigation]}
+            navigation={true}
+          >
+            {state.annonce &&
+              state.annonce.photos.map((photo: Photo, index: number) => (
+                <SwiperSlide key={index}>
+                  <img className="img-caroussel" src={photo.url} alt={`Photo ${index}`} />
+                </SwiperSlide>
+              ))}
+          </Swiper>
+          </AppLoaderComponent>
       </IonItem>
-      {state.annonce && <Caracteristique annonce={state.annonce} />}
+      <AppLoaderComponent loading={state.loading}>
+        {state.annonce && <Caracteristique annonce={state.annonce} />}
+      </AppLoaderComponent>
     </>
   );
 };

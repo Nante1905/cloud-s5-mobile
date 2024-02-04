@@ -8,7 +8,7 @@ const DetailsAnnonceRoot : React.FC = () => {
     <IonPage style={{color:"#ffff"}} id="view-message-page">
             <IonButtons className='button-back' 
             slot="start">
-              <IonBackButton  style={{color:"#ffff"}} text="" defaultHref="/annonce"></IonBackButton>
+              <IonBackButton  style={{color:"#ffff"}} text="" defaultHref="/tabs/annonce"></IonBackButton>
             </IonButtons>
         <IonContent fullscreen>
             <DetailsAnnonce id_annonce={id.id} />

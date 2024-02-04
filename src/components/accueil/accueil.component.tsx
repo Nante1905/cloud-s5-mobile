@@ -29,7 +29,7 @@ const AccueilComponent : React.FC = () => {
                 </div>
                 <VerifiedIcon className="rotate-entry icon-accueil" />
                 <div className="image-accueil" >
-                    <img src="2745453.png" alt="" />
+                    <img src="cyan.png" alt="" />
                     <div  className="bar-group">
                         <RemoveIcon className="bar-accueil" />
                         <RemoveIcon className="bar-accueil"  />
