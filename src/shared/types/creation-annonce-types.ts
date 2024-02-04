@@ -33,7 +33,8 @@ export interface Modele{
 }
 export interface Marque{
     id: number, 
-    nom: string
+    nom: string, 
+    logo: string
 }
 export interface BoiteVitesse{
     id: number, 

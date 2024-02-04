@@ -1,10 +1,13 @@
-import { IonCol, IonGrid, IonItem, IonRow } from "@ionic/react";
+import { IonCol, IonGrid, IonItem, IonRefresher, IonRefresherContent, IonRow, IonToast, RefresherEventDetail } from "@ionic/react";
 import { Annonce, BoiteVitesse, Energie, StepCreationAnnonceProps } from "../../../../shared/types/creation-annonce-types";
 import "../../container/creation/creation.css";
-import { SimpleDialog } from "../../../../shared/hooks/SimpleDialog";
+import { BVSimpleDialog, EnergieSimpleDialog } from "../../../../shared/hooks/SimpleDialog";
 import { Item, transformListToItemList } from "../../../../shared/types/item";
-import { ChangeEvent, useState } from "react";
-import { Button } from "@mui/material";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Alert, Button } from "@mui/material";
+import { getAllBV, getAllEnergie } from "../../../service/Add-annonce.service";
+import { getErrorMessage } from "../../../../shared/service/api-service";
+import { ApiResponse } from "../../../../shared/types/Response";
 interface SecondStepState{
     open : boolean,
     type : string,
@@ -14,6 +17,9 @@ interface SecondStepState{
     bvClasse: string, 
     kmClasse:string,
     consoClasse:string
+    listeBoiteVitesse: BoiteVitesse[], 
+    listeEnergie: Energie[],
+    error: string | null
 }
 interface SecondStepProps{
     onClickFunc: (newValue: string)=>void;
@@ -29,68 +35,132 @@ const initialState: SecondStepState = {
     dialogTitle: "",
     items: [],
     energieClasse: "",
-    bvClasse: "", 
-    kmClasse:'',
-    consoClasse:''
-}
-const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStepProps) => {
-    const [state, setState] = useState(initialState);
-    const energie = [
+    bvClasse: "",
+    kmClasse: '',
+    consoClasse: '',
+    listeBoiteVitesse: [
         { id: 1, nom: 'energie 1' },
         { id: 2, nom: 'energie 2' },
         { id: 3, nom: 'energie 3' }
-      ];
-
-      const bv = [
+    ],
+    listeEnergie: [
         { id: 1, nom: 'bv 1' },
         { id: 2, nom: 'bv 2' },
         { id: 3, nom: 'bv 3' }
-      ];
-
-    const handleClickOpen = (items: Item[], title: string, type: string) => {
+    ],
+    error:null
+}
+const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStepProps) => {
+    const [state, setState] = useState(initialState);
+    const fetchData = ()=>{
+        getAllBV()
+      .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          setState((state) => ({
+            ...state,
+            listeBoiteVitesse: response.data,
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            error: response.err,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        setState((state) => ({
+          ...state,
+          error: errorMessage
+        }));
+      });
+      getAllEnergie()
+      .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          setState((state) => ({
+            ...state,
+            listeEnergie: response.data,
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            error: response.err,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        setState((state) => ({
+          ...state,
+          error: errorMessage
+        }));
+      });
+    }
+    useEffect(()=>{
+        fetchData()
+    },[]);
+    const handleRefresh = (event: CustomEvent<RefresherEventDetail>)=>{
+        setTimeout(() => {
+            fetchData();
+            event.detail.complete();
+          }, 2000);
+    }
+    const handleClickOpen = (type: string) => {
         setState(prevState => ({
             ...prevState,
             open: true,
-            dialogTitle: title,
-            type: type,
-            items: items,
+            type: type
         }));
     };
 
-    const handleClose = (item: Item | null) => {
+    const handleEnergieClose = (item: Energie|null)=>{
         setState(prevState => ({
             ...prevState,
             open: false
         }));
-        switch(state.type) {
-            case 'energie':
-                if (item) {
-                    props.handleEnergieChange({
-                        id: item.id,
-                        nom: item.name
-                    })
-                    setState((prevState)=>({
-                        ...prevState,
-                        energieClasse:""
-                    }))
-                }
-                break;
-            case 'bv':
-                if (item) {
-                    props.handleBoiteVitesseChange({
-                        id:item.id,
-                        nom: item.name
-                    })
-                    setState((prevState)=>({
-                        ...prevState,
-                        bvClasse:""
-                    }))
-                }
-                break;
-                default:
-                break;
+        if (item) {
+            props.handleEnergieChange(item);
+            setState((prevState)=>({
+                ...prevState,
+                energieClasse:""
+            }))
         }
-    };
+    }
+    const handleBVClose = (item: BoiteVitesse|null)=>{
+        setState(prevState => ({
+            ...prevState,
+            open: false
+        }));
+        if (item) {
+            props.handleBoiteVitesseChange(item);
+            setState((prevState)=>({
+                ...prevState,
+                bvClasse:""
+            }))
+        }
+    }
     const next = ()=>{
         if(props.annonce.voiture.energie.id==0){
             setState((prevState)=>({
@@ -159,6 +229,9 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
 
     return (
         <div className="ion-padding">
+            <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                <IonRefresherContent></IonRefresherContent>
+            </IonRefresher>
                 <h1 className="form-title" >
                     Plus de détails
                 </h1>
@@ -167,29 +240,28 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         <label>
                             Energie
                         </label>
-                        <Button className={state.energieClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList( energie, "id" , "nom" ), 'Choisissez une Energie', 'energie')}>
+                        <Button className={state.energieClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('energie')}>
                         {props.annonce.voiture.energie.nom}
                     </Button>
-                    <SimpleDialog
+                    <EnergieSimpleDialog
                         open={state.open && state.type === 'energie'}
-                        onClose={handleClose}
-                        items={state.items}
-                        title={state.dialogTitle}
+                        onClose={handleEnergieClose}
+                        items={state.listeEnergie}
+                        title='Veuillez sélectionner une énergie'
                     />
                     </div>
                     <div className="form-group">
                         <label>
                             Boite de vitesse
                         </label>
-                        <Button  className={state.bvClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen(transformListToItemList( bv, "id" , "nom" ), 'Choisissez une boie de vitesse', 'bv')}>
+                        <Button  className={state.bvClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('bv')}>
                         {props.annonce.voiture.boiteVitesse.nom}
                         </Button>
-                        <SimpleDialog
-                           
+                        <BVSimpleDialog
                             open={state.open && state.type === 'bv'}
-                            onClose={handleClose}
-                            items={state.items}
-                            title={state.dialogTitle}
+                            onClose={handleBVClose}
+                            items={state.listeBoiteVitesse}
+                            title='Veuillez sélectionner une boîte de vitesse'
                         />
                     </div>
                     <div className="form-group">
@@ -210,6 +282,14 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         <div className="button-next-form" onClick={() => next()} >Suivant</div>
                     </div>
                 </div>
+                <IonToast
+                    isOpen={!!state.error}
+                    message={state.error || ""}
+                    duration={3000}
+                    onDidDismiss={() => setState({ ...state, error: null })}
+                    color="danger"
+                ><Alert severity="error">{state.error as string}</Alert>
+                </IonToast>
             </div>
     );
 }
