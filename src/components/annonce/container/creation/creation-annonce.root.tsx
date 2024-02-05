@@ -4,7 +4,6 @@ import FirstStepAnnonceCreation from "../../components/creation/first-step.compo
 import { Tab, Tabs } from "@mui/material";
 import SecondStepAnnonceCreation from "../../components/creation/second-step.components";
 import ThirdStepAnnonceCreation from "../../components/creation/third-step.component";
-import LastStepAnnonceCreation  from "../../components/creation/last-step.component";
 import FourthStepAnnonceCreation from "../../components/creation/fourth-step.component";
 import VerificationAnnonce from "../../components/creation/verification-step.root";
 import { Annonce, BoiteVitesse, Couleur, Energie, Etat, Image, Marque, Modele } from "../../../../shared/types/creation-annonce-types";
@@ -218,7 +217,7 @@ export default  function  CreationAnnonce () {
             voiture:{
                 ...prevState.annonce.voiture,
                 Etat: newEtat,
-                etat: newEtat.id
+                etat: newEtat.valeur
             }
             },
         }));
@@ -260,8 +259,7 @@ export default  function  CreationAnnonce () {
                 {state.tab == "2" && <SecondStepAnnonceCreation  onClickFunc={handleTabChange} handleBoiteVitesseChange={handleBoiteVitesseChange} handleConsommationChange={handleConsommationChange} handleEnergieChange={handleEnergieChange} handleKilometrageChange={handleKilometrageChange} annonce={state.annonce}/>}
                 {state.tab == "3" && <ThirdStepAnnonceCreation handleEstimationChange={handleEstimationChange} onClickFunc={handleTabChange} annonce={state.annonce} handlePriceChange={handlePriceChange} estime={state.prixEvalue} handlePrixValidChange={handlePrixValidChange} prixValid={state.prixValid}/>}
                 {state.tab == "4" && <FourthStepAnnonceCreation handleImageDelete={handleImageDelete} annonce={state.annonce} onClickFunc={handleTabChange} handleDescriptionChange={handleDescriptionChange} handleImageChange={handleImageChange} />}
-                {state.tab == "5" && <VerificationAnnonce marque={state.marque} onClickFunc={handleTabChange} annonce={state.annonce} />}
-                {state.tab == "6" && <LastStepAnnonceCreation annonce={state.annonce}/>}
+                {state.tab == "5" && <VerificationAnnonce marque={state.marque} onClickFunc={handleTabChange} annonce={state.annonce} save={function (value: Annonce): void {} } />}
             </IonContent>
         </IonPage>
     );

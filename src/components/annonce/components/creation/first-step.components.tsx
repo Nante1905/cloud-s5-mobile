@@ -43,24 +43,16 @@ const initialState: FirstStepState = {
     couleurClasse: "",
     etatClasse: "",
     listMarque: [
-        { id: 1, nom: 'Toyota Camry', logo: 'red.png' },
-        { id: 2, nom: 'Honda Accord', logo: 'red.png' },
-        { id: 3, nom: 'Ford Mustang', logo: 'red.png' },
+        
     ],
     listModele: [
-        { id: 1, nom: 'modèle 1' },
-        { id: 2, nom: 'modèle 2' },
-        { id: 3, nom: 'modèle 3' }
+        
     ],
     listEtat: [
-        { id: 1, nom: 'etat 1', valeur: 1 },
-        { id: 2, nom: 'etat 2', valeur: 1 },
-        { id: 3, nom: 'etat 3', valeur: 1 }
+        
     ],
     listCouleur: [
-        { id: 1, nom: 'couleur 1', hexa: 'red' },
-        { id: 2, nom: 'couleur 2', hexa: 'red' },
-        { id: 3, nom: 'couleur 3', hexa: 'red' }
+        
     ],
     error: "",
     refresh: 0
@@ -211,7 +203,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
             ...state,
             listModele: response.data,
           }));
-          if(response.data){
+          if(response.data.length>0){
             props.handleModeleChange(response.data[0]);
           }
         } else {

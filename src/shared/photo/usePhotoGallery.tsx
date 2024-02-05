@@ -46,6 +46,10 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     } else {
       base64Data = await base64FromPath(photo.webPath!);
     }
+    const prefixToRemove = 'data:image/jpeg;base64,';
+    if (base64Data.startsWith(prefixToRemove)) {
+      base64Data = base64Data.slice(prefixToRemove.length);
+    }
     const savedFile = await Filesystem.writeFile({
       path: fileName,
       data: base64Data,
