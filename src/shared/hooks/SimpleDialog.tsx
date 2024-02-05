@@ -190,7 +190,7 @@ export const CouleurSimpleDialog : React.FC<CouleurDialogProps> = (props: Couleu
           <ListItem disableGutters key={item.id}>
             <ListItemButton onClick={() => handleListItemClick(item)}>
               <ListItemAvatar>
-                <Avatar sx={{bgcolor: item.hexa, color:item.hexa}}> 
+                <Avatar sx={{bgcolor: item.hexa, color:item.hexa, border: 'solid 0.1px lightgray'}}> 
                 </Avatar>
               </ListItemAvatar>
               <ListItemText primary={item.nom} />

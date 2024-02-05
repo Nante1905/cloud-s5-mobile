@@ -39,14 +39,10 @@ const initialState: SecondStepState = {
     kmClasse: '',
     consoClasse: '',
     listeBoiteVitesse: [
-        { id: 1, nom: 'energie 1' },
-        { id: 2, nom: 'energie 2' },
-        { id: 3, nom: 'energie 3' }
+        
     ],
     listeEnergie: [
-        { id: 1, nom: 'bv 1' },
-        { id: 2, nom: 'bv 2' },
-        { id: 3, nom: 'bv 3' }
+        
     ],
     error:null
 }
@@ -269,13 +265,13 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         <label>
                             Consommation
                         </label>
-                        <input className={state.consoClasse}  type="text" value={props.annonce.voiture.consommation} onChange={handleConsommationChange}/>
+                        <input className={state.consoClasse}  type="number" value={props.annonce.voiture.consommation==0?'':props.annonce.voiture.consommation} placeholder={'0'} onChange={handleConsommationChange} step=".01"/>
                     </div>
                     <div className="form-group">
                         <label>
                             Kilometrage
                         </label>
-                        <input className={state.kmClasse}  type="text" value={props.annonce.voiture.kilometrage} onChange={handleKilometrageChange}/>
+                        <input className={state.kmClasse}  type="number" value={props.annonce.voiture.kilometrage==0?'':props.annonce.voiture.kilometrage} placeholder='0' onChange={handleKilometrageChange} step=".01"/>
                     </div>
 
                     <div className="ion-button-container">

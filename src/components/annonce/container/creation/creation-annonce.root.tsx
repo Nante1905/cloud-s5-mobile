@@ -13,11 +13,14 @@ interface CreationAnnonceState{
     tab: string;
     annonce: Annonce,
     marque: Marque,
-    prixEvalue: number
+    prixEvalue: number,
+    etatValid: number, 
+    prixValid: number
 }
 const initialState: CreationAnnonceState = {
-    prixEvalue:0,
-    tab:"1", 
+    prixEvalue: 0,
+    etatValid: 0,
+    tab: "1",
     annonce: {
         medias: [],
         id: 0,
@@ -67,16 +70,17 @@ const initialState: CreationAnnonceState = {
         },
         idUtilisateur: 0,
         marque: {
-            id : 0,
-            nom : "",
+            id: 0,
+            nom: "",
             logo: ""
         }
     },
-    marque:{
-        id:0,
-        nom:'Sélectionner une marque',
-        logo:''
-    }
+    marque: {
+        id: 0,
+        nom: 'Sélectionner une marque',
+        logo: ''
+    },
+    prixValid: 0
 }
 
 export default  function  CreationAnnonce () {  
@@ -87,6 +91,18 @@ export default  function  CreationAnnonce () {
           tab: newValue,
         }));
     };
+    const handleEtatValidChange = (newvalue:number)=>{
+        setState(prevState => ({
+            ...prevState,
+            etatValid:newvalue
+          }));
+    }
+    const handlePrixValidChange = (newvalue:number)=>{
+        setState(prevState => ({
+            ...prevState,
+            prixValid:newvalue
+          }));
+    }
     const handleDescriptionChange = (newDescription: string) => {
         setState(prevState => ({
           ...prevState,
@@ -240,9 +256,9 @@ export default  function  CreationAnnonce () {
                         </h1>
                     </div>
                 </IonItem>}
-                {state.tab == "1" && <FirstStepAnnonceCreation  onClickFunc={handleTabChange} handleCouleurChange={handleColorChange} handleEtatChange={handleEtatChange} handleMarqueChange={handleMarqueChange} handleModeleChange={handleModelChange} annonce={state.annonce} marque={state.marque}/>}
+                {state.tab == "1" && <FirstStepAnnonceCreation etatValid={state.etatValid} handleEtatValidChange={handleEtatValidChange}  onClickFunc={handleTabChange} handleCouleurChange={handleColorChange} handleEtatChange={handleEtatChange} handleMarqueChange={handleMarqueChange} handleModeleChange={handleModelChange} annonce={state.annonce} marque={state.marque}/>}
                 {state.tab == "2" && <SecondStepAnnonceCreation  onClickFunc={handleTabChange} handleBoiteVitesseChange={handleBoiteVitesseChange} handleConsommationChange={handleConsommationChange} handleEnergieChange={handleEnergieChange} handleKilometrageChange={handleKilometrageChange} annonce={state.annonce}/>}
-                {state.tab == "3" && <ThirdStepAnnonceCreation handleEstimationChange={handleEstimationChange}  onClickFunc={handleTabChange}  annonce={state.annonce} handlePriceChange={handlePriceChange} estime={state.prixEvalue}/>}
+                {state.tab == "3" && <ThirdStepAnnonceCreation handleEstimationChange={handleEstimationChange} onClickFunc={handleTabChange} annonce={state.annonce} handlePriceChange={handlePriceChange} estime={state.prixEvalue} handlePrixValidChange={handlePrixValidChange} prixValid={state.prixValid}/>}
                 {state.tab == "4" && <FourthStepAnnonceCreation handleImageDelete={handleImageDelete} annonce={state.annonce} onClickFunc={handleTabChange} handleDescriptionChange={handleDescriptionChange} handleImageChange={handleImageChange} />}
                 {state.tab == "5" && <VerificationAnnonce marque={state.marque} onClickFunc={handleTabChange} annonce={state.annonce} />}
                 {state.tab == "6" && <LastStepAnnonceCreation annonce={state.annonce}/>}

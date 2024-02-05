@@ -15,7 +15,6 @@ interface FirstStepState{
     marqueClasse: string,
     modeleClasse:string, 
     couleurClasse: string,
-    etatValid: number,
     etatClasse: string, 
     listMarque: Marque[],
     listModele: Modele[],
@@ -32,6 +31,8 @@ interface FirstStepProps{
     onClickFunc: (newValue: string) => void;
     annonce: Annonce;
     marque: Marque;
+    handleEtatValidChange: (newvalue:number)=>void;
+    etatValid: number;
 }   
 const initialState: FirstStepState = {
     open: false,
@@ -40,7 +41,6 @@ const initialState: FirstStepState = {
     marqueClasse: "",
     modeleClasse: "",
     couleurClasse: "",
-    etatValid: 0,
     etatClasse: "",
     listMarque: [
         { id: 1, nom: 'Toyota Camry', logo: 'red.png' },
@@ -289,21 +289,22 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
         }
     }
     const handleEtatClose = (item: Etat|null)=>{
+        setState(prevState => ({
+            ...prevState,
+            open: false
+        }));
         if (item) {
-            setState(prevState => ({
-                ...prevState,
-                open: false
-            }));
+            
             props.handleEtatChange(item);
             let isValid = 2;
-            if(item.id==0){
+            if(item.valeur==0){
                 isValid=0;
             }
             setState((prevState)=>({
                 ...prevState,
                 etatClasse:"",
-                etatValid:isValid
-            }))
+            }));
+            props.handleEtatValidChange(isValid);
         }
     }
     const next = ()=>{
@@ -325,29 +326,32 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
                 couleurClasse:"error"
             }))
         }
-        if(state.etatValid==0){
+        if(props.etatValid==0){
             setState((prevState)=>({
                 ...prevState,
-                etatValid:-1,
+               
                 etatClasse:"warning"
             }))
+            props.handleEtatValidChange(-1);
         }
-        if(props.marque.id!=0 && props.annonce.voiture.modele.id != 0  && props.annonce.voiture.couleur.id!=0 && state.etatValid!=0){            
+        if(props.marque.id!=0 && props.annonce.voiture.modele.id != 0  && props.annonce.voiture.couleur.id!=0 && props.etatValid!=0){            
             props.onClickFunc("2");
         }
     };
     const setEtatNonValid = ()=>{
         setState((prevState)=>({
             ...prevState,
-            etatValid:0,
+            
             etatClasse:"error"
-        }))
+        }));
+        props.handleEtatValidChange(0);
     }
     const setEtatValid =()=>{
         setState((prevState)=>({
             ...prevState,
-            etatValid:2
+            
         }));
+        props.handleEtatValidChange(2);
         next();
     }
     const handleRefresh = (event: CustomEvent<RefresherEventDetail>)=> {
@@ -395,7 +399,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
                     />
                     </div>
                     {
-                        state.etatValid==-1 && 
+                        props.etatValid==-1 && 
                         <IonAlert
                             isOpen={true}
                             message="Etes-vous sûr que l'état de votre voiture sera 0 ?"
