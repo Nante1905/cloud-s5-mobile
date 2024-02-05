@@ -89,7 +89,7 @@ ion-slides {
     object-fit: cover;
   }
 
-  .caracteristique{
+  .ion-padding{
     transform: translateY(-7vh);
     background: #ffff;
     color:#333;
@@ -101,7 +101,11 @@ ion-slides {
     min-height: 78vh;
     padding-top: 60px;
     padding-bottom: 75px;
-    margin-top: 0px !important;
+    margin-top: 26vh;
+  }
+  .verification{
+    margin-top: -2vh;
+    min-height: 80vh;
   }
 
   .car-name{
@@ -129,7 +133,7 @@ ion-slides {
     font-family: Arial, Helvetica, sans-serif;
   }
   .modif-button{
-    --background : rgb(61, 194, 188);
+    background: rgb( 69 , 189 , 197 );
     height: 50px;
     width:80px;
     border-radius: 5px;
@@ -137,11 +141,6 @@ ion-slides {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  #button-modification{
-    --background :  rgb(61, 194, 188) !important;
-    height: 50px;
   }
 
   .details-header , .details-toolbar{
