@@ -10,7 +10,8 @@ export interface Image{
     blob: string,
     contentType: string, 
     fileName: string ,
-    webViewPath: string|undefined
+    webViewPath: string|undefined,
+    url : string
 }
 export interface SaveAnnonceReq{
     description: string, 

@@ -5,14 +5,15 @@ import { Annonce, BoiteVitesse, Couleur, Energie, Etat, Image, Marque, Modele } 
 import SecondStepAnnonceCreation from "../../components/modif/second-step-modif.components";
 import ThirdStepAnnonceCreation from "../../components/modif/third-step-modif.component";
 import FourthStepAnnonceCreation from "../../components/modif/fourth-step-modif.component";
-import VerificationAnnonce from "../../components/creation/verification-step.root";
 import LastStepAnnonceCreation from "../../components/modif/last-step-modif.component";
 import FirstStepAnnonceCreation from "../../components/modif/first-step-modif.components";
 import { useParams } from "react-router";
 import { getById } from "../../../service/annonce.service";
 import { ApiResponse } from "../../../../shared/types/Response";
 import { getErrorMessage } from "../../../../shared/service/api-service";
- 
+import { convertirAnnonce } from "../../../../shared/hooks/Convert";
+import { Annonce as DetailsAnnonce } from "../../../../shared/types/details-annonce-type";
+import VerificationAnnonceModif from "../../components/modif/verification-step-modif.root";
 interface CreationAnnonceState{
     tab: string;
     annonce: Annonce,
@@ -87,7 +88,7 @@ export default  function  ModifAnnonce () {
     const id = useParams();
     console.log( "id" , id );
     const [state, setState] = useState(initialState);
-    var annonce_by_id = null;
+    var annonce_by_id : DetailsAnnonce ;
     useEffect(() => { 
         getById(id.id)
           .then((res) => {
@@ -100,8 +101,9 @@ export default  function  ModifAnnonce () {
               setState((state) => ({
                 ...state,
                 loading: false,
-                annonce: response.data,
+                annonce: convertirAnnonce(annonce_by_id)
               }));
+              console.log( convertirAnnonce(annonce_by_id) );
             } else {
               setState((state) => ({
                 ...state,
@@ -262,8 +264,12 @@ export default  function  ModifAnnonce () {
     const handleMarqueChange = (newMarque: Marque) => {
         setState(prevState => ({
             ...prevState,
-            marque: newMarque
+            annonce: {
+              ...prevState.annonce,
+              marque : newMarque
+            }
         }));
+        console.log( "annonce " , state.annonce );
     };
     const handleBoiteVitesseChange = (newBV: BoiteVitesse) => {
         setState(prevState => ({
@@ -281,7 +287,9 @@ export default  function  ModifAnnonce () {
       
       
     console.log(state.tab);
+    const save = ()=>{
     
+    }
     return (
         <IonPage style={{ color: "#ffff" }} id="view-message-page">
             <IonContent fullscreen>
@@ -292,11 +300,11 @@ export default  function  ModifAnnonce () {
                         </h1>
                     </div>
                 </IonItem>}
-                {state.tab == "1" && <FirstStepAnnonceCreation  onClickFunc={handleTabChange} handleCouleurChange={handleColorChange} handleEtatChange={handleEtatChange} handleMarqueChange={handleMarqueChange} handleModeleChange={handleModelChange} annonce={state.annonce} marque={state.marque}/>}
+                {state.tab == "1" && <FirstStepAnnonceCreation  onClickFunc={handleTabChange} handleCouleurChange={handleColorChange} handleEtatChange={handleEtatChange} handleMarqueChange={handleMarqueChange} handleModeleChange={handleModelChange} annonce={state.annonce}/>}
                 {state.tab == "2" && <SecondStepAnnonceCreation  onClickFunc={handleTabChange} handleBoiteVitesseChange={handleBoiteVitesseChange} handleConsommationChange={handleConsommationChange} handleEnergieChange={handleEnergieChange} handleKilometrageChange={handleKilometrageChange} annonce={state.annonce}/>}
                 {state.tab == "3" && <ThirdStepAnnonceCreation handleEstimationChange={handleEstimationChange}  onClickFunc={handleTabChange}  annonce={state.annonce} handlePriceChange={handlePriceChange} estime={state.prixEvalue}/>}
                 {state.tab == "4" && <FourthStepAnnonceCreation handleImageDelete={handleImageDelete} annonce={state.annonce} onClickFunc={handleTabChange} handleDescriptionChange={handleDescriptionChange} handleImageChange={handleImageChange} />}
-                {state.tab == "5" && <VerificationAnnonce marque={state.marque} onClickFunc={handleTabChange} annonce={state.annonce} />}
+                {state.tab == "5" && <VerificationAnnonceModif save={save} marque={state.marque} onClickFunc={handleTabChange} annonce={state.annonce} />}
                 {state.tab == "6" && <LastStepAnnonceCreation annonce={state.annonce}/>}
             </IonContent>
         </IonPage>

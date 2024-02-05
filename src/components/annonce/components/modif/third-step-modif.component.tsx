@@ -23,7 +23,7 @@ interface ThirdStepState{
 const initialState:ThirdStepState={
     loading: 0,
     prixClasse: "",
-    prixValid: 0,
+    prixValid: 2,
     error: null
 }
 const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepProps) => {

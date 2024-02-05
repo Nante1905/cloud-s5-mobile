@@ -60,6 +60,7 @@ const initialState: FirstStepState = {
 
 const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepProps) => {
     const [state, setState] = useState(initialState);
+    
     const fetchData = ()=>{
         getAllMarque()
       .then((res) => {
@@ -370,8 +371,6 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
                         <Button className={state.marqueClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('marque')}>
                         {props.marque.nom}
                         </Button>
-            
-                    
                     <MarqueSimpleDialog onClose={handleMarqueClose} items={state.listMarque} title={"Veuillez sélectionner une marque"} open={state.open && state.type === 'marque'} />
                     </div>
                     

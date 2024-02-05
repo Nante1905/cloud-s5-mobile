@@ -10,9 +10,9 @@ const VerificationCaracteristiqueModif:React.FC<VerificationAnnonceProps> = (pro
                         <span className="bold" >Annonce du:</span> {props.annonce.dateCreation.toLocaleDateString('fr-FR',  {  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} à {props.annonce.dateCreation.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false})}
                     </h2>
                 </div>
-                <h1 className="car-name" >{props.marque.nom} - {props.annonce.voiture.modele.nom}</h1>
+                <h1 className="car-name" >{props.annonce.marque.nom} - {props.annonce.voiture.modele.nom}</h1>
                 <h2 className="car-caracteristique" >
-                    <span  className="semi-bold" >Marque :</span> {props.marque.nom}
+                    <span  className="semi-bold" >Marque :</span> {props.annonce.marque.nom}
                 </h2>
                 <h2 className="car-caracteristique" >
                     <span className="semi-bold" >Modèle :</span> {props.annonce.voiture.modele.nom}
@@ -50,9 +50,9 @@ const VerificationCaracteristiqueModif:React.FC<VerificationAnnonceProps> = (pro
                 </p>
                 
                 <div className="ion-button-container">
-                        <div className="button-next-form" onClick={() => props.onClickFunc("4")}>Précedent</div>
-                        <div className="button-next-form" onClick={() => props.onClickFunc("6")} > Suivant</div>
-                    </div>
+                    <div className="button-next-form" onClick={() => props.onClickFunc("4")}>Précedent</div>
+                    <div className="button-next-form" onClick={() => props.onClickFunc("6")} > Suivant</div>
+                </div>
         </div>
     );
 };
