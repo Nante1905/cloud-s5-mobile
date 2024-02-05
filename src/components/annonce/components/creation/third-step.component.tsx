@@ -12,18 +12,18 @@ interface ThirdStepProps{
     handlePriceChange:(newvlue:number)=>void;
     estime: number;
     handleEstimationChange: (value:number)=>void;
+    handlePrixValidChange: (vlue:number)=>void;
+    prixValid:number
     
 }
 interface ThirdStepState{
     loading:number;
     prixClasse: string;
-    prixValid: number;
     error: string|null;
 }
 const initialState:ThirdStepState={
     loading: 0,
     prixClasse: "",
-    prixValid: 0,
     error: null
 }
 const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepProps) => {
@@ -35,24 +35,24 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
             setState((prevState)=>({
                 ...prevState,
                 prixClasse:"warning",
-                prixValid:0
             }))
+            props.handlePrixValidChange(0);
         }
         else{
             props.handlePriceChange(newvalue);
             setState((prevState)=>({
                 ...prevState,
                 prixClasse:"",
-                prixValid:2
             }))
+            props.handlePrixValidChange(2)
         }
     }
     const handlePriceEstimatedChange = ()=>{
         setState((prevState)=>({
             ...prevState,
             prixClasse:"",
-            prixValid:2
         }))
+        props.handlePrixValidChange(2)
         props.handlePriceChange(props.estime);
     }
     const handleEstimate = ()=>{
@@ -109,14 +109,14 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
           }, 3000);
     };
     const next = ()=>{
-        if(state.prixValid==0){
+        if(props.prixValid==0){
             setState((prevState)=>({
                 ...prevState,
                 prixClasse:"warning",
-                prixValid:-1
             }))
+            props.handlePrixValidChange(-1)
         }
-        if(state.prixValid==2){
+        if(props.prixValid==2){
             props.onClickFunc("4");
         }
     }
@@ -124,21 +124,21 @@ const ThirdStepAnnonceCreation: React.FC<ThirdStepProps> = (props : ThirdStepPro
         setState((prevState)=>({
             ...prevState,
             prixClasse:"warning",
-            prixValid:0
         }))
+        props.handlePrixValidChange(0)
     }
     const setPrixValid = ()=>{
         setState((prevState)=>({
             ...prevState,
             prixClasse:"",
-            prixValid:2
         }));
+        props.handlePrixValidChange(2)
         props.onClickFunc("4");
     }
     return (
         <div className="ion-padding">
             {
-                        state.prixValid==-1 && 
+                        props.prixValid==-1 && 
                         <IonAlert
                             isOpen={true}
                             message="Etes-vous sûr votre voiture sera gratuite?"
