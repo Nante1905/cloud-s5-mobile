@@ -38,7 +38,7 @@ const VerificationCaracteristique:React.FC<VerificationAnnonceProps> = (props : 
                     <span className="semi-bold" >Couleur :</span> {props.annonce.voiture.couleur.nom}
                 </h2>
                 <h2 className="car-caracteristique" >
-                    <span className="semi-bold" >Prix :</span>MGA {props.annonce.prix.toLocaleString('fr-FR', {
+                    <span className="semi-bold" >Prix :</span> MGA {props.annonce.prix.toLocaleString('fr-FR', {
                                     useGrouping: true,
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2,

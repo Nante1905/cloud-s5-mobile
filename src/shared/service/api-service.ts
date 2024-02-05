@@ -8,5 +8,5 @@ export const getErrorMessage = (status: string): string => {
         }
 
     }
-    return 'Erreur interne du serveur.';
+    return 'Connexion au serveur impossible. Veuillez vérifier votre connexion internet.';
 }

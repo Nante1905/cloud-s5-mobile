@@ -358,13 +358,14 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
     }
     return (
         <div className="ion-padding">
-            <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
-                <IonRefresherContent></IonRefresherContent>
-            </IonRefresher>
+            
                         <h1 className="form-title" >
                         Caractéristiques générales
                 </h1>
                 <div className="form-login">
+                <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                <IonRefresherContent></IonRefresherContent>
+            </IonRefresher>
                     <div className="form-group">
                         
                         <label>
