@@ -64,7 +64,7 @@ const ConnectComponent : React.FC = () => {
             localStorage.setItem("token", res.data.data);
             setState((prevData) => ({ ...prevData, success: res.data.message, submitLoading: false , redirectToAccueil : true }));
             console.log("andhe ahipsh" );
-            history.push("/accueil");
+            history.push("/tabs/annonce");
             console.log("avy ahipsh" );
           })
           .catch((err) => {

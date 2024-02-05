@@ -69,7 +69,7 @@ ion-item {
   }
 
   /* Without setting height the slides will take up the height of the slide's content */
-ion-slides {
+  ion-slides {
     height: 100%;
   }
 
@@ -89,7 +89,32 @@ ion-slides {
     object-fit: cover;
   }
 
-  .inscription{
+  .error{
+    border-width: 0.4px !important;
+    border-color: #dc3545 !important;
+    color: #dc3545 !important;
+  }
+  .warning{
+    border-width: 0.4px !important;
+    border-color: #ffc107 !important;
+    color: #ffc107 !important;
+  }
+  input:focus-visible{
+    outline: none;
+  }
+  .error:focus-visible{
+    outline: none;
+    border-width: 0.4px !important;
+    border-color: #dc3545 !important;
+    color: #dc3545 !important;
+  }
+  .warning:focus-visible{
+    outline: none;
+    border-width: 0.4px !important;
+    border-color: #ffc107 !important;
+    color: #ffc107 !important;
+  }
+  .form-inscription{
     transform: translateY(-7vh);
     background: #ffff;
     color:#333;

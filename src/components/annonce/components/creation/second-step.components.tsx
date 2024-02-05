@@ -50,7 +50,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
     const [state, setState] = useState(initialState);
     const fetchData = ()=>{
         getAllBV()
-      .then((res) => {
+      .then((res: { data: ApiResponse; }) => {
         const response: ApiResponse = res.data;
         if (response.ok) {
           setState((state) => ({
@@ -64,7 +64,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
           }));
         }
       })
-      .catch((err) => {
+      .catch((err: { response: { data: { err: string | null; }; }; code: string; }) => {
         console.error(err);
         let errorMessage = "";
         if (
@@ -82,7 +82,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
         }));
       });
       getAllEnergie()
-      .then((res) => {
+      .then((res: { data: ApiResponse; }) => {
         const response: ApiResponse = res.data;
         if (response.ok) {
           setState((state) => ({
@@ -96,7 +96,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
           }));
         }
       })
-      .catch((err) => {
+      .catch((err: { response: { data: { err: string | null; }; }; code: string; }) => {
         console.error(err);
         let errorMessage = "";
         if (

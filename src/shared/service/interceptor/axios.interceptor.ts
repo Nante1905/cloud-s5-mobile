@@ -12,6 +12,7 @@ http.interceptors.request.use(
   ) => {
     // return config;
     if (config.url?.includes("login")) return config;
+    else if (config.url?.includes("auth/register")) return config;
     else {
       const token = localStorage.getItem("token");
       if (token) {
