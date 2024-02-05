@@ -12,8 +12,15 @@ export interface Image{
     fileName: string ,
     webViewPath: string|undefined
 }
+export interface SaveAnnonceReq{
+    description: string, 
+    prix: number, 
+    voiture: Voiture, 
+    medias: Image[]
+}
 export interface VerificationAnnonceProps{
     onClickFunc: (value:string)=>void;
+    save: (value:Annonce)=>void;
     annonce: Annonce;
     marque: Marque;
   }
@@ -34,7 +41,7 @@ export interface Modele{
 export interface Marque{
     id: number, 
     nom: string, 
-    logo: string
+    logo:string
 }
 export interface BoiteVitesse{
     id: number, 
