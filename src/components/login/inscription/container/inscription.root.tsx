@@ -9,8 +9,11 @@ import { getErrorMessage } from "../../../../shared/service/api-service";
 interface InscriptionState {
     newUser: SignInReq;
     error: string|null;
+    tab: number,
+    loading: boolean
 }
 const initialState: InscriptionState = {
+    tab: 1,
     newUser: {
         nom: '',
         prenom:'',
@@ -18,17 +21,25 @@ const initialState: InscriptionState = {
         password:'', 
         adresse:''
     },
-    error: null
+    error: null,
+    loading:false
 }
 const InscriptionRoot : React.FC = () => {
     const [state, setState] = useState<InscriptionState>(initialState);
-    
-const saveNewUser = ()=>{
+    const saveNewUser = ()=>{
+    setState((state)=>({
+        ...state, 
+        loading:true
+        }))
     inscrire(state.newUser)
     .then((res) => {
         const response: ApiResponse = res.data;
+        
         if (response.ok) {
-          console.log("user cree");
+          setState((state)=>({
+            ...state, 
+            tab:2
+          }))
         } else {
           setState((state) => ({
             ...state,
@@ -101,23 +112,42 @@ const saveNewUser = ()=>{
     }
     return (
         <IonPage style={{color:"#ffff"}} id="view-message-page">
-            <IonButtons className='button-back' 
-            slot="start">
-              <IonBackButton  style={{color:"#ffff"}} text="" defaultHref="/login"></IonBackButton>
-            </IonButtons>
-            <IonContent fullscreen>
-                <InscriptionComponent newUser={state.newUser} handleNomChange={handleNomChange} handlePrenomChange={handlePrenomChange} handleEmailChange={handleEmailChange} handlePasswordChange={handlePasswordChange} handleAdresseChange={handleAdresseChange} saveNewUser={saveNewUser}  />
-                <IonToast
-                    isOpen={!!state.error}
-                    message={state.error || ""}
-                    duration={3000}
-                    onDidDismiss={() => setState({ ...state, error: null })}
-                    color="danger"
-                ><Alert severity="error">{state.error as string}</Alert>
-                </IonToast>
-            </IonContent>
+            {state.tab==1 && 
+            <div>
+                <IonButtons className='button-back' 
+                slot="start">
+                <IonBackButton  style={{color:"#ffff"}} text="" defaultHref="/login"></IonBackButton>
+                </IonButtons>
+                <IonContent fullscreen>
+                    <InscriptionComponent newUser={state.newUser} handleNomChange={handleNomChange} handlePrenomChange={handlePrenomChange} handleEmailChange={handleEmailChange} handlePasswordChange={handlePasswordChange} handleAdresseChange={handleAdresseChange} saveNewUser={saveNewUser}  />
+                    <IonToast
+                        isOpen={!!state.error}
+                        message={state.error || ""}
+                        duration={3000}
+                        onDidDismiss={() => setState({ ...state, error: null })}
+                        color="danger"
+                    ><Alert severity="error">{state.error as string}</Alert>
+                    </IonToast>
+                </IonContent>
+            </div>}
+            {state.tab==2 &&
+            <div className="welcome-box">
+                <h1 className="welcome">
+                    <span className="bold">Bienvenue</span>, {state.newUser.nom} {state.newUser.prenom}
+                </h1>
+                <div className="start-button" >
+                    <a href="/login">
+                        <div > Commencer</div>
+                    </a>
+                </div>
+            </div>
+            }
+            <IonToast
+                     isOpen={state.loading==true}
+                    message="Création de votre compte"  color="primary">
+                      <Alert severity="info">Création de votre compte</Alert>
+            </IonToast>
         </IonPage>
-
     );
 };
 
