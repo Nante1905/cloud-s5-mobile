@@ -23,6 +23,9 @@ import VerificationCaracteristiqueModif from './verification/verification-caract
 import { VerificationAnnonceProps } from '../../../../shared/types/creation-annonce-types';
 
 const VerificationAnnonceModif: React.FC<VerificationAnnonceProps> = ( props : VerificationAnnonceProps ) => {
+  const save = ()=>{
+    
+  }
   return (
             <>
               <IonItem >
@@ -36,11 +39,11 @@ const VerificationAnnonceModif: React.FC<VerificationAnnonceProps> = ( props : V
                     >
                     
                     {props.annonce.medias.map((photo, index) => (
-                        <SwiperSlide><img className="img-caroussel" src={photo.webViewPath} /></SwiperSlide>
+                        <SwiperSlide><img style={{objectFit : "cover"}} className="img-caroussel" src={photo.url} /></SwiperSlide>
                     ))}
                     </Swiper>
               </IonItem>
-                <VerificationCaracteristiqueModif onClickFunc={props.onClickFunc} annonce={props.annonce} marque={props.marque}/>
+                <VerificationCaracteristiqueModif save={save} onClickFunc={props.onClickFunc} annonce={props.annonce} marque={props.marque}/>
             </>
     );
   };

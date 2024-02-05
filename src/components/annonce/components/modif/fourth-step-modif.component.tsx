@@ -55,12 +55,12 @@ const FourthStepAnnonceCreation: React.FC<FourthStepProps> = (props : FourthStep
                             <RichText onContentChange={onContentChange} defaultValue={props.annonce.description} />
                         </div>                            
                     </div>
-                    {/* <div>
-                        {photos.map((photo, index) => (
-                            <img key={index} src={photo.webviewPath} alt="" />
+                    <div>
+                        {props.annonce.medias.map((photo, index) => (
+                            <img key={index} src={photo.url} alt="" />
                         ))}
-                        </div> */}
-                    <PhotoGallery handleClassChange={handleClassChange} addPhotoClass={state.addPhotoClass} handleImageDelete={props.handleImageDelete} handleImageChange={props.handleImageChange} annonce={props.annonce}/>
+                        </div>
+                    {/* <PhotoGallery handleClassChange={handleClassChange} addPhotoClass={state.addPhotoClass} handleImageDelete={props.handleImageDelete} handleImageChange={props.handleImageChange} annonce={props.annonce}/> */}
                     <div className="ion-button-container">
                         <div className="button-next-form" onClick={() => props.onClickFunc("3")}>Précedent</div>
                         <div className="button-next-form" onClick={() => next()} >Suivant</div>

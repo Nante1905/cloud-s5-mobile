@@ -7,6 +7,7 @@ import { CouleurSimpleDialog, EtatSimpleDialog, MarqueSimpleDialog, ModeleSimple
 import { getAllCouleur, getAllEtat, getAllMarque, getAllModele, getModeleByMarque } from "../../../service/Add-annonce.service";
 import { ApiResponse } from "../../../../shared/types/Response";
 import { getErrorMessage } from "../../../../shared/service/api-service";
+import AppLoaderComponent from "../../../../shared/loader/app-loader.component";
 
 interface FirstStepState{
     open : boolean,
@@ -22,7 +23,8 @@ interface FirstStepState{
     listEtat: Etat[], 
     listCouleur: Couleur[],
     error: string | null, 
-    refresh: number
+    refresh: number,
+    loading : boolean
 }
 interface FirstStepProps{
     handleMarqueChange: (newValue: Marque) => void;
@@ -31,7 +33,6 @@ interface FirstStepProps{
     handleCouleurChange:(newValue: Couleur)=>void;
     onClickFunc: (newValue: string) => void;
     annonce: Annonce;
-    marque: Marque;
 }   
 const initialState: FirstStepState = {
     open: false,
@@ -63,12 +64,18 @@ const initialState: FirstStepState = {
         { id: 3, nom: 'couleur 3', hexa: 'red' }
     ],
     error: "",
-    refresh: 0
+    refresh: 0,
+    loading : true
 }
 
 const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepProps) => {
+    // console.log( "l'annonce " , props.annonce );
     const [state, setState] = useState(initialState);
     const fetchData = ()=>{
+      setState((state) => ({
+        ...state,
+        etatValid : 2
+      }));
         getAllMarque()
       .then((res) => {
         const response: ApiResponse = res.data;
@@ -171,7 +178,11 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
         if (response.ok) {
           setState((state) => ({
             ...state,
-            listCouleur: response.data,
+            listCouleur: response.data
+          }));
+          setState((state) => ({
+            ...state,
+            loading : false
           }));
         } else {
           setState((state) => ({
@@ -200,10 +211,11 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
     }
     useEffect(() => {
         fetchData()
+        
     },[]);
     useEffect(()=>{
-        if(props.marque.id!=0){
-            getModeleByMarque(props.marque.id)
+        if(props.annonce.marque.id!=0){
+            getModeleByMarque(props.annonce.marque.id)
       .then((res) => {
         const response: ApiResponse = res.data;
         if (response.ok) {
@@ -241,7 +253,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
       
         }
         
-    },[props.marque])
+    },[props.annonce.marque])
     const handleClickOpen = (type: string) => {
         setState(prevState => ({
             ...prevState,
@@ -254,7 +266,9 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
             ...prevState,
             open: false
         }));
-        if (item) {
+        console.log( "item marque 2" , item );
+        if (item != null && item != undefined) {
+          console.log( "item marque " , item );
             props.handleMarqueChange(item);
             setState((prevState)=>({
                 ...prevState,
@@ -307,7 +321,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
         }
     }
     const next = ()=>{
-        if(props.marque.id==0){
+        if(props.annonce.marque.id==0){
             setState((prevState)=>({
                 ...prevState,
                 marqueClasse:"error"
@@ -332,7 +346,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
                 etatClasse:"warning"
             }))
         }
-        if(props.marque.id!=0 && props.annonce.voiture.modele.id != 0  && props.annonce.voiture.couleur.id!=0 && state.etatValid!=0){            
+        if(props.annonce.marque.id!=0 && props.annonce.voiture.modele.id != 0  && props.annonce.voiture.couleur.id!=0 && state.etatValid!=0){            
             props.onClickFunc("2");
         }
     };
@@ -361,96 +375,98 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
             <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
                 <IonRefresherContent></IonRefresherContent>
             </IonRefresher>
-                        <h1 className="form-title" >
-                        Caractéristiques générales
-                </h1>
-                <div className="form-login">
-                    <div className="form-group">
+              <AppLoaderComponent loading={state.loading}>
+                    <h1 className="form-title" >
+                            Caractéristiques générales
+                    </h1>
+                    <div className="form-login">
+                        <div className="form-group">
+                            
+                            <label>
+                                Marque
+                            </label>
+                            <Button className={state.marqueClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('marque')}>
+                            {props.annonce.marque.nom}
+                            </Button>
+                
                         
-                        <label>
-                            Marque
-                        </label>
-                        <Button className={state.marqueClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('marque')}>
-                        {props.marque.nom}
+                        <MarqueSimpleDialog onClose={handleMarqueClose} items={state.listMarque} title={"Veuillez sélectionner une marque"} open={state.open && state.type === 'marque'} />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>
+                                Modèle
+                            </label>
+                            <Button className={state.modeleClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('modele')}>
+                            {props.annonce.voiture.modele.nom}
                         </Button>
-            
-                    
-                    <MarqueSimpleDialog onClose={handleMarqueClose} items={state.listMarque} title={"Veuillez sélectionner une marque"} open={state.open && state.type === 'marque'} />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label>
-                            Modèle
-                        </label>
-                        <Button className={state.modeleClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('modele')}>
-                        {props.annonce.voiture.modele.nom}
-                    </Button>
-                    
-                    <ModeleSimpleDialog
-                        open={state.open && state.type === 'modele'}
-                        onClose={handleModeleClose}
-                        items={state.listModele}
-                        title='Veuillez sélectionner un modèle'
-                    />
-                    </div>
-                    {
-                        state.etatValid==-1 && 
-                        <IonAlert
-                            isOpen={true}
-                            message="Etes-vous sûr que l'état de votre voiture sera 0 ?"
-                            buttons={[
-                                {
-                                    text: 'Oui',
-                                    role: 'cancel',
-                                    handler: () => {
-                                      setEtatValid()
+                        
+                        <ModeleSimpleDialog
+                            open={state.open && state.type === 'modele'}
+                            onClose={handleModeleClose}
+                            items={state.listModele}
+                            title='Veuillez sélectionner un modèle'
+                        />
+                        </div>
+                        {
+                            state.etatValid==-1 && 
+                            <IonAlert
+                                isOpen={true}
+                                message="Etes-vous sûr que l'état de votre voiture sera 0 ?"
+                                buttons={[
+                                    {
+                                        text: 'Oui',
+                                        role: 'cancel',
+                                        handler: () => {
+                                          setEtatValid()
+                                        }
+                                    },
+                                    {
+                                      text: 'Non',
+                                      role: 'confirm',
+                                      handler: () => {
+                                        setEtatNonValid()
                                     }
-                                },
-                                {
-                                  text: 'Non',
-                                  role: 'confirm',
-                                  handler: () => {
-                                    setEtatNonValid()
-                                }
-                                }
-                              ]}
-                            onDidDismiss={() => setEtatNonValid()}
-                        ></IonAlert>
-                    }
-                    <div className="form-group">
-                        <label>
-                            Etat
-                        </label>
-                        <Button className={state.etatClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('etat')}>
-                            {props.annonce.voiture.Etat.nom}
-                        </Button>
-                        
-                        <EtatSimpleDialog 
-                            open={state.open && state.type === 'etat'}
-                            onClose={handleEtatClose}
-                            items={state.listEtat}
-                            title='Veuillez sélectionner un état'
-                        />
+                                    }
+                                  ]}
+                                onDidDismiss={() => setEtatNonValid()}
+                            ></IonAlert>
+                        }
+                        <div className="form-group">
+                            <label>
+                                Etat
+                            </label>
+                            <Button className={state.etatClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('etat')}>
+                                {props.annonce.voiture.Etat.nom}
+                            </Button>
+                            
+                            <EtatSimpleDialog 
+                                open={state.open && state.type === 'etat'}
+                                onClose={handleEtatClose}
+                                items={state.listEtat}
+                                title='Veuillez sélectionner un état'
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Couleur
+                            </label>
+                            <Button className={state.couleurClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('couleur')}>
+                                {props.annonce.voiture.couleur.nom}
+                            </Button>
+                            <CouleurSimpleDialog
+                                open={state.open && state.type === 'couleur'}
+                                onClose={handleCouleurClose}
+                                items={state.listCouleur}
+                                title='Veuillez sélectionner une couleur'
+                            />
+                        </div>
+                        <div className="ion-button-container">
+                            <div className="button-invalid-form" >Précedent</div>
+                            <div className="button-next-form" onClick={() => next()} > Suivant</div>
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label>
-                            Couleur
-                        </label>
-                        <Button className={state.couleurClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('couleur')}>
-                            {props.annonce.voiture.couleur.nom}
-                        </Button>
-                        <CouleurSimpleDialog
-                            open={state.open && state.type === 'couleur'}
-                            onClose={handleCouleurClose}
-                            items={state.listCouleur}
-                            title='Veuillez sélectionner une couleur'
-                        />
-                    </div>
-                    <div className="ion-button-container">
-                        <div className="button-invalid-form" >Précedent</div>
-                        <div className="button-next-form" onClick={() => next()} > Suivant</div>
-                    </div>
-                </div>
+                </AppLoaderComponent>
                 <IonToast
                     isOpen={!!state.error}
                     message={state.error || ""}
