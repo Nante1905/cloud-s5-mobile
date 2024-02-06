@@ -2,12 +2,18 @@ import React from 'react';
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
 import './details-annonce.css';
 import { Annonce } from '../../../shared/types/details-annonce-type';
+import { Link, useHistory} from 'react-router-dom';
 
 interface CaracteristiqueProps {
   annonce: Annonce;
 }
 
 const Caracteristique: React.FC<CaracteristiqueProps> = ({ annonce }) => {
+  const history = useHistory();
+  const redirectToOtherPage = ( id : number ) => {
+    console.log( "makato" );
+    history.push(`/modif/${id}`);
+  };
   return (
     <div className="caracteristique ion-padding">
       <div className="annonce">
@@ -38,11 +44,11 @@ const Caracteristique: React.FC<CaracteristiqueProps> = ({ annonce }) => {
         <span className="semi-bold">Couleur :</span> {annonce.voiture.couleur.nom}
       </h2>
       <p className="car-caracteristique">
-        <span className="semi-bold">Description : </span> {annonce.description}
+        <span className="semi-bold">Description : </span><div dangerouslySetInnerHTML={{ __html: annonce.description }}></div>
       </p>
-      <div className="modif-button">
-        Modif
-      </div>
+      <Link to={`/modif/${annonce.id}`}   >
+        <ion-button className="modif-button" id="button-modification" > Modifier l'annonce </ion-button>
+      </Link>
     </div>
   );
 };
