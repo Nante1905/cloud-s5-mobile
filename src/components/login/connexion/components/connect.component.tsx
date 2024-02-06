@@ -94,7 +94,7 @@ const ConnectComponent : React.FC = () => {
                         <label>
                             Email
                         </label> 
-                        <input type="email"  value={state.form.email} onChange={(e) => setState({ ...state, form: { ...state.form, password:e.target.value! } })}  />
+                        <input type="email"  value={state.form.email} onChange={(e) => setState({ ...state, form: { ...state.form, email:e.target.value! } })}  />
                     </div>
                     <div className="form-group">
                         <label>
@@ -124,13 +124,13 @@ const ConnectComponent : React.FC = () => {
                     color="danger"
                 ><Alert severity="error">{state.error as string}</Alert>
                 </IonToast>
-                <IonToast
+                {/* <IonToast
                     isOpen={!!state.success}
                     message={state.success || ""}
                     duration={3000}
                     onDidDismiss={() => setState({ ...state, success: null })}
                     color="success"
-                ><Alert severity="success">{state.success as string}</Alert></IonToast>
+                ><Alert severity="success">{state.success as string}</Alert></IonToast> */}
                 <IonToast
                     isOpen={state.redirectMessage 
                         // || 

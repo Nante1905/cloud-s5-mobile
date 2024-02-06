@@ -1,16 +1,18 @@
 import { IonPage, IonButtons, IonBackButton, IonContent, IonToast } from "@ionic/react";
-import { SignInReq } from "../../../../shared/types/sign-in.types";
+import { SignInReq, UtilisateurToken } from "../../../../shared/types/sign-in.types";
 import { Alert } from "@mui/material";
 import InscriptionComponent from "../components/inscription.component";
 import {useState} from 'react';
-import { inscrire } from "../../../service/inscription.service";
+import { inscrire, sendToken } from "../../../service/inscription.service";
 import { ApiResponse } from "../../../../shared/types/Response";
 import { getErrorMessage } from "../../../../shared/service/api-service";
+import { ActionPerformed, PushNotifications, PushNotificationSchema, Token } from "@capacitor/push-notifications";
 interface InscriptionState {
     newUser: SignInReq;
     error: string|null;
     tab: number,
-    loading: boolean
+    loading: boolean;
+    userToken: UtilisateurToken
 }
 const initialState: InscriptionState = {
     tab: 1,
@@ -22,10 +24,95 @@ const initialState: InscriptionState = {
         adresse:''
     },
     error: null,
-    loading:false
+    loading:false,
+    userToken:{
+        idUtilisateur:0,
+        token:''
+    }
 }
 const InscriptionRoot : React.FC = () => {
     const [state, setState] = useState<InscriptionState>(initialState);
+
+const sendUserToken  = ()=>{
+    sendToken(state.userToken)
+    .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          setState((prevState)=>({
+            ...prevState,
+            tab:2,
+          }))
+        } else {
+          setState((state) => ({
+            ...state,
+            error: response.err,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        setState((state) => ({
+          ...state,
+          error: errorMessage
+        }));
+      });
+}
+    const register = () => {
+        console.log('Initializing HomePage');
+
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register();
+
+        // On success, we should be able to receive notifications
+        PushNotifications.addListener('registration',
+            (token: Token) => {
+                // showToast('Push registration success');
+                alert("tonga token")
+                console.log(token);
+                alert(token);
+                setState((prevState)=>({
+                    ...prevState, 
+                    userToken:{
+                        ...prevState.userToken,
+                        token: token.value
+                    }
+                }))
+            }
+        );
+
+        // Some issue with our setup and push will not work
+        PushNotifications.addListener('registrationError',
+            (error: any) => {
+                alert('Error on registration: ' + JSON.stringify(error));
+            }
+        );
+
+        // Show us the notification payload if the app is open on our device
+        PushNotifications.addListener('pushNotificationReceived',
+            (notification: PushNotificationSchema) => {
+                console.log(notification);
+            }
+        );
+
+        // Method called when tapping on a notification
+        PushNotifications.addListener('pushNotificationActionPerformed',
+            (notification: ActionPerformed) => {
+                console.log(notification);
+            }
+        );
+    }
+
+
     const saveNewUser = ()=>{
     setState((state)=>({
         ...state, 
@@ -36,10 +123,36 @@ const InscriptionRoot : React.FC = () => {
         const response: ApiResponse = res.data;
         
         if (response.ok) {
-          setState((state)=>({
-            ...state, 
-            tab:2
-          }))
+        
+        PushNotifications.checkPermissions().then((res) => {
+            if (res.receive !== 'granted') {
+                PushNotifications.requestPermissions().then((res) => {
+                if (res.receive === 'denied') {
+                    console.log('Push Notification permission denied');
+                }
+                else {
+                    register();
+                     setState((state)=>({
+                        ...state, 
+                        
+                        userToken:{
+                            ...state.userToken,
+                            idUtilisateur:response.data.idUtilisateur
+                        }
+                    }))
+                    sendUserToken();
+                }
+                });
+            }
+            else {
+                register();
+                setState((state)=>({
+                    ...state, 
+                    tab:2
+                  }))
+            }
+            });
+         
         } else {
           setState((state) => ({
             ...state,

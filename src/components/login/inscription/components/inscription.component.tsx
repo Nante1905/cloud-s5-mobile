@@ -3,7 +3,8 @@ import {
   } from '@ionic/react';
 import { SignInReq } from '../../../../shared/types/sign-in.types';
   import "./inscription.css";
-  import {useState, ChangeEvent} from 'react';
+  import {useState, ChangeEvent, useEffect} from 'react';
+  import { PushNotificationSchema, PushNotifications, Token, ActionPerformed } from '@capacitor/push-notifications';
 
 interface InscriptionProps{
     handleNomChange:(newvalue:string)=>void;
@@ -30,6 +31,7 @@ const initialState: InscriptionState = {
 }
 const InscriptionComponent : React.FC<InscriptionProps> = (props: InscriptionProps) => {
     const [state,setState] = useState<InscriptionState>(initialState);
+   
     const handleNomChange = (e:  ChangeEvent<HTMLInputElement>)=>{
         props.handleNomChange(e.target.value);
         setState((state)=>({

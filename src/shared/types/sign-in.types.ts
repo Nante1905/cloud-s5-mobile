@@ -5,3 +5,7 @@ export interface SignInReq {
     password: string,
     adresse: string
 }
+export interface UtilisateurToken{
+    idUtilisateur: number, 
+    token: string
+}
