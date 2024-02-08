@@ -4,7 +4,7 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import "./photo.css"
 import { Annonce, Image } from '../types/creation-annonce-types';
 import { Directory, Filesystem, FilesystemDirectory, FilesystemEncoding } from '@capacitor/filesystem';
-import { Capacitor } from '@capacitor/core';
+import { Capacitor, Plugins } from '@capacitor/core';
 import { checkmarkCircleOutline, closeCircleOutline } from 'ionicons/icons';
 
 interface PhotoGalleryProps{
@@ -38,6 +38,8 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
   const savePicture = async (photo: Photo, fileName: string): Promise<Image> => {
     let base64Data: string;
     // "hybrid" will detect Cordova or Capacitor;
+    console.log(isPlatform('hybrid'));
+    
     if (isPlatform('hybrid')) {
       const file = await Filesystem.readFile({
         path: photo.path!
@@ -57,13 +59,12 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     });
 
     if (isPlatform('hybrid')) {
-      // Display the new image by rewriting the 'file://' path to HTTP
-      // Details: https://ionicframework.com/docs/building/webview#file-protocol
       return {
         fileName: savedFile.uri,
         webViewPath: Capacitor.convertFileSrc(savedFile.uri),
         blob: base64Data, 
-        contentType: photo.format
+        contentType: photo.format, 
+        url:''
       };
     }
     else {
@@ -73,38 +74,62 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
         fileName: fileName,
         webViewPath: photo.webPath,
         blob: base64Data, 
-        contentType: photo.format
+        contentType: photo.format,
+        url:''
       };
     }
   };
+  const { Camera, Permissions } = Plugins;
   const takePhoto = async () => {
-    const photo = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
-      quality: 90,
-    });
+    const cameraPermission = await Permissions.query({ name: 'camera' });
 
-    const fileName = new Date().getTime()+'.jpeg';
-    const savedFileImage = await savePicture (photo, fileName);
-    console.log(savedFileImage.blob);
+  if (cameraPermission.state !== 'granted') {
+    const permissionResult = await Permissions.request({ name: 'camera' });
     
-    props.handleImageChange(savedFileImage);
-    props.handleClassChange('');
-  };
-  const takePhotoFromGallery = async () => {
-    const photo = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos,
-      quality: 90,
-    });
-    
-    const fileName = new Date().getTime()+'.jpeg';
-    const savedFileImage = await savePicture (photo, fileName);
-    console.log(savedFileImage.blob);
-    
-    props.handleImageChange(savedFileImage);
-    props.handleClassChange('');
-  };
+    if (permissionResult.state !== 'granted') {
+      console.error('Permission refusée pour la caméra');
+      return;
+    }
+  }
+
+  // Prendre la photo
+  const photo = await Camera.getPhoto({
+    resultType: CameraResultType.Uri,
+    source: CameraSource.Camera,
+    quality: 90,
+  });
+
+  const fileName = new Date().getTime() + '.jpeg';
+  const savedFileImage = await savePicture(photo, fileName);
+  console.log(savedFileImage.blob);
+
+  props.handleImageChange(savedFileImage);
+  props.handleClassChange('');
+};
+
+const takePhotoFromGallery = async () => {
+  const galleryPermission = await Permissions.query({ name: 'photos' });
+
+  if (galleryPermission.state !== 'granted') {
+    const permissionResult = await Permissions.request({ name: 'photos' });
+    if (permissionResult.state !== 'granted') {
+      console.error('Permission refusée pour la galerie');
+      return;
+    }
+  }
+  const photo = await Camera.getPhoto({
+    resultType: CameraResultType.Uri,
+    source: CameraSource.Photos,
+    quality: 90,
+  });
+
+  const fileName = new Date().getTime() + '.jpeg';
+  const savedFileImage = await savePicture(photo, fileName);
+  console.log(savedFileImage.blob);
+
+  props.handleImageChange(savedFileImage);
+  props.handleClassChange('');
+};
 
 
   const handleImageDelete = (filename : string) =>  {
