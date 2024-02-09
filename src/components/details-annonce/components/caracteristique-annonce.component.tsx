@@ -46,9 +46,9 @@ const Caracteristique: React.FC<CaracteristiqueProps> = ({ annonce }) => {
       <p className="car-caracteristique">
         <span className="semi-bold">Description : </span><div dangerouslySetInnerHTML={{ __html: annonce.description }}></div>
       </p>
-      <Link to={`/modif/${annonce.id}`}   >
+      {/* <Link to={`/modif/${annonce.id}`}   >
         <ion-button className="modif-button" id="button-modification" > Modifier l'annonce </ion-button>
-      </Link>
+      </Link> */}
     </div>
   );
 };

@@ -1,12 +1,13 @@
 import { Annonce, Couleur, Etat, Marque, Modele } from "../../../../shared/types/creation-annonce-types";
 import { Alert, Button } from "@mui/material";
-import { IonAlert, IonRefresher, IonRefresherContent, IonToast, RefresherEventDetail } from '@ionic/react';
+import { IonAlert, IonButton, IonIcon, IonRefresher, IonRefresherContent, IonToast, RefresherEventDetail } from '@ionic/react';
 import { useEffect, useState} from "react";
 import { Item } from "../../../../shared/types/item";
 import { CouleurSimpleDialog, EtatSimpleDialog, MarqueSimpleDialog, ModeleSimpleDialog } from "../../../../shared/hooks/SimpleDialog";
 import { getAllCouleur, getAllEtat, getAllMarque, getAllModele, getModeleByMarque } from "../../../service/Add-annonce.service";
 import { ApiResponse } from "../../../../shared/types/Response";
 import { getErrorMessage } from "../../../../shared/service/api-service";
+import { closeCircleOutline } from "ionicons/icons";
 
 interface FirstStepState{
     open : boolean,
@@ -355,7 +356,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
     }
     return (
         <div className="ion-padding">
-            
+                        
                         <h1 className="form-title" >
                         Caractéristiques générales
                 </h1>
