@@ -63,6 +63,8 @@ const ListAnnonceComponent: React.FC = () => {
         .then((res) => {
           const response: ApiResponse = res.data;
           if (response.ok) {
+            console.log(response.data);
+            
             setState((state) => ({
               ...state,
               annonces: response.data,
@@ -103,10 +105,12 @@ const ListAnnonceComponent: React.FC = () => {
     Modif_annonce( id_annonce )
     .then((res) => {
       const response: ApiResponse = res.data;
+      console.log(response);
+      
       if (response.ok) {
         setState((state) => ({
           ...state,
-          success : "La voiture a donc été vendu"
+          success : "La voiture a été marquée comme vendue"
         }));
         changeList( state.actual_list );
       } else {
@@ -200,12 +204,15 @@ const ListAnnonceComponent: React.FC = () => {
                   <IonCardHeader>
                       <IonCardTitle className="card-title">
                       {annonce.marque.nom} {annonce.modele.nom}
+                      
                     </IonCardTitle>
+
                   </IonCardHeader>
                   <IonCardContent className="content-card">
                     <div className="prix">{formatNumber(annonce.prix)} MGA</div>
-                    <div className="view">  <VisibilityIcon /> 10k</div>
+                    
                   </IonCardContent>
+                  <div className="view">  <VisibilityIcon />{annonce.vues}</div>
                 </div>
               </IonItem>
             </Link>
