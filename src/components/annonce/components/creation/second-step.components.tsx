@@ -130,9 +130,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
     },[]);
     const handleRefresh = (event: CustomEvent<RefresherEventDetail>)=>{
             fetchData();
-            if(state.readyBV && state.readyEnergie){
-                event.detail.complete();
-            }
+            event.detail.complete();
     }
     const handleClickOpen = (type: string) => {
         setState(prevState => ({
