@@ -1,30 +1,29 @@
 ion-item {
-    --padding-start: 0;
-    --inner-padding-end: 0;
-  }
-  .error{
-    border-width: 0.4px !important;
-    border-color: #dc3545 !important;
-    color: #dc3545 !important;
-  }
-  .warning{
-    border-width: 0.4px !important;
-    border-color: #ffc107 !important;
-    color: #ffc107 !important;
-  }
-  .gif-car{
-    margin-top: -1vh;
-
-  }
-  .blue{
-    background-color: #e4eeff;
-    height: 35vh;
-  }
-  .green{
-    background-color:#7da141;
-    height: 35vh;
-    margin-top: -20px;
-  }
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+.error {
+  border-width: 0.4px !important;
+  border-color: #dc3545 !important;
+  color: #dc3545 !important;
+}
+.warning {
+  border-width: 0.4px !important;
+  border-color: #ffc107 !important;
+  color: #ffc107 !important;
+}
+.gif-car {
+  margin-top: -1vh;
+}
+.blue {
+  background-color: #e4eeff;
+  height: 35vh;
+}
+.green {
+  background-color: #7da141;
+  height: 35vh;
+  margin-top: -20px;
+}
 
 .ajout-photo-error {
   animation: pulsate 1s infinite;
@@ -32,13 +31,13 @@ ion-item {
 
 @keyframes pulsate {
   0% {
-      transform: scale(1);
+    transform: scale(1);
   }
   50% {
-      transform: scale(1.1);
+    transform: scale(1.1);
   }
   100% {
-      transform: scale(1);
+    transform: scale(1);
   }
 }
 /* 
@@ -56,194 +55,195 @@ ion-item {
       animation-timing-function: ease-in;
   }
 } */
-  input:focus-visible{
-    outline: none;
-  }
-  .error:focus-visible{
-    outline: none;
-    border-width: 0.4px !important;
-    border-color: #dc3545 !important;
-    color: #dc3545 !important;
-  }
-  .warning:focus-visible{
-    outline: none;
-    border-width: 0.4px !important;
-    border-color: #ffc107 !important;
-    color: #ffc107 !important;
-  }
-  
-  ion-label {
-    margin-top: 12px;
-    margin-bottom: 12px;
-  }
- 
-  ion-item h2 {
-    font-weight: 600;
-    margin: 0;
-    
-    /**
+input:focus-visible {
+  outline: none;
+}
+.error:focus-visible {
+  outline: none;
+  border-width: 0.4px !important;
+  border-color: #dc3545 !important;
+  color: #dc3545 !important;
+}
+.warning:focus-visible {
+  outline: none;
+  border-width: 0.4px !important;
+  border-color: #ffc107 !important;
+  color: #ffc107 !important;
+}
+
+ion-label {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+ion-item h2 {
+  font-weight: 600;
+  margin: 0;
+
+  /**
      * With larger font scales
      * the date/time should wrap to the next
      * line. However, there should be
      * space between the name and the date/time
      * if they can appear on the same line.
      */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  ion-item p {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 95%;
-  }
-  
-  ion-item .date {
-    align-items: center;
-    display: flex;
-  }
-  
-  ion-item ion-icon {
-    color: #c9c9ca;
-  }
-  
-  ion-item ion-note {
-    font-size: 0.9375rem;
-    margin-right: 8px;
-    font-weight: normal;
-  }
-  
-  ion-item ion-note.md {
-    margin-right: 14px;
-  }
-  
-  .dot {
-    display: block;
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    align-self: start;
-    margin: 16px 10px 16px 16px;
-  }
-  
-  .dot-unread {
-    background: var(--ion-color-primary);
-  }
-  
-  ion-footer ion-title {
-    font-size: 11px;
-    font-weight: normal;
-  }
-
-  /* Without setting height the slides will take up the height of the slide's content */
-ion-slides {
-    height: 100%;
-  }
-
-  .swiper-button-next,
-  .swiper-button-prev {
-    --color:black;
-  }
-  
-  .swiper-button-next {
-    right: 10px;
-  }
-  
-  .swiper-button-prev {
-    left: 10px;
-  }
-  .img-caroussel{
-    object-fit: cover;
-  }
-
-  .ion-padding{
-    transform: translateY(-7vh);
-    background: #ffff;
-    color:#333;
-    width: 100%;
-    padding: 40px;
-    border-top-left-radius: 60px;
-    box-shadow:  5px 7px 60px #333;
-    position:absolute;
-    z-index:20 ;
-    min-height: 80vh;
-    padding-top: 60px;
-    padding-bottom: 75px;
-    margin-top: 22vh;
-  }
-
-  .car-name{
-    font-weight: 800;
-    font-size: 35px;
-    margin-bottom: 40px;
-  }
-  .car-annonce{
-    font-size: 15px;
-  }
-  .bold{
-    font-weight: 800;
-  }
-  .semi-bold{
-    font-weight: 800;
-  }
-  .annonce{
-    display: flex;
-    justify-content: space-between;
-    color: rgb(143, 143, 143);
-  }
-  .car-caracteristique{
-    font-size: 20px;
-    font-weight: 500;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .modif-button{
-    background: rgb( 69 , 189 , 197 );
-    height: 50px;
-    width:80px;
-    border-radius: 5px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .details-header , .details-toolbar{
-    --background:transparent;
-  }
-
-.button-back{
-    background: black;
-    /* width: 40px; */
-    /* top:5px; */
-    /* left:5px; */
-    /* position:absolute; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 25px;
-    /* height: 40px; */
-    box-sizing: border-box;
-    color: #ffff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.title-creation-annonce{
+
+ion-item p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 95%;
+}
+
+ion-item .date {
+  align-items: center;
+  display: flex;
+}
+
+ion-item ion-icon {
+  color: #c9c9ca;
+}
+
+ion-item ion-note {
+  font-size: 0.9375rem;
+  margin-right: 8px;
+  font-weight: normal;
+}
+
+ion-item ion-note.md {
+  margin-right: 14px;
+}
+
+.dot {
+  display: block;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  align-self: start;
+  margin: 16px 10px 16px 16px;
+}
+
+.dot-unread {
+  background: var(--ion-color-primary);
+}
+
+ion-footer ion-title {
+  font-size: 11px;
+  font-weight: normal;
+}
+
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  --color: black;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+.img-caroussel {
+  object-fit: cover;
+}
+
+.ion-padding {
+  transform: translateY(-7vh);
+  background: #ffff;
+  color: #333;
+  width: 100%;
+  padding: 40px;
+  border-top-left-radius: 60px;
+  box-shadow: 5px 7px 60px #333;
+  position: absolute;
+  z-index: 20;
+  min-height: 80vh;
+  padding-top: 60px;
+  padding-bottom: 75px;
+  margin-top: 22vh;
+}
+
+.car-name {
+  font-weight: 800;
+  font-size: 35px;
+  margin-bottom: 40px;
+}
+.car-annonce {
+  font-size: 15px;
+}
+.bold {
+  font-weight: 800;
+}
+.semi-bold {
+  font-weight: 800;
+}
+.annonce {
+  display: flex;
+  justify-content: space-between;
+  color: rgb(143, 143, 143);
+}
+.car-caracteristique {
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.modif-button {
+  background: rgb(69, 189, 197);
+  height: 50px;
+  width: 80px;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details-header,
+.details-toolbar {
+  --background: transparent;
+}
+
+.button-back {
+  background: black;
+  /* width: 40px; */
+  /* top:5px; */
+  /* left:5px; */
+  /* position:absolute; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  /* height: 40px; */
+  box-sizing: border-box;
+  color: #ffff;
+}
+.title-creation-annonce {
   padding-top: 6vw;
   padding-right: 6vw;
   display: flex;
-  align-items:flex-start !important;
-  justify-content:flex-end  !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
 }
-.title-login{
-  height:34vh !important;
+.title-login {
+  height: 34vh !important;
   width: 100%;
   position: fixed;
 
-  top:0;
-  background-image: url('background2.jpg')  !important;
+  top: 0;
+  background-image: url("/background2.jpg") !important;
   background-size: cover !important;
 }
-.filter{
+.filter {
   background-color: #333;
   opacity: 30%;
   width: 100%;
@@ -252,8 +252,8 @@ ion-slides {
   top: 0;
   z-index: 2;
 }
-.close-button{
-  background: black  !important;
+.close-button {
+  background: black !important;
   width: 40px;
   height: 40px;
   /* box-sizing: border-box; */
@@ -265,50 +265,49 @@ ion-slides {
   margin-left: 6vw;
 }
 
-.title-login h1{
-  color:#fff;
+.title-login h1 {
+  color: #fff;
   transform: translateY(-2vh);
   font-size: 35px;
   font-weight: 600;
   text-align: center;
 }
-.form-title{
+.form-title {
   font-size: 35px;
   font-weight: 600;
   color: black;
   margin-bottom: 30px;
 }
-.form-group{
-  display:  flex;
-  
+.form-group {
+  display: flex;
+
   flex-direction: column;
 }
-.form-group label{
+.form-group label {
   font-weight: 600;
-  color:  rgb(132, 132, 132);
+  color: rgb(132, 132, 132);
 }
-.form-group input ,.form-group select  {
+.form-group input,
+.form-group select {
   margin-top: 5px;
-  border: 3px solid rgb(211 , 211, 211);
-  background-color: rgb(241 , 241 , 241 );
+  border: 3px solid rgb(211, 211, 211);
+  background-color: rgb(241, 241, 241);
   height: 45px;
-  color:  rgb(132, 132, 132);
+  color: rgb(132, 132, 132);
   border-radius: 10px;
   margin-bottom: 20px;
-  
 }
-.form-group input{
+.form-group input {
   padding-left: 2vh;
-
 }
-.ion-button-container{
+.ion-button-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
 }
 
-.form-login .form-submit{
+.form-login .form-submit {
   background-color: black;
   color: #ffff;
   display: flex;
@@ -321,49 +320,48 @@ ion-slides {
   border-radius: 50px;
   margin-left: auto;
 }
-.inscription{
+.inscription {
   display: flex;
   align-items: center;
   margin-top: 20px;
 }
-.inscription .text-inscription{
-  --background:transparent;
-  --color:black;
+.inscription .text-inscription {
+  --background: transparent;
+  --color: black;
   font-weight: 600;
   margin-left: 5px;
 }
 
-
-.form-suivant{
+.form-suivant {
   --background: transparent;
 }
 
-.button-form-creation{
-  display: flex ;
-  align-items: center ;
+.button-form-creation {
+  display: flex;
+  align-items: center;
   justify-content: center;
   --text-align: center;
   border-radius: 50px;
 }
 
-.button-form-creation .input-wrapper{
+.button-form-creation .input-wrapper {
   justify-content: center;
 }
 
-.button-next-form{
+.button-next-form {
   background: black;
   color: #ffff;
   display: flex;
   align-items: center;
   justify-content: center;
   /* padding: 15px; */
-  border-radius: 20px;  
+  border-radius: 20px;
 
   width: 45%;
   height: 6vh;
 }
 
-.button-invalid-form{
+.button-invalid-form {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -374,8 +372,7 @@ ion-slides {
   height: 6vh;
 }
 
-
-.or-form{
+.or-form {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -387,8 +384,8 @@ ion-slides {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.evaluation{
-  background:  rgb( 69 , 189 , 197 );
+.evaluation {
+  background: rgb(69, 189, 197);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -400,7 +397,7 @@ ion-slides {
   margin-bottom: 20px;
   border-radius: 25px;
 }
-.evalue{
+.evalue {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -410,8 +407,8 @@ ion-slides {
   margin-top: 3vh;
   margin-bottom: 3vh;
 }
-.choisir{
-  background:  rgb( 69 , 189 , 197 );
+.choisir {
+  background: rgb(69, 189, 197);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -423,11 +420,11 @@ ion-slides {
   margin-bottom: 20px;
   border-radius: 20px;
 }
-.price-evalue{
+.price-evalue {
   font-weight: bold;
   font-size: larger;
 }
-.rich-text{
+.rich-text {
   height: 40vh;
   overflow-y: scroll;
   margin-bottom: 50px;
@@ -435,15 +432,15 @@ ion-slides {
   /* padding: 20px; */
 }
 
-#bouton-choice{
+#bouton-choice {
   margin-top: 5px;
-  border: 3px solid rgb(211 , 211, 211);
-  background-color: rgb(241 , 241 , 241 );
+  border: 3px solid rgb(211, 211, 211);
+  background-color: rgb(241, 241, 241);
   height: 45px;
-  width:100%;
+  width: 100%;
   display: block;
   text-align: left;
-  color:  rgb(132, 132, 132);
+  color: rgb(132, 132, 132);
   border-radius: 10px;
   margin-bottom: 20px;
   text-transform: none;
