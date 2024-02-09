@@ -247,7 +247,6 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
           error: errorMessage
         }));
       });
-      
         }
         
     },[props.marque])
@@ -364,8 +363,148 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
         next();
     }
     const handleRefresh = (event: CustomEvent<RefresherEventDetail>)=> {
-            fetchData();
-            event.detail.complete();
+      setState((prevState)=>({
+        ...prevState, 
+        readyMarque:false,
+        readyEtat:false,
+        readyModel: false, 
+        readyCouleur: false
+      }));
+        getAllMarque()
+      .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          setState((state) => ({
+            ...state,
+            listMarque: response.data,
+            readyMarque: true
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            error: response.err,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        setState((state) => ({
+          ...state,
+          error: errorMessage
+        }));
+      });
+      getAllModele()
+      .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          setState((state) => ({
+            ...state,
+            listModele: response.data,
+            readyModel: true
+          }));
+          event.detail.complete()
+        } else {
+          setState((state) => ({
+            ...state,
+            error: response.err,
+          }));
+          
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        setState((state) => ({
+          ...state,
+          error: errorMessage
+        }));
+      });
+      getAllEtat()
+      .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          setState((state) => ({
+            ...state,
+            listEtat: response.data,
+            readyEtat: true
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            error: response.err,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        setState((state) => ({
+          ...state,
+          error: errorMessage
+        }));
+      });
+      getAllCouleur()
+      .then((res) => {
+        const response: ApiResponse = res.data;
+        if (response.ok) {
+          setState((state) => ({
+            ...state,
+            listCouleur: response.data,
+            readyCouleur: true
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            error: response.err,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        let errorMessage = "";
+        if (
+          !err.response?.data.err ||
+          err.response?.data.err == "" ||
+          err.response?.data.err == null
+        ) {
+          errorMessage = getErrorMessage(err.code);
+        } else {
+          errorMessage = err.response.data.err;
+        }
+        setState((state) => ({
+          ...state,
+          error: errorMessage
+        }));
+      });
+        
     }
     return (
         <div className="ion-padding">
