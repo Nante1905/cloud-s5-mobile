@@ -96,6 +96,8 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     props.handleImageChange(savedFileImage);
     props.handleClassChange('');
   };
+  // const { Camera, Permissions } = Plugins;
+
   const takePhotoFromGallery = async () => {
     const photo = await Camera.getPhoto({
       resultType: CameraResultType.Uri,

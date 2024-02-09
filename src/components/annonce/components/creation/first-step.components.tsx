@@ -7,7 +7,6 @@ import { CouleurSimpleDialog, EtatSimpleDialog, MarqueSimpleDialog, ModeleSimple
 import { getAllCouleur, getAllEtat, getAllMarque, getAllModele, getModeleByMarque } from "../../../service/Add-annonce.service";
 import { ApiResponse } from "../../../../shared/types/Response";
 import { getErrorMessage } from "../../../../shared/service/api-service";
-import { closeCircleOutline } from "ionicons/icons";
 
 interface FirstStepState{
     open : boolean,
@@ -22,7 +21,11 @@ interface FirstStepState{
     listEtat: Etat[], 
     listCouleur: Couleur[],
     error: string | null, 
-    refresh: number
+    refresh: number,
+    readyModel: boolean ,
+    readyMarque: boolean,
+    readyEtat: boolean, 
+    readyCouleur: boolean 
 }
 interface FirstStepProps{
     handleMarqueChange: (newValue: Marque) => void;
@@ -36,33 +39,36 @@ interface FirstStepProps{
     etatValid: number;
 }   
 const initialState: FirstStepState = {
-    open: false,
-    type: "",
-    items: [],
-    marqueClasse: "",
-    modeleClasse: "",
-    couleurClasse: "",
-    etatClasse: "",
-    listMarque: [
-        
-    ],
-    listModele: [
-        
-    ],
-    listEtat: [
-        
-    ],
-    listCouleur: [
-        
-    ],
-    error: "",
-    refresh: 0
+  open: false,
+  type: "",
+  items: [],
+  marqueClasse: "",
+  modeleClasse: "",
+  couleurClasse: "",
+  etatClasse: "",
+  listMarque: [],
+  listModele: [],
+  listEtat: [],
+  listCouleur: [],
+  error: "",
+  refresh: 0,
+  readyModel: false,
+  readyMarque: false,
+  readyEtat: false,
+  readyCouleur: false
 }
 
 const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepProps) => {
     const [state, setState] = useState(initialState);
     
     const fetchData = ()=>{
+      setState((prevState)=>({
+        ...prevState, 
+        readyMarque:false,
+        readyEtat:false,
+        readyModel: false, 
+        readyCouleur: false
+      }));
         getAllMarque()
       .then((res) => {
         const response: ApiResponse = res.data;
@@ -70,6 +76,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
           setState((state) => ({
             ...state,
             listMarque: response.data,
+            readyMarque: true
           }));
         } else {
           setState((state) => ({
@@ -102,6 +109,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
           setState((state) => ({
             ...state,
             listModele: response.data,
+            readyModel: true
           }));
         } else {
           setState((state) => ({
@@ -134,6 +142,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
           setState((state) => ({
             ...state,
             listEtat: response.data,
+            readyEtat: true
           }));
         } else {
           setState((state) => ({
@@ -166,6 +175,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
           setState((state) => ({
             ...state,
             listCouleur: response.data,
+            readyCouleur: true
           }));
         } else {
           setState((state) => ({
@@ -196,6 +206,10 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
         fetchData()
     },[]);
     useEffect(()=>{
+      setState((prevState)=>({
+        ...prevState, 
+        readyModel: false
+      }));
         if(props.marque.id!=0){
             getModeleByMarque(props.marque.id)
       .then((res) => {
@@ -204,6 +218,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
           setState((state) => ({
             ...state,
             listModele: response.data,
+            readyModel: true
           }));
           if(response.data.length>0){
             props.handleModeleChange(response.data[0]);
@@ -349,10 +364,8 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
         next();
     }
     const handleRefresh = (event: CustomEvent<RefresherEventDetail>)=> {
-        setTimeout(() => {
             fetchData();
             event.detail.complete();
-          }, 2000);
     }
     return (
         <div className="ion-padding">
@@ -372,7 +385,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
                         <Button className={state.marqueClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('marque')}>
                         {props.marque.nom}
                         </Button>
-                    <MarqueSimpleDialog onClose={handleMarqueClose} items={state.listMarque} title={"Veuillez sélectionner une marque"} open={state.open && state.type === 'marque'} />
+                    <MarqueSimpleDialog ready={state.readyMarque} onClose={handleMarqueClose} items={state.listMarque} title={"Veuillez sélectionner une marque"} open={state.open && state.type === 'marque'} />
                     </div>
                     
                     <div className="form-group">
@@ -383,7 +396,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
                         {props.annonce.voiture.modele.nom}
                     </Button>
                     
-                    <ModeleSimpleDialog
+                    <ModeleSimpleDialog ready={state.readyModel}
                         open={state.open && state.type === 'modele'}
                         onClose={handleModeleClose}
                         items={state.listModele}
@@ -422,7 +435,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
                             {props.annonce.voiture.Etat.nom}
                         </Button>
                         
-                        <EtatSimpleDialog 
+                        <EtatSimpleDialog ready={state.readyEtat}
                             open={state.open && state.type === 'etat'}
                             onClose={handleEtatClose}
                             items={state.listEtat}
@@ -436,7 +449,7 @@ const FirstStepAnnonceCreation: React.FC<FirstStepProps> = (props : FirstStepPro
                         <Button className={state.couleurClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('couleur')}>
                             {props.annonce.voiture.couleur.nom}
                         </Button>
-                        <CouleurSimpleDialog
+                        <CouleurSimpleDialog ready={state.readyCouleur}
                             open={state.open && state.type === 'couleur'}
                             onClose={handleCouleurClose}
                             items={state.listCouleur}

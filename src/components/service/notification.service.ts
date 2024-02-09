@@ -5,7 +5,6 @@ import {
   Token,
 } from "@capacitor/push-notifications";
 import { sendToken } from "./inscription.service";
-
 export const pushNotificationRegister = (id: number) => {
   PushNotifications.checkPermissions().then((perm) => {
     if (perm.receive != "granted") {

@@ -19,7 +19,9 @@ interface SecondStepState{
     consoClasse:string
     listeBoiteVitesse: BoiteVitesse[], 
     listeEnergie: Energie[],
-    error: string | null
+    error: string | null,
+    readyBV: boolean, 
+    readyEnergie: boolean
 }
 interface SecondStepProps{
     onClickFunc: (newValue: string)=>void;
@@ -38,6 +40,8 @@ const initialState: SecondStepState = {
     bvClasse: "",
     kmClasse: '',
     consoClasse: '',
+    readyEnergie: false,
+    readyBV: false,
     listeBoiteVitesse: [
         
     ],
@@ -49,6 +53,11 @@ const initialState: SecondStepState = {
 const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStepProps) => {
     const [state, setState] = useState(initialState);
     const fetchData = ()=>{
+        setState((prevState)=>({
+            ...prevState, 
+            readyBV: false,
+            readyEnergie: false
+        }))
         getAllBV()
       .then((res: { data: ApiResponse; }) => {
         const response: ApiResponse = res.data;
@@ -56,6 +65,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
           setState((state) => ({
             ...state,
             listeBoiteVitesse: response.data,
+            readyBV: true
           }));
         } else {
           setState((state) => ({
@@ -88,6 +98,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
           setState((state) => ({
             ...state,
             listeEnergie: response.data,
+            readyEnergie: true
           }));
         } else {
           setState((state) => ({
@@ -118,10 +129,10 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
         fetchData()
     },[]);
     const handleRefresh = (event: CustomEvent<RefresherEventDetail>)=>{
-        setTimeout(() => {
             fetchData();
-            event.detail.complete();
-          }, 2000);
+            if(state.readyBV && state.readyEnergie){
+                event.detail.complete();
+            }
     }
     const handleClickOpen = (type: string) => {
         setState(prevState => ({
@@ -240,7 +251,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         <Button className={state.energieClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('energie')}>
                         {props.annonce.voiture.energie.nom}
                     </Button>
-                    <EnergieSimpleDialog
+                    <EnergieSimpleDialog ready={state.readyEnergie}
                         open={state.open && state.type === 'energie'}
                         onClose={handleEnergieClose}
                         items={state.listeEnergie}
@@ -254,7 +265,7 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
                         <Button  className={state.bvClasse} id="bouton-choice" variant="outlined" onClick={() => handleClickOpen('bv')}>
                         {props.annonce.voiture.boiteVitesse.nom}
                         </Button>
-                        <BVSimpleDialog
+                        <BVSimpleDialog ready={state.readyBV}
                             open={state.open && state.type === 'bv'}
                             onClose={handleBVClose}
                             items={state.listeBoiteVitesse}
