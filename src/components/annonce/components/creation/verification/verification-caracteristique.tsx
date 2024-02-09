@@ -48,11 +48,15 @@ const VerificationCaracteristique:React.FC<VerificationAnnonceProps> = (props : 
                 <span className="semi-bold" >Description : </span> <div dangerouslySetInnerHTML={{ __html: props.annonce.description }}></div>
                   
                 </p>
-                
-                <div className="ion-button-container">
+                {props.status == 0 && <div className="ion-button-container">
                         <div className="button-next-form" onClick={() => props.onClickFunc("4")}>Précedent</div>
-                        <div className="button-next-form" onClick={() => props.save(props.annonce)} > Terminer</div>
-                    </div>
+                        <div className="button-next-form" onClick={() => props.save(props.annonce)} >Terminer</div>
+                </div>}
+                { props.status==-1 && <div className="ion-button-container">
+                        <div className="button-next-form" onClick={() => props.exit()}>Quitter</div>
+                        <div className="button-next-form" onClick={() => props.save(props.annonce)}>Recommencer</div>
+                </div>}
+                
         </div>
     );
 };

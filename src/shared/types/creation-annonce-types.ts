@@ -24,6 +24,8 @@ export interface VerificationAnnonceProps{
     save: (value:Annonce)=>void;
     annonce: Annonce;
     marque: Marque;
+    exit: ()=>void | null;
+    status:number;
   }
 export interface Etat{
     id: number, 

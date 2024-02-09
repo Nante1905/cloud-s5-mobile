@@ -31,11 +31,13 @@ interface LastStepState{
   error: string|null;
   success: string|null;
   loading: boolean;
+  status: number
 }
 const initialState: LastStepState = {
   error:null,
   success:null,
-  loading:false
+  loading:false, 
+  status:0
 }
 const VerificationAnnonce: React.FC<VerificationAnnonceProps> = ( props : VerificationAnnonceProps ) => {
   const [state,setState] = useState<LastStepState>(initialState);
@@ -57,13 +59,18 @@ const VerificationAnnonce: React.FC<VerificationAnnonceProps> = ( props : Verifi
             setState((state) => ({
                 ...state,
                 loading:false,
-                success: 'Votre annonce a été importée avec succès. Vous serez notifié(e) dès qu\'elle sera validée'
+                success: 'Votre annonce a été importée avec succès. Vous serez notifié(e) dès qu\'elle sera validée',
+                status:1
               }));
+              setTimeout(() => {
+                props.exit();
+              }, 4000);
         } else {
           setState((state) => ({
             ...state,
             loading:false,
             error: response.err,
+            status:-1
           }));
         }
       })
@@ -82,10 +89,12 @@ const VerificationAnnonce: React.FC<VerificationAnnonceProps> = ( props : Verifi
         setState((state) => ({
           ...state,
           loading: false,
-          error: errorMessage
+          error: errorMessage,
+          status: -1
         }));
       });
 }
+
   return (
             <>
               <IonItem >
@@ -103,7 +112,13 @@ const VerificationAnnonce: React.FC<VerificationAnnonceProps> = ( props : Verifi
                     ))}
                     </Swiper>
               </IonItem>
-                <VerificationCaracteristique save={save} onClickFunc={props.onClickFunc} annonce={props.annonce} marque={props.marque}/>
+                <VerificationCaracteristique status={state.status} exit={props.exit} save={save} onClickFunc={props.onClickFunc} annonce={props.annonce} marque={props.marque}/>
+                
+                <div className="ion-button-container">
+                        <div className="button-next-form" onClick={() => props.onClickFunc("4")}>Précedent</div>
+                        <div className="button-next-form" onClick={() => save()} > Terminer</div>
+                </div>
+                
               <IonToast
               duration={3000}
                     isOpen={!!state.error}
