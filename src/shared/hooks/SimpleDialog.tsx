@@ -13,41 +13,48 @@ import firstLetterToUpperCase from './string-helper';
 import { Item } from '../types/item';
 import { SimpleDialogProps } from '../types/simple-dialog-props';
 import { BoiteVitesse, Couleur, Energie, Etat, Marque, Modele } from '../types/creation-annonce-types';
+import AppLoaderComponent from '../loader/app-loader.component';
 interface ModeleDialogProps {
   onClose:(value: Modele|null)=>void;
   items: Modele[], 
   title: string, 
   open: boolean;
+  ready: boolean
 }
 interface MarqueDialogProps{
   onClose:(value: Marque|null)=>void;
   items: Marque[], 
   title: string, 
   open: boolean;
+  ready: boolean
 }
 interface CouleurDialogProps{
   onClose:(value: Couleur|null)=>void;
   items: Couleur[], 
   title: string, 
   open: boolean;
+  ready: boolean
 }
 interface EtatDialogProps{
   onClose:(value: Etat|null)=>void;
   items: Etat[], 
   title: string, 
   open: boolean;
+  ready: boolean
 }
 interface EnergieDialogProps{
   onClose:(value: Energie|null)=>void;
   items: Energie[], 
   title: string, 
   open: boolean;
+  ready: boolean
 }
 interface BVDialogProps{
   onClose:(value: BoiteVitesse|null)=>void;
   items: BoiteVitesse[], 
   title: string, 
   open: boolean;
+  ready: boolean
 }
 
 export const BVSimpleDialog : React.FC<BVDialogProps> = (props: BVDialogProps) => {
@@ -59,9 +66,14 @@ export const BVSimpleDialog : React.FC<BVDialogProps> = (props: BVDialogProps) =
     onClose(item);
   };
   return (
-    <Dialog onClose={handleClose} open={open}>
+        
+        <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{title}</DialogTitle>
-      <List sx={{ pt: 0 }}>
+   
+    
+     <List sx={{ pt: 0 }}>
+      <AppLoaderComponent loading={!props.ready}>
+        <>
         {items.map((item) => (
           <ListItem disableGutters key={item.id}>
             <ListItemButton onClick={() => handleListItemClick(item)}>
@@ -74,6 +86,8 @@ export const BVSimpleDialog : React.FC<BVDialogProps> = (props: BVDialogProps) =
             </ListItemButton>
           </ListItem>
         ))}
+        </>
+        </AppLoaderComponent>
         <ListItem disableGutters>
           <ListItemButton
             autoFocus
@@ -88,7 +102,9 @@ export const BVSimpleDialog : React.FC<BVDialogProps> = (props: BVDialogProps) =
           </ListItemButton>
         </ListItem>
       </List>
+      
     </Dialog>
+     
   );
 }
 
@@ -101,10 +117,15 @@ export const EnergieSimpleDialog : React.FC<EnergieDialogProps> = (props: Energi
     onClose(item);
   };
   return (
+    
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{title}</DialogTitle>
+      
       <List sx={{ pt: 0 }}>
-        {items.map((item) => (
+ 
+ <AppLoaderComponent loading={!props.ready}>
+  <>       
+  {items.map((item) => (
           <ListItem disableGutters key={item.id}>
             <ListItemButton onClick={() => handleListItemClick(item)}>
               <ListItemAvatar>
@@ -116,6 +137,8 @@ export const EnergieSimpleDialog : React.FC<EnergieDialogProps> = (props: Energi
             </ListItemButton>
           </ListItem>
         ))}
+        </>
+        </AppLoaderComponent>
         <ListItem disableGutters>
           <ListItemButton
             autoFocus
@@ -130,7 +153,9 @@ export const EnergieSimpleDialog : React.FC<EnergieDialogProps> = (props: Energi
           </ListItemButton>
         </ListItem>
       </List>
+      
     </Dialog>
+    
   );
 }
 export const EtatSimpleDialog : React.FC<EtatDialogProps> = (props: EtatDialogProps) => {
@@ -142,10 +167,13 @@ export const EtatSimpleDialog : React.FC<EtatDialogProps> = (props: EtatDialogPr
     onClose(item);
   };
   return (
+    
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{title}</DialogTitle>
+      
       <List sx={{ pt: 0 }}>
-        {items.map((item) => (
+ 
+ <AppLoaderComponent loading={!props.ready}><>       {items.map((item) => (
           <ListItem disableGutters key={item.id}>
             <ListItemButton onClick={() => handleListItemClick(item)}>
               <ListItemAvatar>
@@ -157,6 +185,8 @@ export const EtatSimpleDialog : React.FC<EtatDialogProps> = (props: EtatDialogPr
             </ListItemButton>
           </ListItem>
         ))}
+        </>
+        </AppLoaderComponent>
         <ListItem disableGutters>
           <ListItemButton
             autoFocus
@@ -171,7 +201,9 @@ export const EtatSimpleDialog : React.FC<EtatDialogProps> = (props: EtatDialogPr
           </ListItemButton>
         </ListItem>
       </List>
+      
     </Dialog>
+    
   );
 }
 export const CouleurSimpleDialog : React.FC<CouleurDialogProps> = (props: CouleurDialogProps) => {
@@ -183,10 +215,13 @@ export const CouleurSimpleDialog : React.FC<CouleurDialogProps> = (props: Couleu
     onClose(item);
   };
   return (
+    
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{title}</DialogTitle>
+      
       <List sx={{ pt: 0 }}>
-        {items.map((item) => (
+ 
+ <AppLoaderComponent loading={!props.ready}><>       {items.map((item) => (
           <ListItem disableGutters key={item.id}>
             <ListItemButton onClick={() => handleListItemClick(item)}>
               <ListItemAvatar>
@@ -197,6 +232,8 @@ export const CouleurSimpleDialog : React.FC<CouleurDialogProps> = (props: Couleu
             </ListItemButton>
           </ListItem>
         ))}
+        </>
+        </AppLoaderComponent>
         <ListItem disableGutters>
           <ListItemButton
             autoFocus
@@ -211,7 +248,9 @@ export const CouleurSimpleDialog : React.FC<CouleurDialogProps> = (props: Couleu
           </ListItemButton>
         </ListItem>
       </List>
+      
     </Dialog>
+    
   );
 }
 export const ModeleSimpleDialog : React.FC<ModeleDialogProps> = (props: ModeleDialogProps) => {
@@ -223,10 +262,13 @@ export const ModeleSimpleDialog : React.FC<ModeleDialogProps> = (props: ModeleDi
     onClose(item);
   };
   return (
+    
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{title}</DialogTitle>
+      
       <List sx={{ pt: 0 }}>
-        {items.map((item) => (
+ 
+ <AppLoaderComponent loading={!props.ready}><>       {items.map((item) => (
           <ListItem disableGutters key={item.id}>
             <ListItemButton onClick={() => handleListItemClick(item)}>
               <ListItemAvatar>
@@ -239,6 +281,8 @@ export const ModeleSimpleDialog : React.FC<ModeleDialogProps> = (props: ModeleDi
             </ListItemButton>
           </ListItem>
         ))}
+        </>
+        </AppLoaderComponent>
         <ListItem disableGutters>
           <ListItemButton
             autoFocus
@@ -253,7 +297,9 @@ export const ModeleSimpleDialog : React.FC<ModeleDialogProps> = (props: ModeleDi
           </ListItemButton>
         </ListItem>
       </List>
+      
     </Dialog>
+    
   );
 }
 export const MarqueSimpleDialog : React.FC<MarqueDialogProps> = (props: MarqueDialogProps) => {
@@ -265,10 +311,13 @@ export const MarqueSimpleDialog : React.FC<MarqueDialogProps> = (props: MarqueDi
     onClose(item);
   };
   return (
+    
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{title}</DialogTitle>
+      
       <List sx={{ pt: 0 }}>
-        {items.map((item) => (
+ 
+ <AppLoaderComponent loading={!props.ready}><>       {items.map((item) => (
           <ListItem disableGutters key={item.id}>
             <ListItemButton onClick={() => handleListItemClick(item)}>
               <ListItemAvatar>
@@ -281,6 +330,8 @@ export const MarqueSimpleDialog : React.FC<MarqueDialogProps> = (props: MarqueDi
             </ListItemButton>
           </ListItem>
         ))}
+        </>
+        </AppLoaderComponent>
         <ListItem disableGutters>
           <ListItemButton
             autoFocus
@@ -295,6 +346,8 @@ export const MarqueSimpleDialog : React.FC<MarqueDialogProps> = (props: MarqueDi
           </ListItemButton>
         </ListItem>
       </List>
+      
     </Dialog>
+    
   );
 }
