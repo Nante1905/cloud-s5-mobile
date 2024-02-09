@@ -2,6 +2,7 @@ import { IonItem } from "@ionic/react";
 import { Avatar } from "@mui/material";
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { getErrorMessage } from "../../shared/service/api-service";
 import { Utilisateur } from "../../shared/types/profil.types";
 import { ApiResponse } from "../../shared/types/Response";
@@ -25,6 +26,8 @@ const initialState : ProfilState = {
 }
 const ProfilComponent   : React.FC = () => {
     const [state,setState] = useState<ProfilState>(initialState);
+    const history = useHistory();
+
     useEffect(()=>{
         getUserInfo()
         .then((res) => {
@@ -63,7 +66,10 @@ const ProfilComponent   : React.FC = () => {
             }));
           });
     },[])
-
+    const disconnect = ()=>{
+      localStorage.removeItem("token");
+      history.push('/login')
+    }
     return (
         <>
             <div className="profile-page"  >
@@ -102,7 +108,12 @@ const ProfilComponent   : React.FC = () => {
                             {new Date(state.utilisateur.dateInscription).toLocaleString('fr-FR',{ year: 'numeric', month: 'long' })}
                         </div>
                     </div>
-                </div></>
+                    
+                </div>
+                <div className="deconnexion" onClick={disconnect}>
+                    Se déconnecter
+                </div>
+                    </>
                 </AppLoaderComponent>
                             </div>
         </>

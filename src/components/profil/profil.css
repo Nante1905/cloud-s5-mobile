@@ -10,7 +10,17 @@
     width: 100%;
     background: var(--first);
 }
-
+.deconnexion{
+    background-color: #333;
+    border-radius: 20px;
+    width: 100%;
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
 .title-profile h1{
     font-size: 30px;
     font-weight: 600;
@@ -33,12 +43,12 @@
 
 }
 .label-info{
-    margin-bottom: 10px;
-    color: #ffff ;
+    margin-bottom: 7px;
+    color: #3a3a3a ;
     font-weight: 600;
 }
 .info-groupe{
-    margin-bottom: 30px;
+    margin-bottom: 13px;
 }
 .info-input{
     border: 1px solid #3a3a3a ;
@@ -52,5 +62,5 @@
     /* color: white; */
 }
 .information-page{
-    min-height: 45vh;
+    min-height: 41vh;
 }
