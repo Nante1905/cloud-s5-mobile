@@ -2,21 +2,31 @@
     --first : #3DC2BC;
     --second : #3D86C2;
     --third : #3DC279;
-  }
+}
 #profil-page{
-    --background: var(--second) !important;
+    /* --background: #333 !important; */
 }
 .title-profile{
     width: 100%;
-    background: var(--second);
+    background: var(--first);
 }
-
+.deconnexion{
+    background-color: #333;
+    border-radius: 20px;
+    width: 100%;
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
 .title-profile h1{
     font-size: 30px;
     font-weight: 600;
 }
 .profile-page{
-    padding: 40px;
+    padding:7px 40px 40px 40px;
 }
 .avatar-profile{
     width:100%;
@@ -33,23 +43,24 @@
 
 }
 .label-info{
-    margin-bottom: 10px;
-    color: #ffff ;
+    margin-bottom: 7px;
+    color: #3a3a3a ;
     font-weight: 600;
 }
 .info-groupe{
-    margin-bottom: 30px;
+    margin-bottom: 13px;
 }
 .info-input{
-    border: 1px solid #ffff ;
-    background: #3a3a3a;
+    border: 1px solid #3a3a3a ;
+    /* background: ; */
     height: 30px;
     padding: 20px;
     display: flex;
     align-items: center;
     border-radius: 10px;
-    /* color: #808080; */
+    color: #808080;
+    /* color: white; */
 }
 .information-page{
-    min-height: 45vh;
+    min-height: 41vh;
 }
