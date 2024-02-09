@@ -48,9 +48,13 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     } else {
       base64Data = await base64FromPath(photo.webPath!);
     }
-    const prefixToRemove = 'data:image/jpeg;base64,';
-    if (base64Data.startsWith(prefixToRemove)) {
-      base64Data = base64Data.slice(prefixToRemove.length);
+    const base64Prefix = 'base64,';
+    let parts = base64Data.split(base64Prefix);
+    if (parts.length >  1) {
+      let base64Part = parts[1];
+      base64Data = parts[1];
+    } else {
+      console.log('sans prefix');
     }
     const savedFile = await Filesystem.writeFile({
       path: fileName,
@@ -80,6 +84,7 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     }
   };
   const { Camera, Permissions } = Plugins;
+
   const takePhoto = async () => {
     const cameraPermission = await Permissions.query({ name: 'camera' });
 
@@ -87,6 +92,7 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     const permissionResult = await Permissions.request({ name: 'camera' });
     
     if (permissionResult.state !== 'granted') {
+      // L'utilisateur a refusé la permission
       console.error('Permission refusée pour la caméra');
       return;
     }
@@ -108,15 +114,20 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
 };
 
 const takePhotoFromGallery = async () => {
+  // Demander la permission d'accéder à la galerie
   const galleryPermission = await Permissions.query({ name: 'photos' });
 
   if (galleryPermission.state !== 'granted') {
     const permissionResult = await Permissions.request({ name: 'photos' });
+
     if (permissionResult.state !== 'granted') {
+      // L'utilisateur a refusé la permission
       console.error('Permission refusée pour la galerie');
       return;
     }
   }
+
+  // Sélectionner une photo depuis la galerie
   const photo = await Camera.getPhoto({
     resultType: CameraResultType.Uri,
     source: CameraSource.Photos,
