@@ -19,6 +19,8 @@
 }
 .list-annonce .view{
     font-weight: 800;
+    display: flex;
+    width: 100%;
 }
 .list-annonce {
     --text-decoration: none;

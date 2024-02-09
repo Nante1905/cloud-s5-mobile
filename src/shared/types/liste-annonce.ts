@@ -15,5 +15,6 @@ export interface Annonce {
     etat : number,
     favori : boolean ,
     status : number ,
-    photos : Photo[]
+    photos : Photo[],
+    vues: number
 }
