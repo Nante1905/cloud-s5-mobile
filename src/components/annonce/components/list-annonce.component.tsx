@@ -11,6 +11,7 @@ import {
   IonItemOption,
   IonToast,
 } from '@ionic/react';
+import DeleteIcon from '@mui/icons-material/Delete';
 import './list-annonce.component.css';
 import { Link } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -18,7 +19,7 @@ import { findAllAnnonce } from '../../service/Utilisateur.service';
 import { ApiResponse } from '../../../shared/types/Response';
 import { getErrorMessage } from '../../../shared/service/api-service';
 import { Annonce } from '../../../shared/types/liste-annonce';
-import { Modif_annonce } from '../../service/annonce.service';
+import { Delete_annonce, Modif_annonce } from '../../service/annonce.service';
 import { Alert } from '@mui/material';
 import AppLoaderComponent from '../../../shared/loader/app-loader.component';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -28,7 +29,8 @@ interface ListAnnonceState{
   success : string  | null,
   error : string | null,
   actual_list : string,
-  loading : boolean
+  loading : boolean,
+  delete  : boolean
 }
 const initialState : ListAnnonceState = {
   tab : "0",
@@ -36,7 +38,8 @@ const initialState : ListAnnonceState = {
   success : null,
   error : null,
   actual_list : "/annonces/yours",
-  loading : true
+  loading : true,
+  delete : false
 }
 const ListAnnonceComponent: React.FC = () => {
   const [state, setState] = useState(initialState);
@@ -98,6 +101,45 @@ const ListAnnonceComponent: React.FC = () => {
           }));
         });
     console.log( state.annonces );
+  }
+
+  const DeleteAnnonce = (  id_annonce : number) => {
+    console.log( id_annonce );
+    Delete_annonce( id_annonce )
+    .then((res) => {
+      const response: ApiResponse = res.data;
+      if (response.ok) {
+        changeList( state.actual_list );
+        setState((state) => ({
+          ...state,
+          delete : true
+        }));
+      } else {
+        setState((state) => ({
+          ...state,
+          error : response.err
+        }));
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      let errorMessage = "";
+      if (
+        !err.response?.data.err ||
+        err.response?.data.err == "" ||
+        err.response?.data.err == null
+      ) {
+        errorMessage = getErrorMessage(err.code);
+      } else {
+        errorMessage = err.response.data.err;
+      }
+      console.log("etoo");
+
+      setState((state) => ({
+        ...state,
+        error : errorMessage
+      }));
+    });
   }
 
   const ModifAnnonce = ( id_annonce : number) => {
@@ -211,17 +253,25 @@ const ListAnnonceComponent: React.FC = () => {
                 </div>
               </IonItem>
             </Link>
-            
+            <IonItemOptions side="start">
+                <IonItemOption color="danger" onClick={() => DeleteAnnonce( annonce.id )} expandable>
+                  <DeleteIcon />
+                </IonItemOption>
+            </IonItemOptions>
             <IonItemOptions side="end">
-              {/* <IonItemOption color="success" expandable>
-                <CheckCircleOutlineIcon />
-              </IonItemOption> */}
               {CanValid( annonce.status , annonce.id )}
             </IonItemOptions>
           </IonItemSliding>
         ))}
         </IonList>
       </AppLoaderComponent>
+      <IonToast
+      isOpen={state.delete}
+      message={"annonce supprimé"}
+      duration={3000}
+      onDidDismiss={() => setState({ ...state, delete: false })}
+      color="success"
+    ><Alert severity="success">{"annonce supprimé"}</Alert></IonToast>
     <IonToast
       isOpen={!!state.success}
       message={state.success || ""}

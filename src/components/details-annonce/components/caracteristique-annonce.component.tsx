@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonGrid, IonRow, IonCol } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, useIonRouter } from '@ionic/react';
 import './details-annonce.css';
 import { Annonce } from '../../../shared/types/details-annonce-type';
 import { Link, useHistory} from 'react-router-dom';
@@ -9,7 +9,7 @@ interface CaracteristiqueProps {
 }
 
 const Caracteristique: React.FC<CaracteristiqueProps> = ({ annonce }) => {
-  const history = useHistory();
+  const history = useIonRouter();
   const redirectToOtherPage = ( id : number ) => {
     console.log( "makato" );
     history.push(`/modif/${id}`);
