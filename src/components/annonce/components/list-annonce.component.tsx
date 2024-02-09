@@ -201,18 +201,13 @@ const ListAnnonceComponent: React.FC = () => {
                   />
                 </IonThumbnail>
                 <div id='card-text' >
-                  <IonCardHeader>
-                      <IonCardTitle className="card-title">
+                      <div className="card-title">
                       {annonce.marque.nom} {annonce.modele.nom}
-                      
-                    </IonCardTitle>
-
-                  </IonCardHeader>
-                  <IonCardContent className="content-card">
+                    </div>
+                  <div className="content-card">
                     <div className="prix">{formatNumber(annonce.prix)} MGA</div>
-                    
-                  </IonCardContent>
-                  <div className="view">  <VisibilityIcon />{annonce.vues}</div>
+                    <div className="view">  <VisibilityIcon /> <span>{annonce.vues}</span></div>
+                  </div>
                 </div>
               </IonItem>
             </Link>

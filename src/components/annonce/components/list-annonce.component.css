@@ -20,7 +20,11 @@
 .list-annonce .view{
     font-weight: 800;
     display: flex;
-    width: 100%;
+    width: 50%;
+    justify-content: flex-end;
+}
+.list-annonce .view span{
+    margin-left: 10px
 }
 .list-annonce {
     --text-decoration: none;
@@ -29,6 +33,7 @@
     --color:#333;
     font-weight: 700;
     font-size: 20px;
+    margin-bottom: 10px;
 }
 .list-annonce{
     background: #ffff ;
@@ -37,6 +42,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding-right: 20px;
 }
 .list-annonce .card-img{
     border-radius: 50px;
