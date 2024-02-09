@@ -32,6 +32,10 @@ interface ListAnnonceState{
   loading : boolean,
   delete  : boolean
 }
+const numberFormatter = Intl.NumberFormat('en', {
+  notation: 'compact'
+})
+
 const initialState : ListAnnonceState = {
   tab : "0",
   annonces : [],
@@ -201,7 +205,9 @@ const ListAnnonceComponent: React.FC = () => {
     if (tab == "1") changeList( "/annonces/nonValide/moi" );
 
   }; 
+  const formatINTL = (value:number)=>{
 
+  }
   const CanValid = ( status : number , id_annonce :number ) => {
     if( status == 5 )
       return (
@@ -251,7 +257,7 @@ const ListAnnonceComponent: React.FC = () => {
                     </div>
                   <div className="content-card">
                     <div className="prix">{formatNumber(annonce.prix)} MGA</div>
-                    <div className="view">  <VisibilityIcon /> <span>{annonce.vues}</span></div>
+                    <div className="view">  <VisibilityIcon /> <span>{numberFormatter.format(annonce.vues)}</span></div>
                   </div>
                 </div>
               </IonItem>
