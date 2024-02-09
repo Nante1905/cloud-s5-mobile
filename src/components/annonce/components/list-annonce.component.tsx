@@ -109,10 +109,11 @@ const ListAnnonceComponent: React.FC = () => {
     .then((res) => {
       const response: ApiResponse = res.data;
       if (response.ok) {
-        changeList( state.actual_list );
-        setState((state) => ({
-          ...state,
-          delete : true
+        const updatedAnnonces = state.annonces.filter(annonce => annonce.id !== id_annonce);
+        setState(prevState => ({
+          ...prevState,
+          annonces: updatedAnnonces,
+          delete: true 
         }));
       } else {
         setState((state) => ({
@@ -228,7 +229,9 @@ const ListAnnonceComponent: React.FC = () => {
       </div>
       <AppLoaderComponent loading={state.loading}>
         <IonList className="list-annonce" lines="none">
-        {state.annonces.map((annonce) => (
+        {state.annonces
+        .filter(annonce => [0, 5, 10].includes(annonce.status))
+        .map((annonce) => (
           <IonItemSliding id={`annonce`} key={annonce.id}>
             <Link style={{textDecoration:"none"}} to={`/details/${annonce.id}`}>
               <IonItem
