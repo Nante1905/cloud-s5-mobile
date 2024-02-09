@@ -46,9 +46,12 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
     } else {
       base64Data = await base64FromPath(photo.webPath!);
     }
-    const prefixToRemove = 'data:image/jpeg;base64,';
-    if (base64Data.startsWith(prefixToRemove)) {
-      base64Data = base64Data.slice(prefixToRemove.length);
+    const base64Prefix = 'base64,';
+    let parts = base64Data.split(base64Prefix);
+    if (parts.length >  1) {
+      base64Data = parts[1];
+    } else {
+      console.log('sans prefixe');
     }
     const savedFile = await Filesystem.writeFile({
       path: fileName,
@@ -63,7 +66,8 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
         fileName: savedFile.uri,
         webViewPath: Capacitor.convertFileSrc(savedFile.uri),
         blob: base64Data, 
-        contentType: photo.format
+        contentType: photo.format,
+        url:''
       };
     }
     else {
@@ -73,7 +77,8 @@ const PhotoGallery = (props: PhotoGalleryProps) => {
         fileName: fileName,
         webViewPath: photo.webPath,
         blob: base64Data, 
-        contentType: photo.format
+        contentType: photo.format,
+        url:''
       };
     }
   };
