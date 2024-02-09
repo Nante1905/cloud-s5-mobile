@@ -129,8 +129,74 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
         fetchData()
     },[]);
     const handleRefresh = (event: CustomEvent<RefresherEventDetail>)=>{
-            fetchData();
+        getAllBV()
+        .then((res: { data: ApiResponse; }) => {
+          const response: ApiResponse = res.data;
+          if (response.ok) {
+            setState((state) => ({
+              ...state,
+              listeBoiteVitesse: response.data,
+              readyBV: true
+            }));
+          } else {
+            setState((state) => ({
+              ...state,
+              error: response.err,
+            }));
+          }
+        })
+        .catch((err: { response: { data: { err: string | null; }; }; code: string; }) => {
+          console.error(err);
+          let errorMessage = "";
+          if (
+            !err.response?.data.err ||
+            err.response?.data.err == "" ||
+            err.response?.data.err == null
+          ) {
+            errorMessage = getErrorMessage(err.code);
+          } else {
+            errorMessage = err.response.data.err;
+          }
+          setState((state) => ({
+            ...state,
+            error: errorMessage
+          }));
+        });
+        getAllEnergie()
+        .then((res: { data: ApiResponse; }) => {
+          const response: ApiResponse = res.data;
+          if (response.ok) {
+            setState((state) => ({
+              ...state,
+              listeEnergie: response.data,
+              readyEnergie: true
+            }));
             event.detail.complete();
+          } else {
+            setState((state) => ({
+              ...state,
+              error: response.err,
+            }));
+          }
+        })
+        .catch((err: { response: { data: { err: string | null; }; }; code: string; }) => {
+          console.error(err);
+          let errorMessage = "";
+          if (
+            !err.response?.data.err ||
+            err.response?.data.err == "" ||
+            err.response?.data.err == null
+          ) {
+            errorMessage = getErrorMessage(err.code);
+          } else {
+            errorMessage = err.response.data.err;
+          }
+          setState((state) => ({
+            ...state,
+            error: errorMessage
+          }));
+        });
+            
     }
     const handleClickOpen = (type: string) => {
         setState(prevState => ({
@@ -216,20 +282,23 @@ const SecondStepAnnonceCreation: React.FC<SecondStepProps> = (props : SecondStep
     };
     const handleConsommationChange = (e:  ChangeEvent<HTMLInputElement>) => {
         const newvalue  = parseFloat(e.target.value);
-        if(isNaN(newvalue) || newvalue==0.0 || newvalue<0){
-            props.handleConsommationChange(0);
-            setState((prevState)=>({
-                ...prevState,
-                consoClasse:"error"
-            }))
+        if(e.target.value.length <= 2){
+            if(isNaN(newvalue) || newvalue==0.0 || newvalue<0){
+                props.handleConsommationChange(0);
+                setState((prevState)=>({
+                    ...prevState,
+                    consoClasse:"error"
+                }))
+            }
+            else{
+                props.handleConsommationChange(newvalue);
+                setState((prevState)=>({
+                    ...prevState,
+                    consoClasse:""
+                }))
+            }
         }
-        else{
-            props.handleConsommationChange(newvalue);
-            setState((prevState)=>({
-                ...prevState,
-                consoClasse:""
-            }))
-        }
+        
     };
 
     return (
