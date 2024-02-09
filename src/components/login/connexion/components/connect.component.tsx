@@ -58,6 +58,7 @@ const ConnectComponent: React.FC = () => {
 
     connexion({ email: state.form.email, password: state.form.password })
       .then((res) => {
+        console.log( "nilog" );
         localStorage.setItem("token", res.data.data);
         pushNotificationRegister(decodeToken().id);
         setState((prevData) => ({
