@@ -10,3 +10,6 @@ http.put(`/annonces/${id}/vendu`);
 
 export const modif =  ( id : number , annonce : AnnonceInput  ) => 
 http.put(`/annonces/${id}` , annonce);
+
+export const Delete_annonce =  ( id : number  ) => 
+http.delete(`/annonces/${id}`);

@@ -1,4 +1,4 @@
-import { IonItem } from "@ionic/react";
+import { IonItem, useIonRouter } from "@ionic/react";
 import { Avatar } from "@mui/material";
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ const initialState : ProfilState = {
 }
 const ProfilComponent   : React.FC = () => {
     const [state,setState] = useState<ProfilState>(initialState);
-    const history = useHistory();
+    const history = useIonRouter();
 
     useEffect(()=>{
         getUserInfo()

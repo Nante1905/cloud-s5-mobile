@@ -1,4 +1,4 @@
-import { IonPage, IonContent, IonItem,IonButton,IonIcon } from "@ionic/react";
+import { IonPage, IonContent, IonItem,IonButton,IonIcon, useIonRouter } from "@ionic/react";
 import { useState } from "react";
 import FirstStepAnnonceCreation from "../../components/creation/first-step.components";
 import { Tab, Tabs } from "@mui/material";
@@ -88,7 +88,7 @@ const initialState: CreationAnnonceState = {
 
 export default  function  CreationAnnonce () {  
     const [state, setState] = useState(initialState);
-    const history = useHistory();
+    const history = useIonRouter();
 
     const handleTabChange = ( newValue: string) => {
         setState((state) => ({
@@ -259,7 +259,7 @@ export default  function  CreationAnnonce () {
             {/* <div className="filter"></div> */}
             <IonContent fullscreen>
                 {state.tab!="5" && state.tab!="6" && <IonItem>
-                    <div className="title-login">
+                    <div className="title-login title-creation-annonce">
                         <button onClick={()=>exit()} className="close-button">
                     <IonIcon icon={close} size="large"/>                          
                

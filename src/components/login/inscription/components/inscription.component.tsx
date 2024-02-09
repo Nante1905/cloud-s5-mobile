@@ -111,7 +111,7 @@ const InscriptionComponent: React.FC<InscriptionProps> = (
   return (
     <>
       <IonItem>
-        <div className="title-login">
+        <div className="title-login inscription-title">
           <h1>Inscrivez-vous, c'est gratuit!</h1>
         </div>
       </IonItem>

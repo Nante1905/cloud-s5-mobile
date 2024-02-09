@@ -227,21 +227,21 @@ ion-slides {
     box-sizing: border-box;
     color: #ffff;
 }
-
-.title-login{
-  height:34vh !important;
-  width: 100%;
+.title-creation-annonce{
+  padding-top: 6vw;
+  padding-right: 6vw;
   display: flex;
   align-items:flex-start !important;
   justify-content:flex-end  !important;
-  background: black;
+}
+.title-login{
+  height:34vh !important;
+  width: 100%;
   position: fixed;
+
   top:0;
   background-image: url('background2.jpg')  !important;
   background-size: cover !important;
-  padding-top: 6vw;
-
-  padding-right: 6vw;
 }
 .filter{
   background-color: #333;
