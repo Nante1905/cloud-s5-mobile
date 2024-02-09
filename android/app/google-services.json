@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "32351235033",
+    "project_id": "test-push-notif-d60d0",
+    "storage_bucket": "test-push-notif-d60d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32351235033:android:d9a69eb4e35c5e656407c8",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrLBx72By4saoV5g2kEK894Mo-jZiJ3cI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
