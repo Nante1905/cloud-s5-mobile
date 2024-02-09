@@ -69,7 +69,8 @@ const ConnectComponent: React.FC = () => {
         }));
         console.log("andhe ahipsh");
         // history.go("/tabs/annonce");
-        navigation.push("/tabs/annonce");
+        // navigation.push("/tabs/annonce");
+        navigation.push("/accueil");
         console.log("avy ahipsh");
       })
       .catch((err) => {

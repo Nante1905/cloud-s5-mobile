@@ -6,11 +6,10 @@ import {
 import decodeToken from '../../shared/helpers/auth.helper';
 const AccueilComponent : React.FC = () => {
     const renderUserName = () => {
-        if (localStorage.getItem("token")) {
+        if (localStorage.getItem("token") != null) {
             return (
                 <> 
-                    <a href="/login" className="login-accueil">Connexion</a>
-                    <a href="/inscription" className="login-accueil">Inscription</a>
+                    <a href="/tabs" className="button-play-accueil pulsate">Appuyer ici pour continuer</a>
                 </>
             );
         } else {
