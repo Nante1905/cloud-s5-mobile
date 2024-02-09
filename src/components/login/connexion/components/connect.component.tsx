@@ -136,6 +136,7 @@ const ConnectComponent: React.FC = () => {
             Inscrivez vous
           </IonItem>
         </div>
+        
         {/* <IonToast
           isOpen={!!state.error}
           message={state.error || ""}
