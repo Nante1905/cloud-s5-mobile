@@ -14,7 +14,7 @@ import "swiper/css/navigation";
 
 import "swiper/css/pagination";
 
-import Alert from "@mui/material/Alert";
+import { useIonLoading } from "@ionic/react";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import "swiper/css/scrollbar";
@@ -48,6 +48,7 @@ const initialState: UtilisateurFormState = {
 
 const ConnectComponent: React.FC = () => {
   const [state, setState] = useState<UtilisateurFormState>(initialState);
+  const [present, dismiss] = useIonLoading();
 
   //   const history = useHistory();
   const location = useLocation();
@@ -58,9 +59,10 @@ const ConnectComponent: React.FC = () => {
 
     connexion({ email: state.form.email, password: state.form.password })
       .then((res) => {
-        console.log( "nilog" );
+        console.log("nilog");
         localStorage.setItem("token", res.data.data);
         pushNotificationRegister(decodeToken().id);
+        dismiss();
         setState((prevData) => ({
           ...prevData,
           success: res.data.message,
@@ -79,6 +81,7 @@ const ConnectComponent: React.FC = () => {
           error: err?.response?.data.err || "Une erreur s'est produite.",
           submitLoading: false,
         }));
+        dismiss();
       });
   };
   const redirctAccueil = () => {
@@ -86,6 +89,7 @@ const ConnectComponent: React.FC = () => {
       //   return <Redirect to="/accueil" />;
     }
   };
+
   return (
     <>
       <IonItem>
@@ -125,7 +129,12 @@ const ConnectComponent: React.FC = () => {
           <a
             // href="/tabs"
             className="form-submit"
-            onClick={handleSubmit}
+            onClick={(event) => {
+              handleSubmit(event);
+              present({
+                message: "Connexion en cours...",
+              });
+            }}
           >
             Se connecter
           </a>
@@ -136,7 +145,7 @@ const ConnectComponent: React.FC = () => {
             Inscrivez vous
           </IonItem>
         </div>
-        
+
         {/* <IonToast
           isOpen={!!state.error}
           message={state.error || ""}
