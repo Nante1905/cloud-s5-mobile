@@ -88,7 +88,7 @@ const ConnectComponent: React.FC = () => {
     <>
       <IonItem>
         <div className="title-login">
-          <h1>Bienvenue sur la plateforme VV</h1>
+          <h1>Bienvenue sur Sera Vaika</h1>
         </div>
       </IonItem>
       <div className="ion-padding connect">
