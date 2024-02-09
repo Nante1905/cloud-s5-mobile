@@ -2,13 +2,13 @@
     --first : #3DC2BC;
     --second : #3D86C2;
     --third : #3DC279;
-  }
+}
 #profil-page{
-    --background: var(--second) !important;
+    /* --background: #333 !important; */
 }
 .title-profile{
     width: 100%;
-    background: var(--second);
+    background: var(--first);
 }
 
 .title-profile h1{
@@ -16,7 +16,7 @@
     font-weight: 600;
 }
 .profile-page{
-    padding: 40px;
+    padding:7px 40px 40px 40px;
 }
 .avatar-profile{
     width:100%;
@@ -41,14 +41,15 @@
     margin-bottom: 30px;
 }
 .info-input{
-    border: 1px solid #ffff ;
-    background: #3a3a3a;
+    border: 1px solid #3a3a3a ;
+    /* background: ; */
     height: 30px;
     padding: 20px;
     display: flex;
     align-items: center;
     border-radius: 10px;
-    /* color: #808080; */
+    color: #808080;
+    /* color: white; */
 }
 .information-page{
     min-height: 45vh;
