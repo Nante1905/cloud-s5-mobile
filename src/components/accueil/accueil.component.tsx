@@ -3,12 +3,16 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import {
     IonItem,
   } from '@ionic/react';
+import decodeToken from '../../shared/helpers/auth.helper';
 const AccueilComponent : React.FC = () => {
     const renderUserName = () => {
         if (localStorage.getItem("token")) {
-            const token = localStorage.getItem("token");
-            const body = JSON.parse(atob(token!.split(".")[1]));
-            return <a href="/tabs" className="button-play-accueil pulsate">Appuyer ici pour continuer</a>;
+            return (
+                <> 
+                    <a href="/login" className="login-accueil">Connexion</a>
+                    <a href="/inscription" className="login-accueil">Inscription</a>
+                </>
+            );
         } else {
             return (
                 <> 
